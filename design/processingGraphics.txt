@@ -1,0 +1,276 @@
+
+
+void	fill(int rgb, float alpha) 
+
+void	stroke(int rgb, float alpha) 
+
+void	strokeWeight(float weight) Sets the width of the stroke used for lines, points, and the border around shapes.
+void	noStroke() Disables drawing of lines.
+
+void	line(float x1, float y1, float z1, float x2, float y2, float z2) 
+
+void	rect(float a, float b, float c, float d) Draws a rectangle to the screen.
+
+void	noFill() Disables filling geometry.
+
+Introduce a DoctusImage
+void	image(PImage img, float a, float b) Displays images to the screen.
+
+void	text(java.lang.String str, float x, float y) Advanced
+
+void	ellipse(float a, float b, float c, float d) Draws an ellipse (oval) in the display window.
+
+------------------------------------------------------------------------------
+alpha(int rgb) Extracts the alpha value from a color.
+
+void	ambient(float gray) 
+void	ambient(float v1, float v2, float v3) 
+void	ambient(int rgb) Sets the ambient reflectance for shapes drawn to the screen.
+void	ambientLight(float v1, float v2, float v3) Adds an ambient light.
+void	ambientLight(float v1, float v2, float v3, float x, float y, float z) 
+
+void	applyMatrix(float n00, float n01, float n02, float n10, float n11, float n12) 
+void	applyMatrix(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23, float n30, float n31, float n32, float n33) 
+void	applyMatrix(PMatrix source) Multiplies the current matrix by the one specified through the parameters.
+void	applyMatrix(PMatrix2D source) 
+void	applyMatrix(PMatrix3D source) 
+
+void	arc(float a, float b, float c, float d, float start, float stop) Draws an arc in the display window.
+void	arc(float a, float b, float c, float d, float start, float stop, int mode) 
+
+
+void	beginCamera() The beginCamera() and endCamera() functions enable advanced customization of the camera space.
+void	beginContour() 
+void	beginDraw() Sets the default properties for a PGraphics object.
+PGL	beginPGL() 
+void	beginRaw(PGraphics rawGraphics) Record individual lines and triangles by echoing them to another renderer.
+void	beginShape() Start a new shape of type POLYGON
+void	beginShape(int kind) Using the beginShape() and endShape() functions allow creating more complex forms.
+
+void	bezier(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) 
+void	bezier(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float x4, float y4, float z4) Draws a Bezier curve on the screen.
+void	bezierDetail(int detail) Sets the resolution at which Beziers display.
+float	bezierPoint(float a, float b, float c, float d, float t) Evaluates the Bezier at point t for points a, b, c, d.
+float	bezierTangent(float a, float b, float c, float d, float t) Calculates the tangent of a point on a Bezier curve.
+void	bezierVertex(float x2, float y2, float x3, float y3, float x4, float y4) 
+void	bezierVertex(float x2, float y2, float z2, float x3, float y3, float z3, float x4, float y4, float z4)Specifies vertex coordinates for Bezier curves.
+
+void	blendMode(int mode)This is a new reference entry for Processing 2.0.
+float	blue(int rgb)Extracts the blue value from a color, scaled to match current colorMode().
+
+void	box(float size) A box is an extruded rectangle.
+void	box(float w, float h, float d) 
+
+float	brightness(int rgb)Extracts the brightness value from a color.
+
+void	camera()Sets the position of the camera through setting the eye position, the center of the scene, and which axis is facing upward.
+void	camera(float eyeX, float eyeY, float eyeZ, float centerX, float centerY, float centerZ, float upX, float upY, float upZ) 
+boolean	canDraw() Some renderers have requirements re: when they are ready to draw.
+void	clear() 
+void	clip(float a, float b, float c, float d) 
+
+void	colorMode(int mode) Changes the way Processing interprets color data.
+void	colorMode(int mode, float max) 
+void	colorMode(int mode, float max1, float max2, float max3) 
+void	colorMode(int mode, float max1, float max2, float max3, float maxA) 
+
+PShape	createShape() 
+PShape	createShape(int type) 
+PShape	createShape(int kind, float... p) 
+PShape	createShape(PShape source) 
+
+void	curve(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) Draws a curved line on the screen.
+void	curve(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float x4, float y4, float z4) 
+void	curveDetail(int detail) Sets the resolution at which curves display.
+
+float	curvePoint(float a, float b, float c, float d, float t) Evalutes the curve at point t for points a, b, c, d.
+float	curveTangent(float a, float b, float c, float d, float t) Calculates the tangent of a point on a curve.
+void	curveTightness(float tightness) Modifies the quality of forms created with curve() and curveVertex().
+void	curveVertex(float x, float y) Specifies vertex coordinates for curves.
+void	curveVertex(float x, float y, float z) 
+void	directionalLight(float v1, float v2, float v3, float nx, float ny, float nz) Adds a directional light.
+boolean	displayable() Return true if this renderer should be drawn to the screen.
+void	dispose() Handle any takedown for this graphics context.
+void	edge(boolean edge) Sets whether the upcoming vertex is part of an edge.
+void	ellipse(float a, float b, float c, float d) Draws an ellipse (oval) in the display window.
+void	ellipseMode(int mode) The origin of the ellipse is modified by the ellipseMode() function.
+void	emissive(float gray)
+gray number specifying value between white and black
+void	emissive(float v1, float v2, float v3) 
+void	emissive(int rgb) Sets the emissive color of the material used for drawing shapes drawn to the screen.
+void	endCamera()  The beginCamera() and endCamera() functions enable advanced customization of the camera space.
+void	endContour() 
+void	endDraw()  Finalizes the rendering of a PGraphics object so that it can be shown on screen.
+void	endPGL() 
+void	endRaw() 
+void	endShape() 
+void	endShape(int mode) The endShape() function is the companion to beginShape() and may only be called after beginShape().
+
+void	filter(PShader shader) 
+void	flush() 
+void	frustum(float left, float right, float bottom, float top, float near, float far)Sets a perspective matrix defined through the parameters.
+java.lang.Object	getCache(PImage image)Get cache storage data for the specified renderer.
+PMatrix	getMatrix() 
+PMatrix2D	getMatrix(PMatrix2D target)Copy the current transformation matrix into the specified target.
+PMatrix3D	getMatrix(PMatrix3D target)Copy the current transformation matrix into the specified target.
+PGraphics	getRaw() 
+PStyle	getStyle() 
+PStyle	getStyle(PStyle s) 
+float	green(int rgb)Extracts the green value from a color, scaled to match current colorMode().
+boolean	haveRaw() 
+void	hint(int which) Set various hints and hacks for the renderer.
+float	hue(int rgb) Extracts the hue value from a color.
+
+The background() function sets the color used for the background of the Processing window.void	background(float gray) 
+void	background(float gray, float alpha) 
+void	background(float v1, float v2, float v3) 
+void	background(float v1, float v2, float v3, float alpha) 
+void	background(int rgb) 
+void	background(int rgb, float alpha) 
+void	background(PImage image) Takes an RGB or ARGB image and sets it as the background.
+
+float	textWidth(char c) 
+float	textWidth(char[] chars, int start, int length) 
+float	textWidth(java.lang.String str)Calculates and returns the width of any character or text string.
+
+
+void	imageMode(int mode) Modifies the location from which images draw.
+boolean	is2D()Return true if this renderer supports 2D drawing.
+boolean	is3D()Return true if this renderer supports 3D drawing.
+boolean	isGL()Return true if this renderer does rendering through OpenGL.
+int	lerpColor(int c1, int c2, float amt)Calculates a color or colors between two color at a specific increment.
+static int	lerpColor(int c1, int c2, float amt, int mode) 
+void	lightFalloff(float constant, float linear, float quadratic) Sets the falloff rates for point lights, spot lights, and ambient lights.
+void	lights()Sets the default ambient light, directional light, falloff, and specular values.
+void	lightSpecular(float v1, float v2, float v3) Sets the specular color for lights.
+PShader	loadShader(java.lang.String fragFilename)This is a new reference entry for Processing 2.0.
+PShader	loadShader(java.lang.String fragFilename, java.lang.String vertFilename) 
+PShape	loadShape(java.lang.String filename) 
+PShape	loadShape(java.lang.String filename, java.lang.String options) 
+float	modelX(float x, float y, float z)Returns the three-dimensional X, Y, Z position in model space.
+float	modelY(float x, float y, float z)Returns the three-dimensional X, Y, Z position in model space.
+float	modelZ(float x, float y, float z)Returns the three-dimensional X, Y, Z position in model space.
+void	noClip() 
+void	noFill()Disables filling geometry.
+void	noLights() Disable all lighting.
+void	normal(float nx, float ny, float nz) Sets the current normal vector.
+void	noSmooth() Draws all geometry with jagged (aliased) edges.
+void	noTexture()Removes texture image for current shape.
+void	noTint() Removes the current fill value for displaying images and reverts to displaying images with their original hues.
+void	ortho() Sets an orthographic projection and defines a parallel clipping volume.
+void	ortho(float left, float right, float bottom, float top) 
+void	ortho(float left, float right, float bottom, float top, float near, float far) 
+void	perspective() Sets a perspective projection applying foreshortening, making distant objects appear smaller than closer ones.
+void	perspective(float fovy, float aspect, float zNear, float zFar) 
+void	point(float x, float y) Draws a point, a coordinate in space at the dimension of one pixel.
+void	point(float x, float y, float z) 
+void	pointLight(float v1, float v2, float v3, float x, float y, float z) Adds a point light.
+void	popMatrix() Pops the current transformation matrix off the matrix stack.
+void	popStyle() The pushStyle() function saves the current style settings and popStyle() restores the prior settings; these functions are always used together.
+void	printCamera() Prints the current camera matrix to the Console (the text window at the bottom of Processing).
+void	printMatrix() Prints the current matrix to the Console (the text window at the bottom of Processing).
+void	printProjection() Prints the current projection matrix to the Console (the text window at the bottom of Processing).
+void	pushMatrix() Pushes the current transformation matrix onto the matrix stack.
+void	pushStyle() The pushStyle() function saves the current style settings and popStyle() restores the prior settings.
+void	quad(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) A quad is a quadrilateral, a four sided polygon.
+void	quadraticVertex(float cx, float cy, float x3, float y3) 
+void	quadraticVertex(float cx, float cy, float cz, float x3, float y3, float z3) 
+
+void	rectMode(int mode) Modifies the location from which rectangles draw.
+float	red(int rgb) Extracts the red value from a color, scaled to match current colorMode().
+void	removeCache(PImage image)Remove information associated with this renderer from the cache, if any.
+void	requestDraw()Try to draw, or put a draw request on the queue.
+void	requestFocus()Handle grabbing the focus from the parent applet.
+void	resetMatrix() Replaces the current matrix with the identity matrix.
+void	resetShader() This is a new reference entry for Processing 2.0.
+void	resetShader(int kind) 
+void	rotate(float angle) Rotates a shape the amount specified by the angle parameter.
+void	rotate(float angle, float x, float y, float z)
+Advanced
+void	rotateX(float angle) Rotates a shape around the x-axis the amount specified by the angle parameter.
+void	rotateY(float angle) Rotates a shape around the y-axis the amount specified by the angle parameter.
+void	rotateZ(float angle) Rotates a shape around the z-axis the amount specified by the angle parameter.
+float	saturation(int rgb) Extracts the saturation value from a color.
+void	scale(float s) Increases or decreases the size of a shape by expanding and contracting vertices.
+void	scale(float x, float y)Advanced
+void	scale(float x, float y, float z) 
+float	screenX(float x, float y)Takes a three-dimensional X, Y, Z position and returns the X value for where it will appear on a (two-dimensional) screen.
+float	screenX(float x, float y, float z) 
+float	screenY(float x, float y) Takes a three-dimensional X, Y, Z position and returns the Y value for where it will appear on a (two-dimensional) screen.
+float	screenY(float x, float y, float z) 
+float	screenZ(float x, float y, float z)Takes a three-dimensional X, Y, Z position and returns the Z value for where it will appear on a (two-dimensional) screen.
+void	setCache(PImage image, java.lang.Object storage)Store data of some kind for the renderer that requires extra metadata of some kind.
+void	setFrameRate(float frameRate) 
+void	setMatrix(PMatrix source)Set the current transformation matrix to the contents of another.
+void	setMatrix(PMatrix2D source)Set the current transformation to the contents of the specified source.
+void	setMatrix(PMatrix3D source)Set the current transformation to the contents of the specified source.
+
+void	setParent(PApplet parent) 
+void	setPath(java.lang.String path) 
+void	setPrimary(boolean primary)Set (or unset) this as the main drawing surface.
+void	setSize(int w, int h)The final step in setting up a renderer, set its size of this renderer.
+
+void	shader(PShader shader) This is a new reference entry for Processing 2.0.
+void	shader(PShader shader, int kind) 
+void	shape(PShape shape) 
+void	shape(PShape shape, float x, float y) Displays shapes to the screen.
+void	shape(PShape shape, float a, float b, float c, float d) 
+void	shapeMode(int mode) Modifies the location from which shapes draw.
+void	shearX(float angle) Shears a shape around the x-axis the amount specified by the angle parameter.
+void	shearY(float angle) Shears a shape around the y-axis the amount specified by the angle parameter.
+void	shininess(float shine) Sets the amount of gloss in the surface of shapes.
+
+static void	showDepthWarning(java.lang.String method)Display a warning that the specified method is only available with 3D.
+static void	showDepthWarningXYZ(java.lang.String method)Display a warning that the specified method that takes x, y, z parameters can only be used with x and y parameters in this renderer.
+static void	showException(java.lang.String msg)Show an renderer-related exception that halts the program.
+static void	showMethodWarning(java.lang.String method)Display a warning that the specified method is simply unavailable.
+static void	showMissingWarning(java.lang.String method)Display a warning that the specified method is not implemented, meaning that it could be either a completely missing function, although other variations of it may still work properly.
+static void	showVariationWarning(java.lang.String str)Error that a particular variation of a method is unavailable (even though other variations are).
+static void	showWarning(java.lang.String msg)Show a renderer error, and keep track of it so that it's only shown once.
+static void	showWarning(java.lang.String msg, java.lang.Object... args)Version of showWarning() that takes a parsed String.
+
+void	smooth()( begin auto-generated from smooth.xml ) Draws all geometry with smooth (anti-aliased) edges.
+void	smooth(int level) 
+void	specular(float gray)gray number specifying value between white and black
+void	specular(float v1, float v2, float v3) 
+void	specular(int rgb)( begin auto-generated from specular.xml ) Sets the specular color of the materials used for shapes drawn to the screen, which sets the color of hightlights.
+void	sphere(float r)( begin auto-generated from sphere.xml ) A sphere is a hollow ball made from tessellated triangles.
+void	sphereDetail(int res)( begin auto-generated from sphereDetail.xml ) Controls the detail used to render a sphere by adjusting the number of vertices of the sphere mesh.
+void	sphereDetail(int ures, int vres) 
+void	spotLight(float v1, float v2, float v3, float x, float y, float z, float nx, float ny, float nz, float angle, float concentration)( begin auto-generated from spotLight.xml ) Adds a spot light.
+
+void	strokeCap(int cap) Sets the style for rendering line endings.
+void	strokeJoin(int join) Sets the style of the joints which connect line segments.
+
+
+void	strokeCap(int cap) Sets the style for rendering line endings.
+void	strokeJoin(int join) Sets the style of the joints which connect line segments.
+void	strokeWeight(float weight) Sets the width of the stroke used for lines, points, and the border around shapes.
+void	style(PStyle s) 
+void	textAlign(int alignX) 
+void	textAlign(int alignX, int alignY)  Sets the current alignment for drawing text.
+float	textAscent() Returns ascent of the current font at its current size.
+float	textDescent() Returns descent of the current font at its current size.
+void	textFont(PFont which)  Sets the current font that will be drawn with the text() function.
+void	textFont(PFont which, float size) 
+void	textLeading(float leading) Sets the spacing between lines of text in units of pixels.
+void	textMode(int mode) Sets the way text draws to the screen.
+void	textSize(float size) Sets the current font size.
+void	texture(PImage image) Sets a texture to be applied to vertex points.
+void	textureMode(int mode) Sets the coordinate space for texture mapping.
+void	textureWrap(int wrap) Description to come...
+
+void	tint(float gray) 
+void	tint(float gray, float alpha) 
+void	tint(float v1, float v2, float v3) 
+void	tint(float v1, float v2, float v3, float alpha) 
+void	tint(int rgb)Sets the fill value for displaying images.
+void	tint(int rgb, float alpha) 
+void	translate(float x, float y)Specifies an amount to displace objects within the display window.
+void	translate(float x, float y, float z) 
+void	triangle(float x1, float y1, float x2, float y2, float x3, float y3) A triangle is a plane created by connecting three points.
+void	vertex(float[] v)Used by renderer subclasses or PShape to efficiently pass in already formatted vertex information.
+void	vertex(float x, float y) 
+void	vertex(float x, float y, float z) 
+void	vertex(float x, float y, float u, float v) 
+void	vertex(float x, float y, float z, float u, float v)All shapes are constructed by connecting a series of vertices.

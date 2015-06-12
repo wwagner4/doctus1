@@ -1,0 +1,53 @@
+[0m[[0mdebug[0m] [0m[0m
+[0m[[0mdebug[0m] [0mInitial source changes: [0m
+[0m[[0mdebug[0m] [0m	removed:Set()[0m
+[0m[[0mdebug[0m] [0m	added: Set(/Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/swing/DoctusUtilSuite.scala, /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SchedulerTryout.scala, /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SwingKeyActivatableTryout.scala)[0m
+[0m[[0mdebug[0m] [0m	modified: Set()[0m
+[0m[[0mdebug[0m] [0mRemoved products: Set()[0m
+[0m[[0mdebug[0m] [0mExternal API changes: API Changes: Set()[0m
+[0m[[0mdebug[0m] [0mModified binary dependencies: Set()[0m
+[0m[[0mdebug[0m] [0mInitial directly invalidated sources: Set(/Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/swing/DoctusUtilSuite.scala, /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SchedulerTryout.scala, /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SwingKeyActivatableTryout.scala)[0m
+[0m[[0mdebug[0m] [0m[0m
+[0m[[0mdebug[0m] [0mSources indirectly invalidated by:[0m
+[0m[[0mdebug[0m] [0m	product: Set()[0m
+[0m[[0mdebug[0m] [0m	binary dep: Set()[0m
+[0m[[0mdebug[0m] [0m	external source: Set()[0m
+[0m[[0mdebug[0m] [0mAll initially invalidated sources: Set(/Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/swing/DoctusUtilSuite.scala, /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SchedulerTryout.scala, /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SwingKeyActivatableTryout.scala)[0m
+[0m[[0mdebug[0m] [0mRecompiling all 3 sources: invalidated sources (3) exceeded 50.0% of all sources[0m
+[0m[[0minfo[0m] [0mCompiling 3 Scala sources to /Users/wwagner4/prj/scala/doctus/swing/target/scala-2.11/test-classes...[0m
+[0m[[0mdebug[0m] [0mGetting compiler-interface from component compiler for Scala 2.11.5[0m
+[0m[[0mdebug[0m] [0mGetting compiler-interface from component compiler for Scala 2.11.5[0m
+[0m[[0mdebug[0m] [0mRunning cached compiler 74c54edc, interfacing (CompilerInterface) with Scala compiler version 2.11.5[0m
+[0m[[0mdebug[0m] [0mCalling Scala compiler with arguments  (CompilerInterface):[0m
+[0m[[0mdebug[0m] [0m	-bootclasspath[0m
+[0m[[0mdebug[0m] [0m	/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/classes:/Users/wwagner4/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.5.jar[0m
+[0m[[0mdebug[0m] [0m	-classpath[0m
+[0m[[0mdebug[0m] [0m	/Users/wwagner4/prj/scala/doctus/swing/target/scala-2.11/test-classes:/Users/wwagner4/prj/scala/doctus/swing/target/scala-2.11/classes:/Users/wwagner4/prj/scala/doctus/core/target/scala-2.11/classes:/Users/wwagner4/.ivy2/cache/org.scala-js/scalajs-library_2.11/jars/scalajs-library_2.11-0.6.0.jar:/Users/wwagner4/.ivy2/cache/com.lihaoyi/utest_2.11/jars/utest_2.11-0.3.0.jar:/Users/wwagner4/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.4.jar:/Users/wwagner4/.ivy2/cache/org.scala-sbt/test-interface/jars/test-interface-1.0.jar:/Users/wwagner4/.ivy2/cache/commons-lang/commons-lang/jars/commons-lang-2.6.jar[0m
+[0m[[0mdebug[0m] [0mScala compilation took 2.125642 s[0m
+[0m[[0mdebug[0m] [0mInvalidating /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/swing/DoctusUtilSuite.scala...[0m
+[0m[[0mdebug[0m] [0mInvalidating (transitively) by inheritance from /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/swing/DoctusUtilSuite.scala...[0m
+[0m[[0mdebug[0m] [0mInitial set of included nodes: Set(/Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/swing/DoctusUtilSuite.scala)[0m
+[0m[[0mdebug[0m] [0mInvalidated by transitive inheritance dependency: Set(/Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/swing/DoctusUtilSuite.scala)[0m
+[0m[[0mdebug[0m] [0mThe /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/swing/DoctusUtilSuite.scala source file has the following regular definitions changed:[0m
+[0m[[0mdebug[0m] [0m	notify, wait, $asInstanceOf, equals, asInstanceOf, synchronized, tests, $isInstanceOf, DoctusUtilSuite, notifyAll, isInstanceOf, <init>, ==, clone, toString, !=, getClass, ne, eq, ##, finalize, hashCode.[0m
+[0m[[0mdebug[0m] [0mAll member reference dependencies will be considered within this context.[0m
+[0m[[0mdebug[0m] [0mInvalidating /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SchedulerTryout.scala...[0m
+[0m[[0mdebug[0m] [0mInvalidating (transitively) by inheritance from /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SchedulerTryout.scala...[0m
+[0m[[0mdebug[0m] [0mInitial set of included nodes: Set(/Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SchedulerTryout.scala)[0m
+[0m[[0mdebug[0m] [0mInvalidated by transitive inheritance dependency: Set(/Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SchedulerTryout.scala)[0m
+[0m[[0mdebug[0m] [0mThe /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SchedulerTryout.scala source file has the following regular definitions changed:[0m
+[0m[[0mdebug[0m] [0m	notify, wait, $asInstanceOf, equals, SchedulerTryout, asInstanceOf, executionStart, synchronized, a, $isInstanceOf, main, notifyAll, isInstanceOf, b, scheduler, ==, clone, toString, args, !=, getClass, ne, eq, delayedInit, ##, finalize, hashCode.[0m
+[0m[[0mdebug[0m] [0mAll member reference dependencies will be considered within this context.[0m
+[0m[[0mdebug[0m] [0mInvalidating /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SwingKeyActivatableTryout.scala...[0m
+[0m[[0mdebug[0m] [0mInvalidating (transitively) by inheritance from /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SwingKeyActivatableTryout.scala...[0m
+[0m[[0mdebug[0m] [0mInitial set of included nodes: Set(/Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SwingKeyActivatableTryout.scala)[0m
+[0m[[0mdebug[0m] [0mInvalidated by transitive inheritance dependency: Set(/Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SwingKeyActivatableTryout.scala)[0m
+[0m[[0mdebug[0m] [0mThe /Users/wwagner4/prj/scala/doctus/swing/src/test/scala/doctus/tryout/SwingKeyActivatableTryout.scala source file has the following regular definitions changed:[0m
+[0m[[0mdebug[0m] [0m	activatable, notify, clickable, contentPanel, wait, copy$default$2, $asInstanceOf, SwingKeyActivatableTryout, productArity, equals, asInstanceOf, executionStart, synchronized, a, $isInstanceOf, greenPanel, canEqual, main, productPrefix, notifyAll, frame, isInstanceOf, button, <init>, ==, clone, copy, SwingKeyActivatableTryoutController, toString, args, !=, c, getClass, copy$default$1, cnt, ne, eq, productIterator, delayedInit, ##, finalize, productElement, hashCode.[0m
+[0m[[0mdebug[0m] [0mAll member reference dependencies will be considered within this context.[0m
+[0m[[0mdebug[0m] [0mNew invalidations:[0m
+[0m[[0mdebug[0m] [0m	Set()[0m
+[0m[[0mdebug[0m] [0mInitial set of included nodes: Set()[0m
+[0m[[0mdebug[0m] [0mPreviously invalidated, but (transitively) depend on new invalidations:[0m
+[0m[[0mdebug[0m] [0m	Set()[0m
+[0m[[0mdebug[0m] [0mAll newly invalidated sources after taking into account (previously) recompiled sources:Set()[0m

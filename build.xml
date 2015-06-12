@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress XmlUnboundNsPrefix -->
+<project name="doctus-main">
+
+	<property file="build.properties" />
+
+	<property name="scalaVersionMajor" value="2.11" />
+
+	<target name="scaladoc-to-hp">
+		<exec executable="${sbt}" failonerror="true">
+			<arg line="-Dsbt.log.noformat=true doc" />
+		</exec>
+		<copy todir="../doctus-hp/src/main/resources/api/${doctusVersion}">
+			<fileset dir="core/target/scala-${scalaVersionMajor}/api">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="deploy-showcases">
+		<exec executable="${sbt}" failonerror="true">
+			<arg line="-Dsbt.log.noformat=true clean fastOptJS" />
+		</exec>
+		<scp verbose="true" todir="root@entelijan.net:/var/www/tmp/act/"  
+			keyfile="/Users/wwagner4/.ssh/id_rsa">
+			<fileset dir="scalajs-showcase">
+				<include name="*.html" />
+			</fileset>
+			<fileset dir="scalajs-showcase">
+				<include name="target/scala-${scalaVersionMajor}/*" />
+			</fileset>
+			<fileset dir="scalajs-showcase">
+				<include name="src/main/resources/**/*.png" />
+			</fileset>
+			<fileset dir="scalajs-showcase">
+				<include name="js/**/*" />
+			</fileset>
+		</scp>
+	</target>
+
+</project>
