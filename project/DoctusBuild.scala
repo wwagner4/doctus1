@@ -9,7 +9,7 @@ import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 object DoctusBuild extends Build {
 
   object D {
-    val scalaVersion = s"2.11.5"
+    val scalaVersion = s"2.11.7"
     val doctusVersion = s"1.0.5-SNAPSHOT"
     val mockitoVersion = "1.9.5"
   }
@@ -34,7 +34,7 @@ object DoctusBuild extends Build {
     lazy val coreSettings =
       defaultSettings ++
         Seq(
-          libraryDependencies += "com.lihaoyi" %%% "utest" % "0.3.0" % "test",
+          libraryDependencies += "com.lihaoyi" %%% "utest" % "0.3.1" % "test",
           testFrameworks += new TestFramework("utest.runner.Framework"))
 
     lazy val showcaseSettings =
