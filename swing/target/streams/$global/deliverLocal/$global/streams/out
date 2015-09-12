@@ -1,4 +1,0 @@
-[0m[[0minfo[0m] [0m:: delivering :: net.entelijan#doctus-swing_2.11;1.0.5-SNAPSHOT :: 1.0.5-SNAPSHOT :: integration :: Fri Apr 17 19:57:40 CEST 2015[0m
-[0m[[0mdebug[0m] [0m	options = status=integration pubdate=Fri Apr 17 19:57:40 CEST 2015 validate=true resolveDynamicRevisions=true merge=true resolveId=null pubBranch=null[0m
-[0m[[0minfo[0m] [0m	delivering ivy file to /Users/wwagner4/prj/scala/doctus/swing/target/scala-2.11/ivy-1.0.5-SNAPSHOT.xml[0m
-[0m[[0mdebug[0m] [0m	deliver done (13ms)[0m
