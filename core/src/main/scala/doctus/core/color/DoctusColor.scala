@@ -107,7 +107,7 @@ object DoctusColorUtil {
    * Originally from: http://henkelmann.eu/
    */
   def hsv2rgb(hue: Int, saturation: Int, value: Int): (Int, Int, Int) = {
-    val h = (hue % 360).toDouble
+    val h = if (hue < 0) ((hue % 360) + 360).toDouble else (hue % 360).toDouble
     val s = adj(saturation, 0, 99) / 99.0
     val v = adj(value, 0, 99) / 99.0
     val c = s * v
