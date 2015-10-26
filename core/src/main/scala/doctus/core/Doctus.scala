@@ -121,6 +121,8 @@ trait DoctusGraphics {
    * 0 is a horizontal text from left to right
    * Pi/2 (90 deg) is a vertical text going upward. In that case
    *   'origin' is the bottom left corner of the box surrounding the text
+   *
+   * The color and opacity of the text can be set using the 'fill' command.
    */
   def text(str: String, origin: DoctusPoint, rotation: Double): Unit = {
     text(str, origin.x, origin.y, rotation)    
