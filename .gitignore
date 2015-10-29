@@ -1,1 +1,8 @@
 target
+bin
+.settings
+*.cache-main
+*.cache-tests
+*.classpath
+*.project
+core-showcase/.settings
