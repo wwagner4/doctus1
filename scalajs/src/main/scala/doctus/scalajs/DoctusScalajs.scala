@@ -8,6 +8,7 @@ import org.scalajs.dom
 import org.scalajs.dom._
 import org.scalajs.dom.raw._
 import scala.scalajs.js.Any.{ fromFunction0, fromInt, fromString }
+import doctus.core.template.DoctusTemplateCanvas
 
 case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGraphics {
 
@@ -180,10 +181,20 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGr
   }
 }
 
+case class DoctusTemplateCanvasScalajs (elem: HTMLCanvasElement) 
+  extends DoctusTemplateCanvas with DoctusCanvasScalajs1 with DoctusDraggableScalajs1
+
+
 /**
  * Implementation using a HTML5 canvas
  */
-case class DoctusCanvasScalajs(elem: HTMLCanvasElement) extends DoctusCanvas {
+case class DoctusCanvasScalajs(elem: HTMLCanvasElement) extends DoctusCanvasScalajs1 
+
+
+// TODO Make package private
+trait DoctusCanvasScalajs1 extends DoctusCanvas {
+  
+  def elem: HTMLCanvasElement  
 
   val ctx: CanvasRenderingContext2D = elem.getContext("2d").asInstanceOf[CanvasRenderingContext2D]
   ctx.translate(0.5, 0.5)
@@ -291,7 +302,10 @@ trait DoctusPointableScalajs1 extends DoctusPointable {
 
 }
 
-case class DoctusDraggableScalajs(elem: HTMLElement) extends DoctusPointableScalajs1 with DoctusDraggable {
+case class DoctusDraggableScalajs(elem: HTMLElement) extends DoctusDraggableScalajs1 
+
+// TODO make package private
+trait DoctusDraggableScalajs1 extends DoctusPointableScalajs1 with DoctusDraggable {
 
   def onDrag(f: (DoctusPoint) => Unit): Unit = em.onDrag(f)
 
