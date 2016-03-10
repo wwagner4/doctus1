@@ -7,6 +7,8 @@ import doctus.core.DoctusScheduler
 import doctus.core.DoctusPointable
 import doctus.core.DoctusDraggable
 
+trait DoctusTemplateCanvas extends DoctusCanvas with DoctusPointable with DoctusDraggable
+
 trait DoctusTemplate {
 
   def canvas: DoctusCanvas
@@ -33,11 +35,7 @@ trait DoctusTemplateController[T <: DoctusTemplate] {
 
   def sched: DoctusScheduler
 
-  def canvas: DoctusCanvas
-
-  def pointable: DoctusPointable
-
-  def draggable: DoctusDraggable
+  def canvas: DoctusTemplateCanvas
 
   if (template.frameRate.isDefined) {
     val fr = template.frameRate.get
@@ -47,20 +45,18 @@ trait DoctusTemplateController[T <: DoctusTemplate] {
 
   canvas.onRepaint(template.draw)
   // TODO There could be a graphic context on all these on... methods. ???
-  pointable.onStart(template.pointablePressed)
+  canvas.onStart(template.pointablePressed)
 
-  pointable.onStop(template.pointableReleased)
+  canvas.onStop(template.pointableReleased)
 
-  draggable.onDrag(template.pointableDragged)
+  canvas.onDrag(template.pointableDragged)
 
 }
 
 case class DoctusTemplateControllerImpl[T <: DoctusTemplate](
   template: T,
   sched: DoctusScheduler,
-  canvas: DoctusCanvas,
-  pointable: DoctusPointable,
-  draggable: DoctusDraggable) extends DoctusTemplateController[T]
+  canvas: DoctusTemplateCanvas) extends DoctusTemplateController[T]
 
 
 

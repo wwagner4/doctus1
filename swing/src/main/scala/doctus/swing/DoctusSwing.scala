@@ -17,6 +17,7 @@ import java.awt.Canvas
 import java.awt.Dimension
 import java.awt.event._
 import java.awt.geom.AffineTransform
+import doctus.core.template.DoctusTemplateCanvas
 
 case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
 
@@ -166,8 +167,6 @@ trait DoctusComponent extends Component {
 /**
  * A normal scala.swing.Component with some extra functionality
  * needed for SwingCanvas
- *
- * TODO Try to avoid Doctus Component by defining an implicite that defines its functionality
  */
 object DoctusComponentFactory {
 
@@ -204,25 +203,34 @@ object DoctusComponentFactory {
 
 }
 
-case class DoctusCanvasSwing(canvas: DoctusComponent) extends DoctusCanvas {
+case class DoctusCanvasSwing(comp: DoctusComponent) extends DoctusCanvasSwing1
+
+
+case class DoctusTemplateCanvasSwing(comp: DoctusComponent) extends DoctusTemplateCanvas with DoctusCanvasSwing1 with DoctusDraggableSwing1 
+
+
+// TODO Make package private
+trait DoctusCanvasSwing1 extends DoctusCanvas {
+  
+  def comp: DoctusComponent
+  
   def onRepaint(f: (DoctusGraphics) => Unit): Unit = {
-    canvas.paintOpt = Some(f)
+    comp.paintOpt = Some(f)
   }
 
-  def repaint() = canvas.repaint()
+  def repaint() = comp.repaint()
 
   def width = {
-    val size: Dimension = canvas.getSize
+    val size: Dimension = comp.getSize
     size.width
   }
 
   def height = {
-    val size: Dimension = canvas.getSize
+    val size: Dimension = comp.getSize
     size.height
   }
 }
 
-// TODO: Add a transfer function like in scalajs
 case class DoctusSelectSwing[T](comboBox: JComboBox[T], f: (T) => String = (t: T) => t.toString()) extends DoctusSelect[T] {
 
   import javax.swing._
@@ -249,6 +257,8 @@ case class DoctusSelectSwing[T](comboBox: JComboBox[T], f: (T) => String = (t: T
 }
 
 case class DoctusPointableSwing(comp: Component) extends DoctusPointableSwing1
+
+case class DoctusDraggableSwing(comp: Component) extends DoctusDraggableSwing1 with DoctusDraggable 
 
 trait DoctusPointableSwing1 extends DoctusPointable {
 
@@ -285,10 +295,9 @@ trait DoctusPointableSwing1 extends DoctusPointable {
   def onStart(f: (DoctusPoint) => Unit): Unit = pressFunc = Some(f)
 
   def onStop(f: (DoctusPoint) => Unit): Unit = releaseFunc = Some(f)
-
 }
 
-case class DoctusDraggableSwing(comp: Component) extends DoctusPointableSwing1 with DoctusDraggable {
+trait DoctusDraggableSwing1 extends DoctusPointableSwing1 with DoctusDraggable {
 
   var onDragFunc: Option[(DoctusPoint) => Unit] = None
 
