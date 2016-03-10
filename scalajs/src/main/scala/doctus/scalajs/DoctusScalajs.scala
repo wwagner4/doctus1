@@ -183,9 +183,9 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGr
 /**
  * Implementation using a HTML5 canvas
  */
-case class DoctusCanvasScalajs(canvas: HTMLCanvasElement) extends DoctusCanvas {
+case class DoctusCanvasScalajs(elem: HTMLCanvasElement) extends DoctusCanvas {
 
-  val ctx: CanvasRenderingContext2D = canvas.getContext("2d").asInstanceOf[CanvasRenderingContext2D]
+  val ctx: CanvasRenderingContext2D = elem.getContext("2d").asInstanceOf[CanvasRenderingContext2D]
   ctx.translate(0.5, 0.5)
 
   var fopt: Option[(DoctusGraphics) => Unit] = None
@@ -198,13 +198,15 @@ case class DoctusCanvasScalajs(canvas: HTMLCanvasElement) extends DoctusCanvas {
     fopt foreach (f => f(DoctusGraphicsScalajs(ctx)))
   }
 
-  def width = canvas.clientWidth
+  def width = elem.clientWidth
 
-  def height = canvas.clientHeight
+  def height = elem.clientHeight
 }
 
 case class DoctusPointableScalajs(elem: HTMLElement) extends DoctusPointableScalajs1
 
+
+// TODO make package private
 trait DoctusPointableScalajs1 extends DoctusPointable {
 
   def elem: HTMLElement
