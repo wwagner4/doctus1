@@ -127,26 +127,25 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGr
     }
 
   }
-  
+
   protected var imageMode: ImageMode = ImageModeCORNER
-  
+
   def imageMode(imageMode: ImageMode): Unit = {
     this.imageMode = imageMode
   }
 
-  
   def image(img: DoctusImage, originX: Double, originY: Double): Unit = {
     def draw(_img: DoctusImageScalajs, x: Double, y: Double, _imageMode: ImageMode): Unit = {
       _imageMode match {
-        case ImageModeCORNER => 
+        case ImageModeCORNER =>
           ctx.drawImage(_img.image, x, y)
-        case ImageModeCENTER => 
+        case ImageModeCENTER =>
           val _x = x - _img.width / 2.0 / _img.scaleFactor
           val _y = y - _img.height / 2.0 / _img.scaleFactor
           ctx.drawImage(_img.image, _x, _y)
       }
     }
-    
+
     img match {
       case i: DoctusImageScalajs =>
         if (i.image.complete) {
@@ -181,146 +180,145 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGr
   }
 }
 
-case class DoctusTemplateCanvasScalajs (elem: HTMLCanvasElement) 
-  extends DoctusTemplateCanvas with DoctusCanvasScalajs1 with DoctusDraggableScalajs1
+import inner._
 
+case class DoctusTemplateCanvasScalajs(elem: HTMLCanvasElement)
+  extends DoctusTemplateCanvas with DoctusCanvasScalajs1 with DoctusDraggableScalajs1
 
 /**
  * Implementation using a HTML5 canvas
  */
-case class DoctusCanvasScalajs(elem: HTMLCanvasElement) extends DoctusCanvasScalajs1 
+case class DoctusCanvasScalajs(elem: HTMLCanvasElement) extends DoctusCanvasScalajs1
 
+package inner {
 
-// TODO Make package private
-trait DoctusCanvasScalajs1 extends DoctusCanvas {
-  
-  def elem: HTMLCanvasElement  
+  private[scalajs] trait DoctusCanvasScalajs1 extends DoctusCanvas {
 
-  val ctx: CanvasRenderingContext2D = elem.getContext("2d").asInstanceOf[CanvasRenderingContext2D]
-  ctx.translate(0.5, 0.5)
+    def elem: HTMLCanvasElement
 
-  var fopt: Option[(DoctusGraphics) => Unit] = None
+    val ctx: CanvasRenderingContext2D = elem.getContext("2d").asInstanceOf[CanvasRenderingContext2D]
+    ctx.translate(0.5, 0.5)
 
-  def onRepaint(f: (DoctusGraphics) => Unit) = {
-    fopt = Some(f)
+    var fopt: Option[(DoctusGraphics) => Unit] = None
+
+    def onRepaint(f: (DoctusGraphics) => Unit) = {
+      fopt = Some(f)
+    }
+
+    def repaint(): Unit = {
+      fopt foreach (f => f(DoctusGraphicsScalajs(ctx)))
+    }
+
+    def width = elem.clientWidth
+
+    def height = elem.clientHeight
   }
 
-  def repaint(): Unit = {
-    fopt foreach (f => f(DoctusGraphicsScalajs(ctx)))
+  private[scalajs] trait DoctusDraggableScalajs1 extends DoctusPointableScalajs1 with DoctusDraggable {
+
+    def onDrag(f: (DoctusPoint) => Unit): Unit = em.onDrag(f)
+
   }
 
-  def width = elem.clientWidth
+  private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
-  def height = elem.clientHeight
+    def elem: HTMLElement
+
+    def scrollTopLeft(elem: HTMLElement): (Double, Double) = {
+      if (elem.localName.equals("html")) (elem.scrollTop, elem.scrollLeft)
+      else scrollTopLeft(elem.parentElement) match {
+        case (t, l) => (t + elem.scrollTop, l + elem.scrollLeft)
+      }
+    }
+
+    val em = new DoctusEventManager
+
+    elem.addEventListener("mousedown", (e: Event) => {
+      // 'mousedown' always produces a MouseEvent
+      // Patternmatching can cause problems
+      val me = e.asInstanceOf[MouseEvent]
+      e.preventDefault()
+      em.addEvent(MouseDown(point(me)))
+    })
+
+    elem.addEventListener("mouseup", (e: Event) => {
+      // 'mouseup' always produces a MouseEvent
+      val me = e.asInstanceOf[MouseEvent]
+      e.preventDefault()
+      em.addEvent(MouseUp(point(me)))
+    })
+
+    elem.addEventListener("mousemove", (e: Event) => {
+      // 'mousemove' always produces a MouseEvent
+      val me = e.asInstanceOf[MouseEvent]
+      e.preventDefault()
+      em.addEvent(MouseMove(point(me)))
+    })
+
+    elem.addEventListener("touchstart", (e: Event) => {
+      // 'touchstart' always produces a TouchEvent
+      val te = e.asInstanceOf[TouchEvent]
+      e.preventDefault()
+      em.addEvent(TouchStart(idpoints(te)))
+    })
+
+    elem.addEventListener("touchend", (e: Event) => {
+      // 'touchstart' always produces a TouchEvent
+      val te = e.asInstanceOf[TouchEvent]
+      e.preventDefault()
+      em.addEvent(TouchEnd(idpoints(te)))
+    })
+
+    elem.addEventListener("touchmove", (e: Event) => {
+      // 'touchstart' always produces a TouchEvent
+      val te = e.asInstanceOf[TouchEvent]
+      e.preventDefault()
+      em.addEvent(TouchMove(idpoints(te)))
+    })
+
+    def onStart(f: (DoctusPoint) => Unit): Unit = {
+      em.onStart(f)
+    }
+
+    def onStop(f: (DoctusPoint) => Unit): Unit = {
+      em.onStop(f)
+    }
+
+    private def point(m: MouseEvent): DoctusPoint = {
+      val (st, sl) = scrollTopLeft(elem)
+      val x = m.clientX - elem.offsetLeft + sl - 1
+      val y = m.clientY - elem.offsetTop + st - 1
+      DoctusPoint(x, y)
+    }
+
+    private def idpoints(te: TouchEvent): List[DoctusIdPoint] = {
+      val (st, sl) = scrollTopLeft(elem)
+      val tl = te.targetTouches
+      (for (i <- 0 until tl.length.intValue) yield {
+        val t: Touch = tl(i)
+        val x = t.clientX - elem.offsetLeft + sl - 1
+        val y = t.clientY - elem.offsetTop + st - 1
+        DoctusIdPoint(t.identifier, DoctusPoint(x, y))
+      }).toList
+    }
+
+  }
+
 }
-
 case class DoctusPointableScalajs(elem: HTMLElement) extends DoctusPointableScalajs1
 
-
-// TODO make package private
-trait DoctusPointableScalajs1 extends DoctusPointable {
-
-  def elem: HTMLElement
-
-  def scrollTopLeft(elem: HTMLElement): (Double, Double) = {
-    if (elem.localName.equals("html")) (elem.scrollTop, elem.scrollLeft)
-    else scrollTopLeft(elem.parentElement) match {
-      case (t, l) => (t + elem.scrollTop, l + elem.scrollLeft)
-    }
-  }
-
-  val em = new DoctusEventManager
-
-  elem.addEventListener("mousedown", (e: Event) => {
-    // 'mousedown' always produces a MouseEvent
-    // Patternmatching can cause problems
-    val me = e.asInstanceOf[MouseEvent]
-    e.preventDefault()
-    em.addEvent(MouseDown(point(me)))
-  })
-
-  elem.addEventListener("mouseup", (e: Event) => {
-    // 'mouseup' always produces a MouseEvent
-    val me = e.asInstanceOf[MouseEvent]
-    e.preventDefault()
-    em.addEvent(MouseUp(point(me)))
-  })
-
-  elem.addEventListener("mousemove", (e: Event) => {
-    // 'mousemove' always produces a MouseEvent
-    val me = e.asInstanceOf[MouseEvent]
-    e.preventDefault()
-    em.addEvent(MouseMove(point(me)))
-  })
-
-  elem.addEventListener("touchstart", (e: Event) => {
-    // 'touchstart' always produces a TouchEvent
-    val te = e.asInstanceOf[TouchEvent]
-    e.preventDefault()
-    em.addEvent(TouchStart(idpoints(te)))
-  })
-
-  elem.addEventListener("touchend", (e: Event) => {
-    // 'touchstart' always produces a TouchEvent
-    val te = e.asInstanceOf[TouchEvent]
-    e.preventDefault()
-    em.addEvent(TouchEnd(idpoints(te)))
-  })
-
-  elem.addEventListener("touchmove", (e: Event) => {
-    // 'touchstart' always produces a TouchEvent
-    val te = e.asInstanceOf[TouchEvent]
-    e.preventDefault()
-    em.addEvent(TouchMove(idpoints(te)))
-  })
-
-  def onStart(f: (DoctusPoint) => Unit): Unit = {
-    em.onStart(f)
-  }
-
-  def onStop(f: (DoctusPoint) => Unit): Unit = {
-    em.onStop(f)
-  }
-
-  private def point(m: MouseEvent): DoctusPoint = {
-    val (st, sl) = scrollTopLeft(elem)
-    val x = m.clientX - elem.offsetLeft + sl - 1
-    val y = m.clientY - elem.offsetTop + st - 1
-    DoctusPoint(x, y)
-  }
-
-  private def idpoints(te: TouchEvent): List[DoctusIdPoint] = {
-    val (st, sl) = scrollTopLeft(elem)
-    val tl = te.targetTouches
-    (for (i <- 0 until tl.length.intValue) yield {
-      val t: Touch = tl(i)
-      val x = t.clientX - elem.offsetLeft + sl - 1
-      val y = t.clientY - elem.offsetTop + st - 1
-      DoctusIdPoint(t.identifier, DoctusPoint(x, y))
-    }).toList
-  }
-
-}
-
-case class DoctusDraggableScalajs(elem: HTMLElement) extends DoctusDraggableScalajs1 
-
-// TODO make package private
-trait DoctusDraggableScalajs1 extends DoctusPointableScalajs1 with DoctusDraggable {
-
-  def onDrag(f: (DoctusPoint) => Unit): Unit = em.onDrag(f)
-
-}
+case class DoctusDraggableScalajs(elem: HTMLElement) extends DoctusDraggableScalajs1
 
 case class DoctusImageScalajs(path: String, scaleFactor: Double = 1.0) extends DoctusImage {
 
   val image: HTMLImageElement = {
     val _image = dom.document.createElement("img").asInstanceOf[HTMLImageElement]
-    _image.src  = path
+    _image.src = path
     _image
   }
-  
+
   def width = (image.width * scaleFactor).toInt
-  
+
   def height = (image.height * scaleFactor).toInt
 
   def scale(factor: Double): DoctusImage = DoctusImageScalajs(path, scaleFactor * factor)
