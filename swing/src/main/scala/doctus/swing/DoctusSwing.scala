@@ -203,33 +203,11 @@ object DoctusComponentFactory {
 
 }
 
+import inner._
+
 case class DoctusCanvasSwing(comp: DoctusComponent) extends DoctusCanvasSwing1
 
-
-case class DoctusTemplateCanvasSwing(comp: DoctusComponent) extends DoctusTemplateCanvas with DoctusCanvasSwing1 with DoctusDraggableSwing1 
-
-
-// TODO Make package private
-trait DoctusCanvasSwing1 extends DoctusCanvas {
-  
-  def comp: DoctusComponent
-  
-  def onRepaint(f: (DoctusGraphics) => Unit): Unit = {
-    comp.paintOpt = Some(f)
-  }
-
-  def repaint() = comp.repaint()
-
-  def width = {
-    val size: Dimension = comp.getSize
-    size.width
-  }
-
-  def height = {
-    val size: Dimension = comp.getSize
-    size.height
-  }
-}
+case class DoctusTemplateCanvasSwing(comp: DoctusComponent) extends DoctusTemplateCanvas with DoctusCanvasSwing1 with DoctusDraggableSwing1
 
 case class DoctusSelectSwing[T](comboBox: JComboBox[T], f: (T) => String = (t: T) => t.toString()) extends DoctusSelect[T] {
 
@@ -258,66 +236,7 @@ case class DoctusSelectSwing[T](comboBox: JComboBox[T], f: (T) => String = (t: T
 
 case class DoctusPointableSwing(comp: Component) extends DoctusPointableSwing1
 
-case class DoctusDraggableSwing(comp: Component) extends DoctusDraggableSwing1 with DoctusDraggable 
-
-trait DoctusPointableSwing1 extends DoctusPointable {
-
-  def comp: Component
-
-  val ml = new MouseListener {
-    override def mouseExited(e: MouseEvent): Unit = ()
-
-    override def mouseClicked(e: MouseEvent): Unit = ()
-
-    override def mouseEntered(e: MouseEvent): Unit = ()
-
-    override def mousePressed(e: MouseEvent): Unit = {
-      val x = e.getPoint.getX.toInt
-      val y = e.getPoint.getY.toInt
-      val p = DoctusPoint(x, y)
-      pressFunc.foreach(f => f(p))
-    }
-
-    override def mouseReleased(e: MouseEvent): Unit = {
-      val x = e.getPoint.getX.toInt
-      val y = e.getPoint.getY.toInt
-      val p = DoctusPoint(x, y)
-      releaseFunc.foreach(f => f(p))
-    }
-
-  }
-
-  comp.addMouseListener(ml)
-
-  private var pressFunc: Option[(DoctusPoint) => Unit] = None
-  private var releaseFunc: Option[(DoctusPoint) => Unit] = None
-
-  def onStart(f: (DoctusPoint) => Unit): Unit = pressFunc = Some(f)
-
-  def onStop(f: (DoctusPoint) => Unit): Unit = releaseFunc = Some(f)
-}
-
-trait DoctusDraggableSwing1 extends DoctusPointableSwing1 with DoctusDraggable {
-
-  var onDragFunc: Option[(DoctusPoint) => Unit] = None
-
-  def onDrag(f: (DoctusPoint) => Unit) = onDragFunc = Some(f)
-
-  val mml = new MouseMotionListener {
-
-    def mouseDragged(me: MouseEvent): Unit = {
-      val x = me.getPoint.getX
-      val y = me.getPoint.getY
-      val p = DoctusPoint(x, y)
-      onDragFunc.foreach(f => f(p))
-    }
-
-    def mouseMoved(me: MouseEvent): Unit = ()
-
-  }
-  comp.addMouseMotionListener(mml)
-
-}
+case class DoctusDraggableSwing(comp: Component) extends DoctusDraggableSwing1 with DoctusDraggable
 
 case class DoctusActivatableSwing(comp: Component) extends DoctusActivatable {
 
@@ -398,6 +317,89 @@ object DoctusActivatableSwingKey {
       c.addMouseListener(ml)
 
     }
+  }
+}
+
+package inner {
+
+  private[swing] trait DoctusCanvasSwing1 extends DoctusCanvas {
+
+    def comp: DoctusComponent
+
+    def onRepaint(f: (DoctusGraphics) => Unit): Unit = {
+      comp.paintOpt = Some(f)
+    }
+
+    def repaint() = comp.repaint()
+
+    def width = {
+      val size: Dimension = comp.getSize
+      size.width
+    }
+
+    def height = {
+      val size: Dimension = comp.getSize
+      size.height
+    }
+  }
+
+  private[swing] trait DoctusPointableSwing1 extends DoctusPointable {
+
+    def comp: Component
+
+    val ml = new MouseListener {
+      override def mouseExited(e: MouseEvent): Unit = ()
+
+      override def mouseClicked(e: MouseEvent): Unit = ()
+
+      override def mouseEntered(e: MouseEvent): Unit = ()
+
+      override def mousePressed(e: MouseEvent): Unit = {
+        val x = e.getPoint.getX.toInt
+        val y = e.getPoint.getY.toInt
+        val p = DoctusPoint(x, y)
+        pressFunc.foreach(f => f(p))
+      }
+
+      override def mouseReleased(e: MouseEvent): Unit = {
+        val x = e.getPoint.getX.toInt
+        val y = e.getPoint.getY.toInt
+        val p = DoctusPoint(x, y)
+        releaseFunc.foreach(f => f(p))
+      }
+
+    }
+
+    comp.addMouseListener(ml)
+
+    private var pressFunc: Option[(DoctusPoint) => Unit] = None
+    private var releaseFunc: Option[(DoctusPoint) => Unit] = None
+
+    def onStart(f: (DoctusPoint) => Unit): Unit = pressFunc = Some(f)
+
+    def onStop(f: (DoctusPoint) => Unit): Unit = releaseFunc = Some(f)
+  }
+
+  private[swing] trait DoctusDraggableSwing1 extends DoctusPointableSwing1 with DoctusDraggable {
+
+    var onDragFunc: Option[(DoctusPoint) => Unit] = None
+
+    def onDrag(f: (DoctusPoint) => Unit) = onDragFunc = Some(f)
+
+    val mml = new MouseMotionListener {
+
+      def mouseDragged(me: MouseEvent): Unit = {
+        val x = me.getPoint.getX
+        val y = me.getPoint.getY
+        val p = DoctusPoint(x, y)
+        onDragFunc.foreach(f => f(p))
+      }
+
+      def mouseMoved(me: MouseEvent): Unit = ()
+
+    }
+    comp.addMouseMotionListener(mml)
+
   }
 
 }
