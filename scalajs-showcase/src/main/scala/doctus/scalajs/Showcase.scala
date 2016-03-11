@@ -24,7 +24,7 @@ object ComponentMap {
     ComponentCtrl(
       DoctusPointableScalajs(activatable01Elem),
       DoctusPointableScalajs(activatable02Elem),
-      DoctusActivatableScalajsKey(dom.document.body, KeyCode.up),
+      DoctusActivatableScalajsKey(dom.document.body, KeyCode.Up),
       DoctusActivatableScalajs(button01Elem),
       DoctusSelectScalajs[FullName](jQuery(select01Elem), (fn) => s"${fn.first} -- ${fn.last}"),
       DoctusActivatableScalajs(selectButton01Elem),

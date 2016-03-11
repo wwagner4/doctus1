@@ -9,7 +9,7 @@ import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 object DoctusBuild extends Build {
 
   object D {
-    val scalaVersion = s"2.11.7"
+    val scalaVersion = s"2.11.8"
     val doctusVersion = s"1.0.5-SNAPSHOT"
     val mockitoVersion = "1.9.5"
   }
@@ -34,7 +34,8 @@ object DoctusBuild extends Build {
     lazy val coreSettings =
       defaultSettings ++
         Seq(
-          libraryDependencies += "com.lihaoyi" %%% "utest" % "0.3.1" % "test",
+          libraryDependencies += "com.lihaoyi" %%% "utest" % "0.4.1" % "test",
+          libraryDependencies += "org.scala-lang" % "scala-reflect" % "2.11.8",
           testFrameworks += new TestFramework("utest.runner.Framework"))
 
     lazy val showcaseSettings =
@@ -51,8 +52,8 @@ object DoctusBuild extends Build {
       coreSettings ++
         Seq(
           jsDependencies += RuntimeDOM,
-          libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.8.0",
-          libraryDependencies += "be.doeraene" %%% "scalajs-jquery" % "0.8.0",
+          libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.0",
+          libraryDependencies += "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
           testFrameworks += new TestFramework("utest.runner.Framework"))
   }
 

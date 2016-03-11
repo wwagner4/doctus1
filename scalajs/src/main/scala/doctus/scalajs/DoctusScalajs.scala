@@ -348,11 +348,11 @@ case class DoctusTextScalajs(elem: Element) extends DoctusText {
 case object DoctusSchedulerScalajs extends DoctusScheduler {
 
   def start(f: () => Unit, duration: Int): DoctusScheduler.Stopper = {
-    val id = dom.setInterval(f, duration)
+    val id = dom.window.setInterval(f, duration)
 
     new DoctusScheduler.Stopper {
       // Stops the execution of a Scheduler
-      override def stop(): Unit = dom.clearInterval(id)
+      override def stop(): Unit = dom.window.clearInterval(id)
     }
   }
 

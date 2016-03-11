@@ -21,7 +21,7 @@ object DoctusScalajsUtil {
 
 }
 
-case class DoctusIdPoint(id: Int, point: DoctusPoint)
+case class DoctusIdPoint(id: Double, point: DoctusPoint)
 
 sealed trait DoctusEvent
 case class TouchStart(point: List[DoctusIdPoint]) extends DoctusEvent
