@@ -5,7 +5,7 @@ import javax.swing.JFrame
 import javax.swing.ImageIcon
 import java.awt.BorderLayout
 import java.awt.Dimension
-import doctus.core.template.DoctusTemplateControllerImpl
+import doctus.core.template._
 
 object ShowcaseTemplateStillImage extends App {
 
@@ -25,7 +25,7 @@ object ShowcaseTemplateStillImage extends App {
   top.setVisible(true)
 
   val templ = DoctusTemplateStillImage(canvas)
-  DoctusTemplateControllerImpl(templ, sched, canvas)
+  DoctusTemplateController(templ, sched, canvas)
 
 
 }

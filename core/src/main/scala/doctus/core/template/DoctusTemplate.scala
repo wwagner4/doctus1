@@ -32,13 +32,10 @@ trait DoctusTemplate {
 
 }
 
-trait DoctusTemplateController[T <: DoctusTemplate] {
-
-  def template: T
-
-  def sched: DoctusScheduler
-
-  def canvas: DoctusTemplateCanvas
+case class DoctusTemplateController[T <: DoctusTemplate](
+    template: T,
+    sched: DoctusScheduler,
+    canvas: DoctusTemplateCanvas) {
 
   if (template.frameRate.isDefined) {
     val fr = template.frameRate.get
@@ -47,7 +44,7 @@ trait DoctusTemplateController[T <: DoctusTemplate] {
   }
 
   canvas.onRepaint(template.draw)
-  // TODO There could be a graphic context on all these on... methods. ???
+
   canvas.onStart(template.pointablePressed)
 
   canvas.onStop(template.pointableReleased)
@@ -56,10 +53,6 @@ trait DoctusTemplateController[T <: DoctusTemplate] {
 
 }
 
-case class DoctusTemplateControllerImpl[T <: DoctusTemplate](
-  template: T,
-  sched: DoctusScheduler,
-  canvas: DoctusTemplateCanvas) extends DoctusTemplateController[T]
 
 
 
