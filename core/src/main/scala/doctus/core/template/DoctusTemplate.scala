@@ -17,7 +17,10 @@ trait DoctusTemplate {
 
   def height: Int = canvas.height
 
-  def frameRate: Option[Int] = Some(60)
+  /* 
+   * In frames per second. Default: 20 fps
+   */
+  def frameRate: Option[Int] = Some(20)
 
   def draw(g: DoctusGraphics): Unit
 
@@ -40,7 +43,7 @@ trait DoctusTemplateController[T <: DoctusTemplate] {
   if (template.frameRate.isDefined) {
     val fr = template.frameRate.get
     require(fr > 0)
-    sched.start(canvas.repaint, fr)
+    sched.start(canvas.repaint, (1000.0 / fr).toInt)
   }
 
   canvas.onRepaint(template.draw)
