@@ -18,14 +18,14 @@ object DoctusBuild extends Build {
 
   object S {
 
+    val keyfile = new java.io.File("/Users/wwagner4/.ssh/id_rsa")
+
     lazy val baseSettings: Seq[Def.Setting[_]] =
       Seq(
         scalaVersion := D.scalaVersion,
         organization := "net.entelijan",
         organizationHomepage := Some(url("http://entelijan.net/")),
-        publishTo := Some("entelijan-repo" at "http://entelijan.net/artifactory/libs-release-local"),
-        credentials += Credentials("Artifactory Realm", "entelijan.net", "deploy", "deploy"),
-        resolvers += "entelijan" at "http://entelijan.net/artifactory/repo",
+        publishTo := Some(Resolver.sftp("entelijan", "entelijan.net", "/var/www/ivy2")(Resolver.ivyStylePatterns) as ("root", keyfile)),
         EclipseKeys.withSource := true)
 
     lazy val defaultSettings =
