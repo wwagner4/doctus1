@@ -1,2 +1,3 @@
+- Check if thiner lines can be drawn
 - Check if strokeWidth can handle a value less than 1
 - Add a hook for keyPressed in Framework
