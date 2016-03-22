@@ -173,6 +173,7 @@ object DoctusComponentFactory {
   def component: DoctusComponent = {
     import doctus.swing.DoctusSwingUtil._
 
+    // Originally for mac. Problems seem to be fixed
     def createCanvas = new Canvas with DoctusComponent {
 
       var paintOpt: Option[(DoctusGraphics) => Unit] = None
@@ -197,7 +198,7 @@ object DoctusComponentFactory {
 
     }
 
-    if (osName == Mac) createCanvas
+    if (osName == Mac) createJPanel
     else createJPanel
   }
 
