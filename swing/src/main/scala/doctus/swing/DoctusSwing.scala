@@ -250,7 +250,7 @@ case class DoctusActivatableSwing(comp: Component) extends DoctusActivatable {
 case object DoctusSchedulerSwing extends DoctusScheduler {
 
   def start(f: () => Unit, duration: Int): DoctusScheduler.Stopper = {
-    val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
+    val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(10)
     val b = new Runnable {
       override def run(): Unit = f()
     }
