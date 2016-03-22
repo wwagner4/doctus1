@@ -33,7 +33,7 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGr
     isStroke = true
   }
   def strokeWeight(weight: Double): Unit = {
-    ctx.lineWidth = weight.ceil
+    ctx.lineWidth = weight
   }
 
   def noFill(): Unit = isFill = false
