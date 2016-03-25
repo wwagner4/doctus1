@@ -644,7 +644,7 @@ case class SchedulerStopCtrl(sched: DoctusScheduler, start: DoctusActivatable, s
   start.onDeactivated(() => {
     stopper ::= sched.start(() => {
       cnt += 1
-    }, 500)
+    }, 500, 2000)
   })
 
   stop.onDeactivated(() => {

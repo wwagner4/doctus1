@@ -271,9 +271,10 @@ trait DoctusScheduler {
 
   /**
    * Calls the function f every 'duration' milliseconds
+   * InitialDelay delays the first call of f for 'initialDelay' milliseconds   
    * Execution can be stopped by calling the stop method of the returned stopper
    */
-  def start(f: () => Unit, duration: Int): Stopper
+  def start(f: () => Unit, duration: Int, initialDelay: Int = 0): Stopper
 }
 
 object DoctusScheduler {

@@ -347,12 +347,30 @@ case class DoctusTextScalajs(elem: Element) extends DoctusText {
 
 case object DoctusSchedulerScalajs extends DoctusScheduler {
 
-  def start(f: () => Unit, duration: Int): DoctusScheduler.Stopper = {
-    val id = dom.window.setInterval(f, duration)
+  def start(f: () => Unit, duration: Int, initialDelay: Int = 0): DoctusScheduler.Stopper = {
+    require(duration > 0, "Duration must be greater than zero. " + duration)
+    require(initialDelay >= 0, "Initial delay must be greater equal to zero. " + duration)
+
+    var id = -1
+    var stopped = false
+
+    val startInterval = () => {
+      if (!stopped) {
+        f()
+        id = dom.window.setInterval(f, duration)
+      }
+    }
+
+    dom.window.setTimeout(startInterval, initialDelay)
+    
+    
 
     new DoctusScheduler.Stopper {
       // Stops the execution of a Scheduler
-      override def stop(): Unit = dom.window.clearInterval(id)
+      override def stop(): Unit = {
+        stopped = true;
+        if (id >= 0) dom.window.clearInterval(id)
+      }
     }
   }
 

@@ -250,12 +250,15 @@ case class DoctusActivatableSwing(comp: Component) extends DoctusActivatable {
 
 case object DoctusSchedulerSwing extends DoctusScheduler {
 
-  def start(f: () => Unit, duration: Int): DoctusScheduler.Stopper = {
+  def start(f: () => Unit, duration: Int, initialDelay: Int = 0): DoctusScheduler.Stopper = {
+    require(duration > 0, "Duration must be greater than zero. " + duration)
+    require(initialDelay >= 0, "Initial delay must be greater equal to zero. " + duration)
+    
     val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
     val b = new Runnable {
       override def run(): Unit = f()
     }
-    val future = scheduler.scheduleAtFixedRate(b, 0, duration, TimeUnit.MILLISECONDS)
+    val future = scheduler.scheduleAtFixedRate(b, initialDelay, duration, TimeUnit.MILLISECONDS)
 
     new DoctusScheduler.Stopper {
       // Stops the execution of a Scheduler
