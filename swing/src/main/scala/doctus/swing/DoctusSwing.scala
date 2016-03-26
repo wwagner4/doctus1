@@ -8,9 +8,11 @@ import doctus.core.util._
 import javax.swing._
 import javax.swing.text._
 import java.awt.Stroke
+import java.awt.image.BufferedImage
 import java.awt.BasicStroke
 import java.awt.Font
 import java.awt.Graphics
+import java.awt.RenderingHints
 import java.awt.Graphics2D
 import java.awt.Component
 import java.awt.Canvas
@@ -170,17 +172,44 @@ trait DoctusComponent extends Component {
  */
 object DoctusComponentFactory {
 
-  def component: DoctusComponent = {
+  /**
+   * Parameters are only used for Mac.
+   */
+  def component(bufferWidth: Int = 3000, bufferHeight: Int = 3000, 
+      textAntialiasing: Boolean = true, 
+      doubleBuffering: Boolean = true): DoctusComponent = {
     import doctus.swing.DoctusSwingUtil._
 
-    // Originally for mac. Problems seem to be fixed
+    case class Buffer(image: BufferedImage, graphics: DoctusGraphics)
+
+    def createBuffer: Buffer = {
+      val bi = new BufferedImage(3000, 3000, BufferedImage.TYPE_INT_RGB)
+      val bg = bi.createGraphics()
+      bg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+      if (textAntialiasing) {
+        bg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
+      } else {
+        bg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF)
+      }
+      val bdg = DoctusGraphicsSwing(bg.asInstanceOf[Graphics2D])
+      Buffer(bi, bdg)
+    }
+    
+    lazy val buffer = createBuffer
+
     def createCanvas = new Canvas with DoctusComponent {
 
       var paintOpt: Option[(DoctusGraphics) => Unit] = None
 
       override def paint(g: Graphics): Unit = {
-        val doctusGraphics = DoctusGraphicsSwing(g.asInstanceOf[Graphics2D])
-        paintOpt.foreach(f => f(doctusGraphics))
+        if (doubleBuffering) {
+          val doctusGraphics = DoctusGraphicsSwing(g.asInstanceOf[Graphics2D])
+          paintOpt.foreach(f => f(buffer.graphics))
+          g.drawImage(buffer.image, 0, 0, null)
+        } else {
+          val doctusGraphics = DoctusGraphicsSwing(g.asInstanceOf[Graphics2D])
+          paintOpt.foreach(f => f(doctusGraphics))
+        }
       }
 
       override def update(g: Graphics): Unit = paint(g)
@@ -200,8 +229,7 @@ object DoctusComponentFactory {
 
     if (osName == Mac) {
       createCanvas
-    }
-    else createJPanel
+    } else createJPanel
   }
 
 }
@@ -255,7 +283,7 @@ case object DoctusSchedulerSwing extends DoctusScheduler {
   def start(f: () => Unit, duration: Int, initialDelay: Int = 0): DoctusScheduler.Stopper = {
     require(duration > 0, "Duration must be greater than zero. " + duration)
     require(initialDelay >= 0, "Initial delay must be greater equal to zero. " + duration)
-    
+
     val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
     val b = new Runnable {
       override def run(): Unit = f()

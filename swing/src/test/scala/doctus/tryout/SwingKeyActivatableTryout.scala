@@ -14,7 +14,7 @@ import doctus.swing.DoctusActivatableSwing
 
 object SwingKeyActivatableTryout extends App {
 
-  val greenPanel = DoctusComponentFactory.component
+  val greenPanel = DoctusComponentFactory.component()
   greenPanel.setBackground(Color.GREEN)
 
   val button = new JButton("click me")

@@ -9,7 +9,7 @@ import doctus.core.template._
 
 object ShowcaseTemplateStillImage extends App {
 
-  val p = DoctusComponentFactory.component
+  val p = DoctusComponentFactory.component()
   val canvas = DoctusTemplateCanvasSwing(p)
   val sched = DoctusSchedulerSwing
   val logo = DoctusImageSwing("logo.png")

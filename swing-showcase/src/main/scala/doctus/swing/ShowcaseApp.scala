@@ -94,7 +94,7 @@ object ComponentApp extends App {
 
 object CanvasApp extends App {
 
-  val p = DoctusComponentFactory.component
+  val p = DoctusComponentFactory.component()
   val canvas = DoctusCanvasSwing(p)
   val logo = DoctusImageSwing("logo.png")
   
@@ -113,7 +113,7 @@ object CanvasApp extends App {
 
 object PointableApp extends App {
 
-  val p = DoctusComponentFactory.component
+  val p = DoctusComponentFactory.component()
 
   PointableCtrl(DoctusPointableSwing(p), DoctusCanvasSwing(p))
 
@@ -128,7 +128,7 @@ object PointableApp extends App {
 
 object DraggableApp extends App {
 
-  val p = DoctusComponentFactory.component
+  val p = DoctusComponentFactory.component()
 
   DraggableCtrl(DoctusDraggableSwing(p), DoctusCanvasSwing(p))
 
@@ -144,7 +144,7 @@ object DraggableApp extends App {
 object AnimatedApp extends App {
 
   // Create the component
-  val panel = DoctusComponentFactory.component
+  val panel = DoctusComponentFactory.component()
 
   // Wrap the components
   val sched = DoctusSchedulerSwing
@@ -168,7 +168,7 @@ object AnimatedApp extends App {
 object SchedulerStopApp extends App {
 
   // Create Components
-  val panel = DoctusComponentFactory.component
+  val panel = DoctusComponentFactory.component()
   val startButton = new JButton("start")
   val stopButton = new JButton("stop")
 
