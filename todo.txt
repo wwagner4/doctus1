@@ -1,5 +1,14 @@
-- Check if thiner lines can be drawn
+closed
 - Check if strokeWidth can handle a value less than 1
+- Check if thiner lines can be drawn
+
+
+open
+1.0.5
 - Add a hook for keyPressed in Framework
-- Try enable/disable double buffering in swing. Use morphing as an example
+- Test all apps using 1.0.5
+-- saint
+-- ???
+
+1.0.6
 - Integrate JavaFX
