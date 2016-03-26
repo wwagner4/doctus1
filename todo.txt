@@ -1,6 +1,5 @@
 closed
 - Check if strokeWidth can handle a value less than 1
-- Check if thiner lines can be drawn
 
 
 open
@@ -9,6 +8,7 @@ open
 - Test all apps using 1.0.5
 -- saint
 -- ???
+- Update Mydoctus
 
 1.0.6
 - Integrate JavaFX
