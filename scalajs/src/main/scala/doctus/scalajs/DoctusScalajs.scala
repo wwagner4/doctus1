@@ -214,7 +214,8 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGr
 }
 
 case class DoctusTemplateCanvasScalajs(elem: HTMLCanvasElement)
-  extends DoctusTemplateCanvas with DoctusCanvasScalajs1 with DoctusDraggableScalajs1
+  extends DoctusTemplateCanvas with DoctusCanvasScalajs1 with DoctusDraggableScalajs1 
+  with DoctusKeyScalajs1
 
 /**
  * Implementation using a HTML5 canvas
@@ -405,8 +406,12 @@ case object DoctusSchedulerScalajs extends DoctusScheduler {
 
 }
 
-case class DoctusActivatableKeyScalajs(elem: Element) extends DoctusKey {
+case class DoctusActivatableKeyScalajs(elem: Element) extends DoctusKeyScalajs1 
 
+trait DoctusKeyScalajs1 extends DoctusKey {
+  
+  def elem: Element
+  
   private def mapKeyCode(code: Int): Option[DoctusKeyCode] = {
 
     if (org.scalajs.dom.ext.KeyCode.Down == code) Some(DKC_Down)

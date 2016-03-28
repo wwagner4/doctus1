@@ -6,8 +6,10 @@ import doctus.core.DoctusCanvas
 import doctus.core.DoctusScheduler
 import doctus.core.DoctusPointable
 import doctus.core.DoctusDraggable
+import doctus.core.DoctusKey
+import doctus.core.DoctusKeyCode
 
-trait DoctusTemplateCanvas extends DoctusCanvas with DoctusPointable with DoctusDraggable
+trait DoctusTemplateCanvas extends DoctusCanvas with DoctusPointable with DoctusDraggable with DoctusKey
 
 trait DoctusTemplate {
 
@@ -30,6 +32,8 @@ trait DoctusTemplate {
 
   def pointableDragged(pos: DoctusPoint): Unit
 
+  def keyPressed(code: DoctusKeyCode): Unit
+
 }
 
 case class DoctusTemplateController[T <: DoctusTemplate](
@@ -50,6 +54,8 @@ case class DoctusTemplateController[T <: DoctusTemplate](
   canvas.onStop(template.pointableReleased)
 
   canvas.onDrag(template.pointableDragged)
+  
+  canvas.onKeyPressed {template.keyPressed}
 
 }
 

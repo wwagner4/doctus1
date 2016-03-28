@@ -12,6 +12,7 @@ import doctus.core.DoctusColor
 import doctus.core.color.DoctusColorUtil
 import doctus.core.color.DoctusColorRgb
 import doctus.core.color.DoctusColorRgb
+import doctus.core.DoctusKeyCode
 
 case class DoctusTemplateStillImage(canvas: DoctusCanvas) extends DoctusTemplate {
 
@@ -42,5 +43,6 @@ case class DoctusTemplateStillImage(canvas: DoctusCanvas) extends DoctusTemplate
   def pointableDragged(pos: DoctusPoint): Unit = () // Nothing to do in a still image
   def pointablePressed(pos: DoctusPoint): Unit = () // Nothing to do in a still image
   def pointableReleased(pos: DoctusPoint): Unit = () // Nothing to do in a still image
+  def keyPressed(code: DoctusKeyCode): Unit = () // Nothing to do in a still image
 
 }

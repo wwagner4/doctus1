@@ -21,6 +21,8 @@ import java.awt.event._
 import java.awt.geom.AffineTransform
 import doctus.core.template.DoctusTemplateCanvas
 
+import inner._
+
 case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
 
   var fill = new java.awt.Color(100, 100, 100, 255)
@@ -234,11 +236,11 @@ object DoctusComponentFactory {
 
 }
 
-import inner._
-
 case class DoctusCanvasSwing(comp: DoctusComponent) extends DoctusCanvasSwing1
 
-case class DoctusTemplateCanvasSwing(comp: DoctusComponent) extends DoctusTemplateCanvas with DoctusCanvasSwing1 with DoctusDraggableSwing1
+case class DoctusTemplateCanvasSwing(comp: DoctusComponent) 
+  extends DoctusTemplateCanvas with DoctusCanvasSwing1 with DoctusDraggableSwing1
+  with DoctusKeySwing1
 
 case class DoctusSelectSwing[T](comboBox: JComboBox[T], f: (T) => String = (t: T) => t.toString()) extends DoctusSelect[T] {
 
@@ -436,6 +438,62 @@ package inner {
 
   }
 
+  trait DoctusKeySwing1 extends DoctusKey {
+
+    def comp: Component
+
+    private def mapKeyCode(code: Int): Option[DoctusKeyCode] = {
+      code match {
+        case KeyEvent.VK_DOWN  => Some(DKC_Down)
+        case KeyEvent.VK_UP    => Some(DKC_Up)
+        case KeyEvent.VK_LEFT  => Some(DKC_Left)
+        case KeyEvent.VK_RIGHT => Some(DKC_Right)
+        case KeyEvent.VK_SPACE => Some(DKC_Space)
+        case KeyEvent.VK_ENTER => Some(DKC_Enter)
+        case _                 => None
+      }
+    }
+
+    comp.setFocusable(true)
+
+    // Needed to avoid repeated key pressed events
+    var active = false
+
+    val kl = new KeyListener {
+
+      override def keyTyped(e: KeyEvent): Unit = ()
+
+      override def keyPressed(e: KeyEvent): Unit = {
+        mapKeyCode(e.getKeyCode) match {
+          case Some(key) => if (!active) {
+            active = true
+            pressFunc.foreach(f => f(key))
+          }
+          case None => // Nothing to do        
+        }
+      }
+
+      override def keyReleased(e: KeyEvent): Unit = {
+        mapKeyCode(e.getKeyCode) match {
+          case Some(key) =>
+            active = false
+            pressFunc.foreach(f => f(key))
+          case None => // Nothing to do        
+        }
+      }
+    }
+
+    comp.addKeyListener(kl)
+
+    private var pressFunc: Option[(DoctusKeyCode) => Unit] = None
+    private var releaseFunc: Option[(DoctusKeyCode) => Unit] = None
+
+    def onKeyPressed(f: (DoctusKeyCode) => Unit): Unit = pressFunc = Some(f)
+
+    def onKeyReleased(f: (DoctusKeyCode) => Unit): Unit = releaseFunc = Some(f)
+
+  }
+
 }
 
 /**
@@ -444,59 +502,7 @@ package inner {
  * Consider that listening only works if the component 'comp' has currently the focus.
  * You may use 'requestFocusForDoctusActivatableSwingKey' as for convenience.
  */
-case class DoctusKeySwing(comp: Component) extends DoctusKey {
-
-  private def mapKeyCode(code: Int): Option[DoctusKeyCode] = {
-    code match {
-      case KeyEvent.VK_DOWN  => Some(DKC_Down)
-      case KeyEvent.VK_UP    => Some(DKC_Up)
-      case KeyEvent.VK_LEFT  => Some(DKC_Left)
-      case KeyEvent.VK_RIGHT => Some(DKC_Right)
-      case KeyEvent.VK_SPACE => Some(DKC_Space)
-      case KeyEvent.VK_ENTER => Some(DKC_Enter)
-      case _                 => None
-    }
-  }
-
-  comp.setFocusable(true)
-
-  // Needed to avoid repeated key pressed events
-  var active = false
-
-  val kl = new KeyListener {
-
-    override def keyTyped(e: KeyEvent): Unit = ()
-
-    override def keyPressed(e: KeyEvent): Unit = {
-      mapKeyCode(e.getKeyCode) match {
-        case Some(key) => if (!active) {
-          active = true
-          pressFunc.foreach(f => f(key))
-        }
-        case None => // Nothing to do        
-      }
-    }
-
-    override def keyReleased(e: KeyEvent): Unit = {
-      mapKeyCode(e.getKeyCode) match {
-        case Some(key) =>
-          active = false
-          pressFunc.foreach(f => f(key))
-        case None => // Nothing to do        
-      }
-    }
-  }
-
-  comp.addKeyListener(kl)
-
-  private var pressFunc: Option[(DoctusKeyCode) => Unit] = None
-  private var releaseFunc: Option[(DoctusKeyCode) => Unit] = None
-
-  def onKeyPressed(f: (DoctusKeyCode) => Unit): Unit = pressFunc = Some(f)
-
-  def onKeyReleased(f: (DoctusKeyCode) => Unit): Unit = releaseFunc = Some(f)
-
-}
+case class DoctusKeySwing(comp: Component) extends DoctusKeySwing1
 
 case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0) extends DoctusImage {
 
