@@ -446,14 +446,14 @@ package inner {
  */
 case class DoctusActivatableKeySwing(comp: Component) extends DoctusActivatableKey {
 
-  private def mapKeyCode(code: Int): Option[DoctusKey] = {
+  private def mapKeyCode(code: Int): Option[DoctusKeyCode] = {
     code match {
-      case KeyEvent.VK_DOWN  => Some(DoctusKey_Down)
-      case KeyEvent.VK_UP    => Some(DoctusKey_Up)
-      case KeyEvent.VK_LEFT  => Some(DoctusKey_Left)
-      case KeyEvent.VK_RIGHT => Some(DoctusKey_Right)
-      case KeyEvent.VK_SPACE => Some(DoctusKey_Space)
-      case KeyEvent.VK_ENTER => Some(DoctusKey_Enter)
+      case KeyEvent.VK_DOWN  => Some(DKC_Down)
+      case KeyEvent.VK_UP    => Some(DKC_Up)
+      case KeyEvent.VK_LEFT  => Some(DKC_Left)
+      case KeyEvent.VK_RIGHT => Some(DKC_Right)
+      case KeyEvent.VK_SPACE => Some(DKC_Space)
+      case KeyEvent.VK_ENTER => Some(DKC_Enter)
       case _                 => None
     }
   }
@@ -489,12 +489,12 @@ case class DoctusActivatableKeySwing(comp: Component) extends DoctusActivatableK
 
   comp.addKeyListener(kl)
 
-  private var pressFunc: Option[(DoctusKey) => Unit] = None
-  private var releaseFunc: Option[(DoctusKey) => Unit] = None
+  private var pressFunc: Option[(DoctusKeyCode) => Unit] = None
+  private var releaseFunc: Option[(DoctusKeyCode) => Unit] = None
 
-  def onActivated(f: (DoctusKey) => Unit): Unit = pressFunc = Some(f)
+  def onActivated(f: (DoctusKeyCode) => Unit): Unit = pressFunc = Some(f)
 
-  def onDeactivated(f: (DoctusKey) => Unit): Unit = releaseFunc = Some(f)
+  def onDeactivated(f: (DoctusKeyCode) => Unit): Unit = releaseFunc = Some(f)
 
 }
 

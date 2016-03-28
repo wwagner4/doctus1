@@ -1,17 +1,48 @@
 package doctus.scalajs
 
-import doctus.core._
-import doctus.core.comp._
-import doctus.core.util._
-import doctus.core.color._
-import org.scalajs.dom
-import org.scalajs.dom._
-import org.scalajs.dom.raw._
-import scala.scalajs.js.Any.{ fromFunction0, fromInt, fromString }
-import doctus.core.template.DoctusTemplateCanvas
+import scala.scalajs.js.Any.fromFunction0
+import scala.scalajs.js.Any.fromFunction1
+import scala.scalajs.js.Any.fromString
 
-import inner._
-import javafx.scene.input.KeyCode
+import org.scalajs.dom
+import org.scalajs.dom.raw.CanvasRenderingContext2D
+import org.scalajs.dom.raw.Element
+import org.scalajs.dom.raw.Event
+import org.scalajs.dom.raw.HTMLCanvasElement
+import org.scalajs.dom.raw.HTMLElement
+import org.scalajs.dom.raw.HTMLImageElement
+import org.scalajs.dom.raw.KeyboardEvent
+import org.scalajs.dom.raw.MouseEvent
+import org.scalajs.dom.raw.Node
+import org.scalajs.dom.raw.Touch
+import org.scalajs.dom.raw.TouchEvent
+
+import doctus.core.DKC_Down
+import doctus.core.DKC_Enter
+import doctus.core.DKC_Left
+import doctus.core.DKC_Right
+import doctus.core.DKC_Space
+import doctus.core.DKC_Up
+import doctus.core.DoctusActivatable
+import doctus.core.DoctusActivatableKey
+import doctus.core.DoctusCanvas
+import doctus.core.DoctusColor
+import doctus.core.DoctusDraggable
+import doctus.core.DoctusFont
+import doctus.core.DoctusGraphics
+import doctus.core.DoctusImage
+import doctus.core.DoctusKeyCode
+import doctus.core.DoctusPointable
+import doctus.core.DoctusScheduler
+import doctus.core.ImageMode
+import doctus.core.ImageModeCENTER
+import doctus.core.ImageModeCORNER
+import doctus.core.comp.DoctusText
+import doctus.core.template.DoctusTemplateCanvas
+import doctus.core.util.DoctusPoint
+import inner.DoctusCanvasScalajs1
+import inner.DoctusDraggableScalajs1
+import inner.DoctusPointableScalajs1
 
 case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGraphics {
 
@@ -377,19 +408,19 @@ case object DoctusSchedulerScalajs extends DoctusScheduler {
 
 case class DoctusActivatableKeyScalajs(elem: Element) extends DoctusActivatableKey {
 
-  private def mapKeyCode(code: Int): Option[DoctusKey] = {
+  private def mapKeyCode(code: Int): Option[DoctusKeyCode] = {
 
-    if (org.scalajs.dom.ext.KeyCode.Down == code) Some(DoctusKey_Down)
-    else if (org.scalajs.dom.ext.KeyCode.Up == code) Some(DoctusKey_Up)
-    else if (org.scalajs.dom.ext.KeyCode.Right == code) Some(DoctusKey_Right)
-    else if (org.scalajs.dom.ext.KeyCode.Left == code) Some(DoctusKey_Left)
-    else if (org.scalajs.dom.ext.KeyCode.Space == code) Some(DoctusKey_Space)
-    else if (org.scalajs.dom.ext.KeyCode.Enter == code) Some(DoctusKey_Enter)
+    if (org.scalajs.dom.ext.KeyCode.Down == code) Some(DKC_Down)
+    else if (org.scalajs.dom.ext.KeyCode.Up == code) Some(DKC_Up)
+    else if (org.scalajs.dom.ext.KeyCode.Right == code) Some(DKC_Right)
+    else if (org.scalajs.dom.ext.KeyCode.Left == code) Some(DKC_Left)
+    else if (org.scalajs.dom.ext.KeyCode.Space == code) Some(DKC_Space)
+    else if (org.scalajs.dom.ext.KeyCode.Enter == code) Some(DKC_Enter)
     else None
   }
 
-  private var onActOpt: Option[(DoctusKey) => Unit] = None
-  private var onDeactOpt: Option[(DoctusKey) => Unit] = None
+  private var onActOpt: Option[(DoctusKeyCode) => Unit] = None
+  private var onDeactOpt: Option[(DoctusKeyCode) => Unit] = None
 
   private var active = false
 
@@ -417,8 +448,8 @@ case class DoctusActivatableKeyScalajs(elem: Element) extends DoctusActivatableK
     }
   })
 
-  def onActivated(f: (DoctusKey) => Unit): Unit = onActOpt = Some(f)
-  def onDeactivated(f: (DoctusKey) => Unit): Unit = onDeactOpt = Some(f)
+  def onActivated(f: (DoctusKeyCode) => Unit): Unit = onActOpt = Some(f)
+  def onDeactivated(f: (DoctusKeyCode) => Unit): Unit = onDeactOpt = Some(f)
 
 }
 
