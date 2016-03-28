@@ -586,12 +586,12 @@ case class ComponentCtrl(
     count += 1
   })
 
-  upKey04.onActivated((key) => {
+  upKey04.onKeyPressed((key) => {
     info.text = s"$count - You pressed the $key key"
     count += 1
   })
 
-  upKey04.onDeactivated((key) => {
+  upKey04.onKeyReleased((key) => {
     info.text = s"$count - You released the $key key"
     count += 1
   })

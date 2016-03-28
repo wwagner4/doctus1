@@ -249,12 +249,12 @@ trait DoctusKey {
   /**
    * Defines a function that gets called whenever the key is pressed
    */
-  def onActivated(f: (DoctusKeyCode) => Unit): Unit
+  def onKeyPressed(f: (DoctusKeyCode) => Unit): Unit
 
   /**
    * Defines a function that gets called whenever the key is released
    */
-  def onDeactivated(f: (DoctusKeyCode) => Unit): Unit
+  def onKeyReleased(f: (DoctusKeyCode) => Unit): Unit
 
 }
 

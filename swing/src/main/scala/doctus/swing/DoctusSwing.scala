@@ -492,9 +492,9 @@ case class DoctusKeySwing(comp: Component) extends DoctusKey {
   private var pressFunc: Option[(DoctusKeyCode) => Unit] = None
   private var releaseFunc: Option[(DoctusKeyCode) => Unit] = None
 
-  def onActivated(f: (DoctusKeyCode) => Unit): Unit = pressFunc = Some(f)
+  def onKeyPressed(f: (DoctusKeyCode) => Unit): Unit = pressFunc = Some(f)
 
-  def onDeactivated(f: (DoctusKeyCode) => Unit): Unit = releaseFunc = Some(f)
+  def onKeyReleased(f: (DoctusKeyCode) => Unit): Unit = releaseFunc = Some(f)
 
 }
 

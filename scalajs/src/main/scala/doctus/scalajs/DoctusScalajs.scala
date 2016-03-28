@@ -418,8 +418,8 @@ case class DoctusActivatableKeyScalajs(elem: Element) extends DoctusKey {
     else None
   }
 
-  private var onActOpt: Option[(DoctusKeyCode) => Unit] = None
-  private var onDeactOpt: Option[(DoctusKeyCode) => Unit] = None
+  private var onPressedOpt: Option[(DoctusKeyCode) => Unit] = None
+  private var onReleasedOpt: Option[(DoctusKeyCode) => Unit] = None
 
   private var active = false
 
@@ -430,7 +430,7 @@ case class DoctusActivatableKeyScalajs(elem: Element) extends DoctusKey {
         e.preventDefault()
         e.cancelBubble
         active = true
-        onActOpt.foreach(f => f(key))
+        onPressedOpt.foreach(f => f(key))
       case None => // Nothing to do 
     }
   })
@@ -442,13 +442,13 @@ case class DoctusActivatableKeyScalajs(elem: Element) extends DoctusKey {
         e.preventDefault()
         e.cancelBubble
         active = false
-        onDeactOpt.foreach(f => f(key))
+        onReleasedOpt.foreach(f => f(key))
       case None => // Nothing to do
     }
   })
 
-  def onActivated(f: (DoctusKeyCode) => Unit): Unit = onActOpt = Some(f)
-  def onDeactivated(f: (DoctusKeyCode) => Unit): Unit = onDeactOpt = Some(f)
+  def onKeyPressed(f: (DoctusKeyCode) => Unit): Unit = onPressedOpt = Some(f)
+  def onKeyReleased(f: (DoctusKeyCode) => Unit): Unit = onReleasedOpt = Some(f)
 
 }
 
