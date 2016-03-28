@@ -175,9 +175,9 @@ object DoctusComponentFactory {
   /**
    * Parameters are only used for Mac.
    */
-  def component(bufferWidth: Int = 3000, bufferHeight: Int = 3000, 
-      textAntialiasing: Boolean = true, 
-      doubleBuffering: Boolean = true): DoctusComponent = {
+  def component(bufferWidth: Int = 3000, bufferHeight: Int = 3000,
+                textAntialiasing: Boolean = true,
+                doubleBuffering: Boolean = true): DoctusComponent = {
     import doctus.swing.DoctusSwingUtil._
 
     case class Buffer(image: BufferedImage, graphics: DoctusGraphics)
@@ -194,7 +194,7 @@ object DoctusComponentFactory {
       val bdg = DoctusGraphicsSwing(bg.asInstanceOf[Graphics2D])
       Buffer(bi, bdg)
     }
-    
+
     lazy val buffer = createBuffer
 
     def createCanvas = new Canvas with DoctusComponent {
@@ -441,10 +441,22 @@ package inner {
 /**
  * Listens to the keyboard.
  *
- * Consider that listening only works if the component 'c' has currently the focus.
+ * Consider that listening only works if the component 'comp' has currently the focus.
  * You may use 'requestFocusForDoctusActivatableSwingKey' as for convenience.
  */
-case class DoctusActivatableSwingKey(comp: Component, keyCode: Int) extends DoctusActivatable {
+case class DoctusActivatableKeySwing(comp: Component) extends DoctusActivatableKey {
+
+  private def mapKeyCode(code: Int): Option[DoctusKey] = {
+    code match {
+      case KeyEvent.VK_DOWN  => Some(DoctusKey_Down)
+      case KeyEvent.VK_UP    => Some(DoctusKey_Up)
+      case KeyEvent.VK_LEFT  => Some(DoctusKey_Left)
+      case KeyEvent.VK_RIGHT => Some(DoctusKey_Right)
+      case KeyEvent.VK_SPACE => Some(DoctusKey_Space)
+      case KeyEvent.VK_ENTER => Some(DoctusKey_Enter)
+      case _                 => None
+    }
+  }
 
   comp.setFocusable(true)
 
@@ -456,28 +468,33 @@ case class DoctusActivatableSwingKey(comp: Component, keyCode: Int) extends Doct
     override def keyTyped(e: KeyEvent): Unit = ()
 
     override def keyPressed(e: KeyEvent): Unit = {
-      if (e.getKeyCode == keyCode && !active) {
-        active = true
-        pressFunc.foreach(f => f())
+      mapKeyCode(e.getKeyCode) match {
+        case Some(key) => if (!active) {
+          active = true
+          pressFunc.foreach(f => f(key))
+        }
+        case None => // Nothing to do        
       }
     }
 
     override def keyReleased(e: KeyEvent): Unit = {
-      if (e.getKeyCode == keyCode) {
-        active = false
-        releaseFunc.foreach(f => f())
+      mapKeyCode(e.getKeyCode) match {
+        case Some(key) =>
+          active = false
+          pressFunc.foreach(f => f(key))
+        case None => // Nothing to do        
       }
     }
   }
 
   comp.addKeyListener(kl)
 
-  private var pressFunc: Option[() => Unit] = None
-  private var releaseFunc: Option[() => Unit] = None
+  private var pressFunc: Option[(DoctusKey) => Unit] = None
+  private var releaseFunc: Option[(DoctusKey) => Unit] = None
 
-  def onActivated(f: () => Unit): Unit = pressFunc = Some(f)
+  def onActivated(f: (DoctusKey) => Unit): Unit = pressFunc = Some(f)
 
-  def onDeactivated(f: () => Unit): Unit = releaseFunc = Some(f)
+  def onDeactivated(f: (DoctusKey) => Unit): Unit = releaseFunc = Some(f)
 
 }
 

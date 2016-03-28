@@ -222,15 +222,40 @@ trait DoctusActivatable {
 
   /**
    * Defines a function that gets called whenever the component is activated
-   * E.g. a button was clicked, a key was pressed
+   * E.g. a button was clicked
    */
   def onActivated(f: () => Unit): Unit
 
   /**
    * Defines a function that gets called whenever the component is deactivated
-   * E.g. a button or a key was released
+   * E.g. a button was released
    */
   def onDeactivated(f: () => Unit): Unit
+}
+
+sealed trait DoctusKey
+case object DoctusKey_Space extends DoctusKey
+case object DoctusKey_Up extends DoctusKey
+case object DoctusKey_Down extends DoctusKey
+case object DoctusKey_Right extends DoctusKey
+case object DoctusKey_Left extends DoctusKey
+case object DoctusKey_Enter extends DoctusKey
+
+/**
+ * A component reaction to key events
+ */
+trait DoctusActivatableKey {
+  
+  /**
+   * Defines a function that gets called whenever the key is pressed
+   */
+  def onActivated(f: (DoctusKey) => Unit): Unit
+
+  /**
+   * Defines a function that gets called whenever the key is released
+   */
+  def onDeactivated(f: (DoctusKey) => Unit): Unit
+
 }
 
 /**

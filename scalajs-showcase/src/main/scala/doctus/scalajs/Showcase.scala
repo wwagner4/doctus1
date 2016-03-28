@@ -6,7 +6,6 @@ import org.scalajs.dom._
 import org.scalajs.dom.raw._
 import org.scalajs.jquery.jQuery
 import scala.scalajs.js.annotation.JSExport
-import org.scalajs.dom.ext.KeyCode
 import doctus.core.DoctusFont
 
 @JSExport("ComponentMap")
@@ -24,7 +23,7 @@ object ComponentMap {
     ComponentCtrl(
       DoctusPointableScalajs(activatable01Elem),
       DoctusPointableScalajs(activatable02Elem),
-      DoctusActivatableScalajsKey(dom.document.body, KeyCode.Up),
+      DoctusActivatableKeyScalajs(dom.document.body),
       DoctusActivatableScalajs(button01Elem),
       DoctusSelectScalajs[FullName](jQuery(select01Elem), (fn) => s"${fn.first} -- ${fn.last}"),
       DoctusActivatableScalajs(selectButton01Elem),

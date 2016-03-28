@@ -10,6 +10,9 @@ import org.scalajs.dom.raw._
 import scala.scalajs.js.Any.{ fromFunction0, fromInt, fromString }
 import doctus.core.template.DoctusTemplateCanvas
 
+import inner._
+import javafx.scene.input.KeyCode
+
 case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGraphics {
 
   private var isFill = true
@@ -179,8 +182,6 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGr
     ctx.stroke()
   }
 }
-
-import inner._
 
 case class DoctusTemplateCanvasScalajs(elem: HTMLCanvasElement)
   extends DoctusTemplateCanvas with DoctusCanvasScalajs1 with DoctusDraggableScalajs1
@@ -362,8 +363,6 @@ case object DoctusSchedulerScalajs extends DoctusScheduler {
     }
 
     dom.window.setTimeout(startInterval, initialDelay)
-    
-    
 
     new DoctusScheduler.Stopper {
       // Stops the execution of a Scheduler
@@ -376,35 +375,50 @@ case object DoctusSchedulerScalajs extends DoctusScheduler {
 
 }
 
-case class DoctusActivatableScalajsKey(elem: Element, keycode: Number) extends DoctusActivatable {
+case class DoctusActivatableKeyScalajs(elem: Element) extends DoctusActivatableKey {
 
-  private var onActOpt: Option[() => Unit] = None
-  private var onDeactOpt: Option[() => Unit] = None
+  private def mapKeyCode(code: Int): Option[DoctusKey] = {
+
+    if (org.scalajs.dom.ext.KeyCode.Down == code) Some(DoctusKey_Down)
+    else if (org.scalajs.dom.ext.KeyCode.Up == code) Some(DoctusKey_Up)
+    else if (org.scalajs.dom.ext.KeyCode.Right == code) Some(DoctusKey_Right)
+    else if (org.scalajs.dom.ext.KeyCode.Left == code) Some(DoctusKey_Left)
+    else if (org.scalajs.dom.ext.KeyCode.Space == code) Some(DoctusKey_Space)
+    else if (org.scalajs.dom.ext.KeyCode.Enter == code) Some(DoctusKey_Enter)
+    else None
+  }
+
+  private var onActOpt: Option[(DoctusKey) => Unit] = None
+  private var onDeactOpt: Option[(DoctusKey) => Unit] = None
 
   private var active = false
 
   elem.addEventListener("keydown", (e: Event) => {
     val kevent: KeyboardEvent = e.asInstanceOf[KeyboardEvent]
-    if ((kevent.keyCode == keycode.intValue()) && !active) {
-      e.preventDefault()
-      e.cancelBubble
-      active = true
-      onActOpt.foreach(f => f())
+    if (!active) mapKeyCode(kevent.keyCode) match {
+      case Some(key) =>
+        e.preventDefault()
+        e.cancelBubble
+        active = true
+        onActOpt.foreach(f => f(key))
+      case None => // Nothing to do 
     }
   })
 
   elem.addEventListener("keyup", (e: Event) => {
     val kevent: KeyboardEvent = e.asInstanceOf[KeyboardEvent]
-    if ((kevent.keyCode == keycode.intValue()) && active) {
-      e.preventDefault()
-      e.cancelBubble
-      active = false
-      onDeactOpt.foreach(f => f())
+    if (active) mapKeyCode(kevent.keyCode) match {
+      case Some(key) =>
+        e.preventDefault()
+        e.cancelBubble
+        active = false
+        onDeactOpt.foreach(f => f(key))
+      case None => // Nothing to do
     }
   })
 
-  def onActivated(f: () => Unit): Unit = onActOpt = Some(f)
-  def onDeactivated(f: () => Unit): Unit = onDeactOpt = Some(f)
+  def onActivated(f: (DoctusKey) => Unit): Unit = onActOpt = Some(f)
+  def onDeactivated(f: (DoctusKey) => Unit): Unit = onDeactOpt = Some(f)
 
 }
 

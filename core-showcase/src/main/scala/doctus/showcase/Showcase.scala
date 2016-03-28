@@ -558,7 +558,7 @@ case class DraggableCtrl(draggable: DoctusDraggable, canvas: DoctusCanvas) {
 case class ComponentCtrl(
   pointable01: DoctusPointable,
   pointable02: DoctusPointable,
-  upKey04: DoctusActivatable,
+  upKey04: DoctusActivatableKey,
   activatable01: DoctusActivatable,
   select03: DoctusSelect[FullName],
   activatable03: DoctusActivatable,
@@ -586,13 +586,13 @@ case class ComponentCtrl(
     count += 1
   })
 
-  upKey04.onActivated(() => {
-    info.text = s"$count - You pressed the UP key"
+  upKey04.onActivated((key) => {
+    info.text = s"$count - You pressed the $key key"
     count += 1
   })
 
-  upKey04.onDeactivated(() => {
-    info.text = s"$count - You released the UP key"
+  upKey04.onDeactivated((key) => {
+    info.text = s"$count - You released the $key key"
     count += 1
   })
 

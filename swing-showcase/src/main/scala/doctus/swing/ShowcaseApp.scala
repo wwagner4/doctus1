@@ -3,12 +3,13 @@ package doctus.swing
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.FlowLayout
-import java.awt.event.KeyEvent
-import DoctusActivatableSwingKey.Implicit
+
 import doctus.showcase.AnimatedCtrl
 import doctus.showcase.CanvasCtrl
 import doctus.showcase.ComponentCtrl
+import doctus.showcase.DraggableCtrl
 import doctus.showcase.FullName
+import doctus.showcase.PointableCtrl
 import doctus.showcase.SchedulerStopCtrl
 import javax.swing.ImageIcon
 import javax.swing.JButton
@@ -16,14 +17,9 @@ import javax.swing.JComboBox
 import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.JPanel
-import javax.swing.JScrollPane
 import javax.swing.JTextArea
 import javax.swing.JTextField
 import javax.swing.border.EmptyBorder
-import java.awt.event.ContainerListener
-import java.awt.event.AdjustmentListener
-import doctus.showcase.PointableCtrl
-import doctus.showcase.DraggableCtrl
 
 object ComponentApp extends App {
   
@@ -55,7 +51,7 @@ object ComponentApp extends App {
   main.add(button01)
   main.add(comboBox03)
   main.add(button03)
-  main.add(new JTextArea("Press the 'arrow-up' key for testing the key activatable\n" + 
+  main.add(new JTextArea("Press one of the arrow keys for testing the key activatable\n" + 
   "Click on the background panel if another component has currently the focus.") {
     override def isEditable() = false;
   })
@@ -70,7 +66,7 @@ object ComponentApp extends App {
   val infoText: DoctusTextSwing = DoctusTextSwing(textField)
   val pointable01 = DoctusPointableSwing(label01)
   val pointable02 = DoctusPointableSwing(panel02)
-  val upKey04 = DoctusActivatableSwingKey(cont, KeyEvent.VK_UP)
+  val upKey04 = DoctusActivatableKeySwing(cont)
   val clickable01 = DoctusActivatableSwing(button01)
   val select03 = DoctusSelectSwing[FullName](comboBox03, (fn) => "[%s - %s]" format(fn.first, fn.last))
   val clickable03 = DoctusActivatableSwing(button03)
