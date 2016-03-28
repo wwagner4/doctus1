@@ -558,7 +558,7 @@ case class DraggableCtrl(draggable: DoctusDraggable, canvas: DoctusCanvas) {
 case class ComponentCtrl(
   pointable01: DoctusPointable,
   pointable02: DoctusPointable,
-  upKey04: DoctusActivatableKey,
+  upKey04: DoctusKey,
   activatable01: DoctusActivatable,
   select03: DoctusSelect[FullName],
   activatable03: DoctusActivatable,

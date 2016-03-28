@@ -3,7 +3,6 @@ package doctus.scalajs
 import scala.scalajs.js.Any.fromFunction0
 import scala.scalajs.js.Any.fromFunction1
 import scala.scalajs.js.Any.fromString
-
 import org.scalajs.dom
 import org.scalajs.dom.raw.CanvasRenderingContext2D
 import org.scalajs.dom.raw.Element
@@ -16,7 +15,6 @@ import org.scalajs.dom.raw.MouseEvent
 import org.scalajs.dom.raw.Node
 import org.scalajs.dom.raw.Touch
 import org.scalajs.dom.raw.TouchEvent
-
 import doctus.core.DKC_Down
 import doctus.core.DKC_Enter
 import doctus.core.DKC_Left
@@ -24,7 +22,7 @@ import doctus.core.DKC_Right
 import doctus.core.DKC_Space
 import doctus.core.DKC_Up
 import doctus.core.DoctusActivatable
-import doctus.core.DoctusActivatableKey
+import doctus.core.DoctusKey
 import doctus.core.DoctusCanvas
 import doctus.core.DoctusColor
 import doctus.core.DoctusDraggable
@@ -43,6 +41,7 @@ import doctus.core.util.DoctusPoint
 import inner.DoctusCanvasScalajs1
 import inner.DoctusDraggableScalajs1
 import inner.DoctusPointableScalajs1
+import doctus.core.DoctusKey
 
 case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGraphics {
 
@@ -406,7 +405,7 @@ case object DoctusSchedulerScalajs extends DoctusScheduler {
 
 }
 
-case class DoctusActivatableKeyScalajs(elem: Element) extends DoctusActivatableKey {
+case class DoctusActivatableKeyScalajs(elem: Element) extends DoctusKey {
 
   private def mapKeyCode(code: Int): Option[DoctusKeyCode] = {
 

@@ -244,7 +244,7 @@ case object DKC_Enter extends DoctusKeyCode
 /**
  * A component reaction to key events
  */
-trait DoctusActivatableKey {
+trait DoctusKey {
   
   /**
    * Defines a function that gets called whenever the key is pressed

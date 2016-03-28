@@ -66,7 +66,7 @@ object ComponentApp extends App {
   val infoText: DoctusTextSwing = DoctusTextSwing(textField)
   val pointable01 = DoctusPointableSwing(label01)
   val pointable02 = DoctusPointableSwing(panel02)
-  val upKey04 = DoctusActivatableKeySwing(cont)
+  val upKey04 = DoctusKeySwing(cont)
   val clickable01 = DoctusActivatableSwing(button01)
   val select03 = DoctusSelectSwing[FullName](comboBox03, (fn) => "[%s - %s]" format(fn.first, fn.last))
   val clickable03 = DoctusActivatableSwing(button03)

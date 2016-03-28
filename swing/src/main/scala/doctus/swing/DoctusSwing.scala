@@ -444,7 +444,7 @@ package inner {
  * Consider that listening only works if the component 'comp' has currently the focus.
  * You may use 'requestFocusForDoctusActivatableSwingKey' as for convenience.
  */
-case class DoctusActivatableKeySwing(comp: Component) extends DoctusActivatableKey {
+case class DoctusKeySwing(comp: Component) extends DoctusKey {
 
   private def mapKeyCode(code: Int): Option[DoctusKeyCode] = {
     code match {
