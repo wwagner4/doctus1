@@ -15,11 +15,13 @@ import doctus.core.color.DoctusColorRgb
 import doctus.core.DoctusKeyCode
 
 case class DoctusTemplateStillImage(canvas: DoctusCanvas) extends DoctusTemplate {
+  
+  println("DoctusTemplateStillImage init")
 
   val ran = new Random
 
   // None means there is no animation. The draw method is called ones
-  override def frameRate = None
+  override def frameRate = Some(1)
 
   def draw(g: DoctusGraphics): Unit = {
 
@@ -42,7 +44,7 @@ case class DoctusTemplateStillImage(canvas: DoctusCanvas) extends DoctusTemplate
 
   def pointableDragged(pos: DoctusPoint): Unit = () // Nothing to do in a still image
   def pointablePressed(pos: DoctusPoint): Unit = () // Nothing to do in a still image
-  def pointableReleased(pos: DoctusPoint): Unit = () // Nothing to do in a still image
-  def keyPressed(code: DoctusKeyCode): Unit = () // Nothing to do in a still image
+  def pointableReleased(pos: DoctusPoint): Unit = println("released pointable " + pos)
+  def keyPressed(code: DoctusKeyCode): Unit = println("pressed key " + code)
 
 }
