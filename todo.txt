@@ -4,11 +4,13 @@ closed
 
 open
 1.0.5
-- Add a hook for keyPressed in Framework
+- Fix keyPressed in scalajs template
+- Update Mydoctus (see todo there)
+- Make still image (framerate 0) working in scalajs
 - Test all apps using 1.0.5
 -- saint
+-- ht2016
 -- ???
-- Update Mydoctus
 
 1.0.6
 - Integrate JavaFX
