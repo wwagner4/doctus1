@@ -16,6 +16,10 @@ private[scalajs] trait DoctusCanvasScalajs1 extends DoctusCanvas {
     repaint()
   })
   
+  dom.window.addEventListener("resize", (e: Event) => {
+    repaint()
+  })
+  
   def elem: HTMLCanvasElement
   
   val ctx: CanvasRenderingContext2D = elem.getContext("2d").asInstanceOf[CanvasRenderingContext2D]
