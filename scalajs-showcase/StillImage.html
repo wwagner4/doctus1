@@ -4,9 +4,17 @@
     <meta charset="UTF-8">
     <title>Showcase StillImage</title>
 </head>
-<body style="background:green; font-family:sans-serif; padding:10px; text-align:center">
-<canvas style="background:red;" id="canvas" width="600" height="400" ></canvas>
-
+<body style="margin: 0px">
+<canvas id="canvas"></canvas>
+<script  type="text/javascript" >
+  function resize() {
+  var canv = document.getElementById("canvas") 
+            canv.width = window.innerWidth;
+            canv.height = window.innerHeight;
+  }
+  resize();
+  window.onresize = function() {resize();};	
+</script>
 <script type="text/javascript" src="target/scala-2.11/doctus-scalajs-showcase-fastopt.js"></script>
 <script type='text/javascript'>
 	StillImage().main();
