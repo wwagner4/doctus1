@@ -13,8 +13,7 @@ object StillImage {
 
   @JSExport
   def main() {
-    println("Still image main")
-    
+
     // Get element from html page
     val canvasElem: HTMLCanvasElement = dom.document.getElementById("canvas").asInstanceOf[HTMLCanvasElement]
 
