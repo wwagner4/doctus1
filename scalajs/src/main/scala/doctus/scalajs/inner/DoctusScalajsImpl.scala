@@ -12,28 +12,20 @@ import doctus.scalajs._
 
 private[scalajs] trait DoctusCanvasScalajs1 extends DoctusCanvas {
 
-  dom.window.addEventListener("load", (e: Event) => {
-    repaint()
-  })
-  
-  dom.window.addEventListener("resize", (e: Event) => {
-    repaint()
-  })
-  
+  dom.window.addEventListener("load", (e: Event) => repaint())
+
+  dom.window.addEventListener("resize", (e: Event) => repaint())
+
   def elem: HTMLCanvasElement
-  
-  val ctx: CanvasRenderingContext2D = elem.getContext("2d").asInstanceOf[CanvasRenderingContext2D]
+
+  val ctx = elem.getContext("2d").asInstanceOf[CanvasRenderingContext2D]
   ctx.translate(0.5, 0.5)
-  
+
   var fopt: Option[(DoctusGraphics) => Unit] = None
 
-  def onRepaint(f: (DoctusGraphics) => Unit) = {
-    fopt = Some(f)
-  }
+  def onRepaint(f: (DoctusGraphics) => Unit) = fopt = Some(f)
 
-  def repaint(): Unit = {
-    fopt foreach (f => f(DoctusGraphicsScalajs(ctx)))
-  }
+  def repaint(): Unit = fopt foreach (f => f(DoctusGraphicsScalajs(ctx)))
 
   def width = elem.clientWidth
 
