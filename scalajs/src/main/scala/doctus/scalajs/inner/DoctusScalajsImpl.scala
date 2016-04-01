@@ -4,6 +4,7 @@ import scala.scalajs.js
 import scala.scalajs.js.Any.fromFunction1
 
 import org.scalajs.dom.raw._
+import org.scalajs.dom
 
 import doctus.core._
 import doctus.core.util.DoctusPoint
@@ -11,18 +12,31 @@ import doctus.scalajs._
 
 private[scalajs] trait DoctusCanvasScalajs1 extends DoctusCanvas {
 
+  dom.window.addEventListener("load", (e: Event) => {
+    println("DoctusCanvasScalajs1 onload")
+    dom.window.setTimeout(startInterval, 200)
+  })
+  
   def elem: HTMLCanvasElement
+  
+
+  val startInterval = () => {
+    println("DoctusCanvasScalajs1 startInterval")
+    repaint()
+  }
 
   val ctx: CanvasRenderingContext2D = elem.getContext("2d").asInstanceOf[CanvasRenderingContext2D]
   ctx.translate(0.5, 0.5)
-
+  
   var fopt: Option[(DoctusGraphics) => Unit] = None
 
   def onRepaint(f: (DoctusGraphics) => Unit) = {
+    println("DoctusCanvasScalajs1 onRepaint")
     fopt = Some(f)
   }
 
   def repaint(): Unit = {
+    println("DoctusCanvasScalajs1 repaint")
     fopt foreach (f => f(DoctusGraphicsScalajs(ctx)))
   }
 
