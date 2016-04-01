@@ -14,3 +14,5 @@ open
 
 1.0.6
 - Integrate JavaFX
+- uniform structure for showcase
+- sbt: change to build.sbt from file

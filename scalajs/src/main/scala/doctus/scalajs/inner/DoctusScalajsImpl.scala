@@ -142,7 +142,8 @@ trait DoctusKeyScalajs1 extends DoctusKey {
 
   private var active = false
 
-  elem.addEventListener("keydown", (e: Event) => {
+  dom.window.addEventListener("keydown", (e: Event) => {
+    println("-- keydown")
     val kevent: KeyboardEvent = e.asInstanceOf[KeyboardEvent]
     if (!active) mapKeyCode(kevent.keyCode) match {
       case Some(key) =>
@@ -154,7 +155,8 @@ trait DoctusKeyScalajs1 extends DoctusKey {
     }
   })
 
-  elem.addEventListener("keyup", (e: Event) => {
+  dom.window.addEventListener("keyup", (e: Event) => {
+    println("-- keyup")
     val kevent: KeyboardEvent = e.asInstanceOf[KeyboardEvent]
     if (active) mapKeyCode(kevent.keyCode) match {
       case Some(key) =>

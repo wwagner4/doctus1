@@ -55,7 +55,7 @@ case class DoctusTemplateController[T <: DoctusTemplate](
 
   canvas.onDrag(template.pointableDragged)
   
-  canvas.onKeyPressed {template.keyPressed}
+  canvas.onKeyPressed(template.keyPressed)
 
 }
 

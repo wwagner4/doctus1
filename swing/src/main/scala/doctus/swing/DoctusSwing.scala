@@ -477,7 +477,6 @@ package inner {
         mapKeyCode(e.getKeyCode) match {
           case Some(key) =>
             active = false
-            pressFunc.foreach(f => f(key))
           case None => // Nothing to do        
         }
       }
