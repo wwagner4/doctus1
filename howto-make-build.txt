@@ -9,6 +9,7 @@
 - build these apps
 - check in doctus. message build x.x.x
 - check in the other apps. message doctus build x.x.x
+- switch doctus to the next snapshot version and check it in
 - make a new version of myDoctus
 
 
