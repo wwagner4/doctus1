@@ -12,15 +12,3 @@
 - make a new version of myDoctus
 
 
-build 1.0.5
-- OK find all apps using the current snapshot
-- OK make all these apps comileable and test them
-- change the current doctus version from snapshot to final
-- deploy this version to the repository
-- delete your complete local repository. 
-- change the doctus dependency of one of the apps to doctus-final
-- build this app
-- change the doctus dependency of one of the other apps to doctus-final
-- build these apps
-- check in doctus. message build x.x.x
-- check in the other apps. message doctus build x.x.x
