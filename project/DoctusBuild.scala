@@ -10,7 +10,7 @@ object DoctusBuild extends Build {
 
   object D {
     val scalaVersion = "2.11.8"
-    val doctusVersion = "1.0.5"
+    val doctusVersion = "1.0.6-SNAPSHOT"
     val mockitoVersion = "1.9.5"
     val utestVersion = "0.4.1"
     val scalaJsDomJqueryVersion = "0.9.0"
