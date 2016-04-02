@@ -10,7 +10,7 @@ object DoctusBuild extends Build {
 
   object D {
     val scalaVersion = "2.11.8"
-    val doctusVersion = "1.0.5-SNAPSHOT"
+    val doctusVersion = "1.0.5"
     val mockitoVersion = "1.9.5"
     val utestVersion = "0.4.1"
     val scalaJsDomJqueryVersion = "0.9.0"
@@ -25,7 +25,7 @@ object DoctusBuild extends Build {
         scalaVersion := D.scalaVersion,
         organization := "net.entelijan",
         organizationHomepage := Some(url("http://entelijan.net/")),
-        publishTo := Some(Resolver.sftp("entelijan", "entelijan.net", "/var/www/ivy2/")(Resolver.ivyStylePatterns) as ("root", keyfile)),
+        licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
         EclipseKeys.withSource := true)
 
     lazy val defaultSettings =
