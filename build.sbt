@@ -54,6 +54,7 @@ lazy val core = (project in file("core"))
   .settings(coreSettings: _*)
   .settings(
     name := "doctus-core")
+  .enablePlugins(ScalaJSPlugin)
 
 lazy val swing = (project in file("swing"))
   .settings(swingSettings: _*)
