@@ -1,5 +1,7 @@
 1.0.6
 - uniform structure for showcase
+- remove utest. migrate all testcases. exception scalajs module
+- remove obsolete tryouts
 -- name of modules start all with doctus-showcase...
 -- packages: uniform structure
 -- name of classes and file: uniform structure. Principle: technical before usage.
