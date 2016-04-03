@@ -1,25 +1,11 @@
-open
-1.0.5
-- Update Mydoctus (see todo there)
-- Test all apps using 1.0.5
--- morphing OK
--- saint OK
--- ht2016
--- hopper OK
--- ???
-
 1.0.6
-- Integrate JavaFX
+- sbt: change to build.sbt from file
 - uniform structure for showcase
 -- name of modules start all with doctus-showcase...
 -- packages: uniform structure
 -- name of classes and file: uniform structure. Principle: technical before usage.
-- sbt: change to build.sbt from file
+- Integrate JavaFX
 - Implementation of the doctus sound interface
 
 closed
-- Check if strokeWidth can handle a value less than 1
-- Fix keyPressed in scalajs template
-- Make still image (framerate 0) working in scalajs
-
 
