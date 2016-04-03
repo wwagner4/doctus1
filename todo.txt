@@ -1,5 +1,5 @@
 1.0.6
-- sbt: change to build.sbt from file
+- sbt: change to build.sbt from scala file
 - uniform structure for showcase
 -- name of modules start all with doctus-showcase...
 -- packages: uniform structure
