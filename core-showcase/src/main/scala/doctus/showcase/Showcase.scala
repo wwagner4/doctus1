@@ -10,8 +10,6 @@ case class CanvasCtrl(canvas: DoctusCanvas, logo: DoctusImage) {
 
   // Define what method should be called on repaint
   canvas.onRepaint(paint)
-  // Paint the canvas ones
-  canvas.repaint()
 
   val cnt: Long = 0
 

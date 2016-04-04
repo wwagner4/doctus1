@@ -20,8 +20,8 @@ import java.awt.Dimension
 import java.awt.event._
 import java.awt.geom.AffineTransform
 import doctus.core.template.DoctusTemplateCanvas
-
 import inner._
+import java.awt.Color
 
 case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
 
@@ -178,8 +178,8 @@ object DoctusComponentFactory {
    * Parameters are only used for Mac.
    */
   def component(bufferWidth: Int = 3000, bufferHeight: Int = 3000,
-                textAntialiasing: Boolean = true,
-                doubleBuffering: Boolean = true): DoctusComponent = {
+                textAntialiasing: Boolean = true, doubleBuffering: Boolean = true): DoctusComponent = {
+
     import doctus.swing.DoctusSwingUtil._
 
     case class Buffer(image: BufferedImage, graphics: DoctusGraphics)
@@ -229,16 +229,14 @@ object DoctusComponentFactory {
 
     }
 
-    if (osName == Mac) {
-      createCanvas
-    } else createJPanel
+    createJPanel
   }
 
 }
 
 case class DoctusCanvasSwing(comp: DoctusComponent) extends DoctusCanvasSwing1
 
-case class DoctusTemplateCanvasSwing(comp: DoctusComponent) 
+case class DoctusTemplateCanvasSwing(comp: DoctusComponent)
   extends DoctusTemplateCanvas with DoctusCanvasSwing1 with DoctusDraggableSwing1
   with DoctusKeySwing1
 
