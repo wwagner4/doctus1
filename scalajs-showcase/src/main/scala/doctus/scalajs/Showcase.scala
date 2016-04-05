@@ -20,7 +20,7 @@ object ComponentMap {
     val select01Elem: HTMLElement = dom.document.getElementById("select_01").asInstanceOf[HTMLElement]
     val selectButton01Elem: HTMLElement = dom.document.getElementById("button_select_01").asInstanceOf[HTMLElement]
     
-    ComponentCtrl(
+    DoctusControllerComponent(
       DoctusPointableScalajs(activatable01Elem),
       DoctusPointableScalajs(activatable02Elem),
       DoctusKeyScalajs(dom.document.body),
@@ -43,7 +43,7 @@ object CanvasMap {
     val canvas = DoctusCanvasScalajs(canvasElem)
     val logo = DoctusImageScalajs("src/main/resources/logo.png")
     // Call the controller
-    CanvasCtrl(canvas, logo)
+    DoctusControllerCanvas(canvas, logo)
   }
 }
 
@@ -58,7 +58,7 @@ object PointedMap {
     val canvas = DoctusCanvasScalajs(canvasElem)
     val point = DoctusPointableScalajs(canvasElem)
     // Call the controller
-    PointableCtrl(point, canvas)
+    DoctusControllerPointable(point, canvas)
   }
 }
 
@@ -73,7 +73,7 @@ object DraggedMap {
     val canvas = DoctusCanvasScalajs(canvasElem)
     val drag = DoctusDraggableScalajs(canvasElem)
     // Call the controller
-    DraggableCtrl(drag, canvas)
+    DoctusControllerDraggable(drag, canvas)
   }
 }
 
@@ -102,7 +102,7 @@ object AnimatedMap {
     val canvas = DoctusCanvasScalajs(canvasElem)
     val logo = DoctusImageScalajs("src/main/resources/logo.png")
     // call the controller
-    AnimatedCtrl(canvas, sched, logo)
+    DoctusControllerAnimated(canvas, sched, logo)
   }
 }
 
@@ -124,7 +124,7 @@ object SchedulerStopMap {
     val canv = DoctusCanvasScalajs(canvasElem)
 
     // Call the controller
-    SchedulerStopCtrl(sched, start, stop, canv)
+    DoctusControllerSchedulerStop(sched, start, stop, canv)
   }
 }
 

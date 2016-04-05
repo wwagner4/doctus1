@@ -3,23 +3,9 @@ package doctus.swing
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.FlowLayout
-
-import doctus.showcase.AnimatedCtrl
-import doctus.showcase.CanvasCtrl
-import doctus.showcase.ComponentCtrl
-import doctus.showcase.DraggableCtrl
-import doctus.showcase.FullName
-import doctus.showcase.PointableCtrl
-import doctus.showcase.SchedulerStopCtrl
-import javax.swing.ImageIcon
-import javax.swing.JButton
-import javax.swing.JComboBox
-import javax.swing.JFrame
-import javax.swing.JLabel
-import javax.swing.JPanel
-import javax.swing.JTextArea
-import javax.swing.JTextField
+import javax.swing._
 import javax.swing.border.EmptyBorder
+import doctus.showcase._
 
 object ComponentApp extends App {
   
@@ -72,7 +58,7 @@ object ComponentApp extends App {
   val clickable03 = DoctusActivatableSwing(button03)
 
   // Start the controller
-  ComponentCtrl(pointable01, pointable02, upKey04, clickable01, select03, clickable03, infoText)
+  DoctusControllerComponent(pointable01, pointable02, upKey04, clickable01, select03, clickable03, infoText)
 
   // Open the main frame
   val top = new JFrame()
@@ -94,7 +80,7 @@ object CanvasApp extends App {
   val canvas = DoctusCanvasSwing(p)
   val logo = DoctusImageSwing("logo.png")
   
-  CanvasCtrl(canvas, logo)
+  DoctusControllerCanvas(canvas, logo)
 
   val top = new JFrame()
   top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
@@ -111,7 +97,7 @@ object PointableApp extends App {
 
   val p = DoctusComponentFactory.component()
 
-  PointableCtrl(DoctusPointableSwing(p), DoctusCanvasSwing(p))
+  DoctusControllerPointable(DoctusPointableSwing(p), DoctusCanvasSwing(p))
 
   val top = new JFrame()
   top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
@@ -126,7 +112,7 @@ object DraggableApp extends App {
 
   val p = DoctusComponentFactory.component()
 
-  DraggableCtrl(DoctusDraggableSwing(p), DoctusCanvasSwing(p))
+  DoctusControllerDraggable(DoctusDraggableSwing(p), DoctusCanvasSwing(p))
 
   val top = new JFrame()
   top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
@@ -148,7 +134,7 @@ object AnimatedApp extends App {
   val img = DoctusImageSwing("logo.png")
 
   // Start the controller
-  AnimatedCtrl(canvas, sched, img)
+  DoctusControllerAnimated(canvas, sched, img)
 
   // Open the main frame
   val top = new JFrame()
@@ -186,7 +172,7 @@ object SchedulerStopApp extends App {
   val canv = DoctusCanvasSwing(panel)
 
   // Start the controller
-  SchedulerStopCtrl(sched, start, stop, canv)
+  DoctusControllerSchedulerStop(sched, start, stop, canv)
 
   // Open the application
   val top = new JFrame()

@@ -6,7 +6,7 @@ import doctus.core.color._
 import doctus.core.util._
 import doctus.core.text._
 
-case class CanvasCtrl(canvas: DoctusCanvas, logo: DoctusImage) {
+case class DoctusControllerCanvas(canvas: DoctusCanvas, logo: DoctusImage) {
 
   // Define what method should be called on repaint
   canvas.onRepaint(paint)
@@ -296,7 +296,7 @@ case class CanvasCtrl(canvas: DoctusCanvas, logo: DoctusImage) {
 
 }
 
-case class AnimatedCtrl(canvas: DoctusCanvas, scheduler: DoctusScheduler, logo: DoctusImage) {
+case class DoctusControllerAnimated(canvas: DoctusCanvas, scheduler: DoctusScheduler, logo: DoctusImage) {
 
   val ran = new java.util.Random
 
@@ -346,7 +346,7 @@ case class Started(p: DoctusPoint, cnt: Int) extends ActionTyp
 case class Stopped(p: DoctusPoint, cnt: Int) extends ActionTyp
 case class Dragged(p: DoctusPoint, cnt: Int) extends ActionTyp
 
-case class PointableCtrl(pointable: DoctusPointable, canvas: DoctusCanvas) {
+case class DoctusControllerPointable(pointable: DoctusPointable, canvas: DoctusCanvas) {
 
   var actCount = 0
   var init = true
@@ -447,7 +447,7 @@ case class PointableCtrl(pointable: DoctusPointable, canvas: DoctusCanvas) {
 
 }
 
-case class DraggableCtrl(draggable: DoctusDraggable, canvas: DoctusCanvas) {
+case class DoctusControllerDraggable(draggable: DoctusDraggable, canvas: DoctusCanvas) {
 
   var actCount = 0
 
@@ -553,7 +553,7 @@ case class DraggableCtrl(draggable: DoctusDraggable, canvas: DoctusCanvas) {
 
 }
 
-case class ComponentCtrl(
+case class DoctusControllerComponent(
   pointable01: DoctusPointable,
   pointable02: DoctusPointable,
   upKey04: DoctusKey,
@@ -614,7 +614,7 @@ case class FullName(first: String, last: String)
 /**
  * Demonstrates how a scheduler can be started and stopped
  */
-case class SchedulerStopCtrl(sched: DoctusScheduler, start: DoctusActivatable, stop: DoctusActivatable, canv: DoctusCanvas) {
+case class DoctusControllerSchedulerStop(sched: DoctusScheduler, start: DoctusActivatable, stop: DoctusActivatable, canv: DoctusCanvas) {
 
   var cnt = 0
 
