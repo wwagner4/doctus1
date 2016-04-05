@@ -9,7 +9,7 @@ import doctus.core.template.DoctusTemplateController
 import doctus.showcase.DoctusTemplateStillImage
 
 @JSExport("StillImage")
-object StillImage {
+object ShowcaseTemplateStillImage {
 
   @JSExport
   def main() {
