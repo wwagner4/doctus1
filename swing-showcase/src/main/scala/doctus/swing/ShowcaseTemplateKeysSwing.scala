@@ -2,7 +2,7 @@ package doctus.swing
 
 import javax.swing.JFrame
 import java.awt.Dimension
-import doctus.showcase.ShowcaseTemplateKeys
+import doctus.showcase.DoctusTemplateKeys
 import doctus.core.template.DoctusTemplateController
 import javax.swing.ImageIcon
 import java.awt.BorderLayout
@@ -24,7 +24,7 @@ object ShowcaseTemplateKeysSwing extends App {
   top.setSize(new Dimension(900, 700))
   top.setVisible(true)
 
-  val templ = ShowcaseTemplateKeys(canvas)
+  val templ = DoctusTemplateKeys(canvas)
   DoctusTemplateController(templ, sched, canvas)
 
 

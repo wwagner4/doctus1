@@ -3,7 +3,7 @@ package doctus.scalajs
 import scala.scalajs.js.annotation.JSExport
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLCanvasElement
-import doctus.showcase.ShowcaseTemplateKeys
+import doctus.showcase.DoctusTemplateKeys
 import doctus.core.template.DoctusTemplateController
 
 
@@ -20,8 +20,8 @@ object ShowcaseTemplateKeysScalajs {
     val templCanvas = DoctusTemplateCanvasScalajs(canvasElem)
     val sched = DoctusSchedulerScalajs
 
-    // call the controller
-    val templ = ShowcaseTemplateKeys(templCanvas)
+    // Instantiate the template and put it to the controller
+    val templ = DoctusTemplateKeys(templCanvas)
     DoctusTemplateController(templ, sched, templCanvas)
   }
 }

@@ -8,7 +8,7 @@ import doctus.core.color.DoctusColorBlack
 
 case class Button(pos: DoctusPoint)
 
-case class ShowcaseTemplateKeys(canvas: DoctusCanvas) extends DoctusTemplate {
+case class DoctusTemplateKeys(canvas: DoctusCanvas) extends DoctusTemplate {
 
   def center: DoctusPoint = DoctusPoint(canvas.width * 0.5, canvas.height * 0.5)
 
