@@ -7,7 +7,7 @@ import java.awt.BorderLayout
 import java.awt.Dimension
 import doctus.core.template._
 
-object ShowcaseTemplateStillImage extends App {
+object ShowcaseTemplateSwingStillImage extends App {
 
   val p = DoctusComponentFactory.component()
   val canvas = DoctusTemplateCanvasSwing(p)

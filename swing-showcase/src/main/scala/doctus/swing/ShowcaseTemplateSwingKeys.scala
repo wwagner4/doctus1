@@ -7,7 +7,7 @@ import doctus.core.template.DoctusTemplateController
 import javax.swing.ImageIcon
 import java.awt.BorderLayout
 
-object ShowcaseTemplateKeysSwing extends App {
+object ShowcaseTemplateSwingKeys extends App {
   
     val p = DoctusComponentFactory.component()
   val canvas = DoctusTemplateCanvasSwing(p)
