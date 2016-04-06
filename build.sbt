@@ -96,4 +96,10 @@ lazy val showcase_swing = (project in file("showcase-swing"))
     name := "showcase-doctus-swing")
   .dependsOn(showcase_core, swing)
 
+lazy val showcase_jvm = (project in file("showcase-jvm"))
+  .settings(showcaseSettings: _*)
+  .settings(
+    name := "showcase-doctus-jvm")
+  .dependsOn(showcase_core, jvm)
+
     

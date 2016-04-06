@@ -105,12 +105,6 @@ case class DoctusActivatableFx(comp: Any) extends DoctusActivatable {
   def onDeactivated(f: () => Unit): Unit = ???
 }
 
-case object DoctusSchedulerFx extends DoctusScheduler {
-
-  def start(f: () => Unit, duration: Int, initialDelay: Int = 0): DoctusScheduler.Stopper = ???
-
-}
-
 case class DoctusTextFx(textComp: Any) extends DoctusText {
 
   def text: String = ???
