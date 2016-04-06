@@ -1,18 +1,15 @@
 package doctus.swing
 
 import org.apache.commons.lang.SystemUtils
-import utest._
+import org.scalatest.FunSuite
 
-class DoctusUtilSuite extends TestSuite {
+class DoctusUtilSuite extends FunSuite {
 
-  def tests = TestSuite {
-
-    "Check operating system name"-{
-      if (SystemUtils.IS_OS_MAC) assert(DoctusSwingUtil.osName == Mac)
-      else if (SystemUtils.IS_OS_LINUX) assert(DoctusSwingUtil.osName == Linux)
-      else if (SystemUtils.IS_OS_WINDOWS) assert(DoctusSwingUtil.osName == Win)
-      else assert(DoctusSwingUtil.osName == Unknown)
-    }
+  test("Check operating system name") {
+    if (SystemUtils.IS_OS_MAC) assert(DoctusSwingUtil.osName == Mac)
+    else if (SystemUtils.IS_OS_LINUX) assert(DoctusSwingUtil.osName == Linux)
+    else if (SystemUtils.IS_OS_WINDOWS) assert(DoctusSwingUtil.osName == Win)
+    else assert(DoctusSwingUtil.osName == Unknown)
   }
 
 }

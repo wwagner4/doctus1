@@ -16,9 +16,8 @@ lazy val commonSettings =
 lazy val coreSettings =
   commonSettings ++
     Seq(
-      libraryDependencies += "com.lihaoyi" %%% "utest" % utestVersion % "test",
-      libraryDependencies += "org.scala-lang" % "scala-reflect" % _scalaVersion,
-      testFrameworks += new TestFramework("utest.runner.Framework"))
+      libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.6" % "test",
+      libraryDependencies += "commons-lang" % "commons-lang" % "2.6" % "test")
 
 lazy val showcaseSettings =
   coreSettings
@@ -27,13 +26,13 @@ lazy val swingSettings =
   coreSettings ++
     Seq(
       libraryDependencies += "commons-lang" % "commons-lang" % "2.6" % "test",
-      fork := true,
-      testFrameworks += new TestFramework("utest.runner.Framework"))
+      fork := true)
 
 lazy val scalajsSettings =
   coreSettings ++
     Seq(
       jsDependencies += RuntimeDOM,
+      libraryDependencies += "com.lihaoyi" %%% "utest" % utestVersion % "test",
       libraryDependencies += "org.scala-js" %%% "scalajs-dom" % scalaJsDomJqueryVersion,
       libraryDependencies += "be.doeraene" %%% "scalajs-jquery" % scalaJsDomJqueryVersion,
       testFrameworks += new TestFramework("utest.runner.Framework"))
