@@ -10,7 +10,7 @@ import doctus.showcase._
 object ShowcaseSwingAnimated extends App {
 
   // Create the component
-  val panel = DoctusComponentFactory.component()
+  val panel = DoctusComponentFactory.component(doubleBuffering = false)
 
   // Wrap the components
   val sched = DoctusSchedulerSwing

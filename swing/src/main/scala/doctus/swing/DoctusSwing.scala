@@ -246,7 +246,8 @@ object DoctusComponentFactory {
 
     }
 
-    createJPanel
+    if (osName == Mac) createCanvas
+    else createJPanel
   }
 
 }
