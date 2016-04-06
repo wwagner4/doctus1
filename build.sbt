@@ -46,9 +46,9 @@ lazy val root = (project in file("."))
     core,
     swing,
     scalajs,
-    core_showcase,
-    swing_showcase, 
-    scalajs_showcase)
+    showcase_core,
+    showcase_swing, 
+    showcase_scalajs)
 
 lazy val core = (project in file("core"))
   .settings(coreSettings: _*)
@@ -69,24 +69,24 @@ lazy val scalajs = (project in file("scalajs"))
   .dependsOn(core)
   .enablePlugins(ScalaJSPlugin)
 
-lazy val core_showcase = (project in file("core-showcase"))
+lazy val showcase_core = (project in file("showcase-core"))
   .settings(showcaseSettings: _*)
   .settings(
-    name := "doctus-core-showcase")
+    name := "showcase-doctus-core")
   .dependsOn(core)
   .enablePlugins(ScalaJSPlugin)
 
-lazy val scalajs_showcase = (project in file("scalajs-showcase"))
+lazy val showcase_scalajs = (project in file("showcase-scalajs"))
   .settings(showcaseSettings: _*)
   .settings(
-    name := "doctus-scalajs-showcase")
-  .dependsOn(core_showcase, scalajs)
+    name := "showcase-doctus-scalajs")
+  .dependsOn(showcase_core, scalajs)
   .enablePlugins(ScalaJSPlugin)
 
-lazy val swing_showcase = (project in file("swing-showcase"))
+lazy val showcase_swing = (project in file("showcase-swing"))
   .settings(showcaseSettings: _*)
   .settings(
-    name := "doctus-swing-showcase")
-  .dependsOn(core_showcase, swing)
+    name := "showcase-doctus-swing")
+  .dependsOn(showcase_core, swing)
 
     
