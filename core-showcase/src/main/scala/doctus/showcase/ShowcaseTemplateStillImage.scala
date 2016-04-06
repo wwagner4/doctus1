@@ -24,7 +24,7 @@ case class DoctusTemplateStillImage(canvas: DoctusCanvas) extends DoctusTemplate
   def draw(g: DoctusGraphics): Unit = {
 
     val w = canvas.width
-    val h = canvas.width
+    val h = canvas.height
     
     def ranColor: DoctusColor = {
       val hue = ran.nextInt(360)
