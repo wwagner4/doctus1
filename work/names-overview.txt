@@ -27,7 +27,7 @@ doctus.scalajs
 doctus.scalajs.x
 
 Showcases
-doctus
+doctus.core
 doctus.swing
 doctus.scalajs
 
@@ -35,27 +35,21 @@ doctus.scalajs
 ---------------------------------------------
 Filenames 
 
-core 
 Doctus
 DoctusXxx
 
-swing
 DoctusSwing
 DoctusSwingImpl
 DoctusSwingXxx
 
-scalajs
 DoctusScalajs
 DoctusScalajsImpl
 DoctusScalajsXxxx
 
 Showcase
 
-ShowcaseCore
-ShowcaseCoreXxx
-ShowcaseSwing
+ShowcaseXxx
 ShowcaseSwingXxx
-ShowcaseScalajs
 ShowcaseScalajsXxx
 
 Tests
