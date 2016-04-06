@@ -45,6 +45,7 @@ lazy val root = (project in file("."))
   .aggregate(
     core,
     swing,
+    jvm,
     scalajs,
     showcase_core,
     showcase_swing, 
@@ -60,6 +61,12 @@ lazy val swing = (project in file("swing"))
   .settings(swingSettings: _*)
   .settings(
     name := "doctus-swing")
+  .dependsOn(core)
+
+lazy val jvm = (project in file("jvm"))
+  .settings(swingSettings: _*)
+  .settings(
+    name := "doctus-jvm")
   .dependsOn(core)
 
 lazy val scalajs = (project in file("scalajs"))
