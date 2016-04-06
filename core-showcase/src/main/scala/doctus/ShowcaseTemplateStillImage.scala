@@ -1,13 +1,11 @@
-package doctus.showcase
+package doctus
 
 import doctus.core.template.DoctusTemplate
 import doctus.core.DoctusGraphics
 import doctus.core.DoctusCanvas
 import doctus.core.util.DoctusPoint
-import doctus.core.util.DoctusVector
 import doctus.core.color.DoctusColorBlue
 import java.util.Random
-import doctus.core.color.DoctusColorGreen
 import doctus.core.DoctusColor
 import doctus.core.color.DoctusColorUtil
 import doctus.core.color.DoctusColorRgb

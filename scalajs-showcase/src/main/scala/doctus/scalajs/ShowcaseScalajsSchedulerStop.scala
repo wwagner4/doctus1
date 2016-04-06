@@ -6,7 +6,7 @@ import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLCanvasElement
 import org.scalajs.dom.raw.HTMLElement
 
-import doctus.showcase.DoctusControllerSchedulerStop
+import doctus.DoctusControllerSchedulerStop
 
 @JSExport("SchedulerStopMap")
 object ShowcaseScalajsSchedulerStop {

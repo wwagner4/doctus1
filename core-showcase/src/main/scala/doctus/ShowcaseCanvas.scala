@@ -1,4 +1,4 @@
-package doctus.showcase
+package doctus
 
 import doctus.core._
 import doctus.core.comp._

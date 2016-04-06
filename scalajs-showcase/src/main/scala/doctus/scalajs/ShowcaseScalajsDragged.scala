@@ -5,7 +5,7 @@ import scala.scalajs.js.annotation.JSExport
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLCanvasElement
 
-import doctus.showcase.DoctusControllerDraggable
+import doctus.DoctusControllerDraggable
 
 @JSExport("DraggedMap")
 object ShowcaseScalajsDragged {

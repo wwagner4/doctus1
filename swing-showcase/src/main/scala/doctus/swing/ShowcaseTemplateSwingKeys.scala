@@ -2,7 +2,7 @@ package doctus.swing
 
 import javax.swing.JFrame
 import java.awt.Dimension
-import doctus.showcase.DoctusTemplateKeys
+import doctus.DoctusTemplateKeys
 import doctus.core.template.DoctusTemplateController
 import javax.swing.ImageIcon
 import java.awt.BorderLayout

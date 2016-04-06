@@ -1,12 +1,13 @@
 package doctus.scalajs
 
-import doctus.showcase._
+import doctus._
 import org.scalajs.dom
 import org.scalajs.dom._
 import org.scalajs.dom.raw._
 import org.scalajs.jquery.jQuery
 import scala.scalajs.js.annotation.JSExport
 import doctus.core.DoctusFont
+import doctus.DoctusControllerCanvas
 
 @JSExport("CanvasMap")
 object ShowcaseScalajsCanvas {

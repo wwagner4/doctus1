@@ -27,9 +27,9 @@ doctus.scalajs
 doctus.scalajs.x
 
 Showcases
-doctus.showcase.core
-doctus.showcase.swing
-doctus.showcase.scalajs
+doctus
+doctus.swing
+doctus.scalajs
 
 
 ---------------------------------------------
