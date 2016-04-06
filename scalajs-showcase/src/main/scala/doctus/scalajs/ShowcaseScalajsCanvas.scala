@@ -7,7 +7,7 @@ import org.scalajs.dom.raw._
 import org.scalajs.jquery.jQuery
 import scala.scalajs.js.annotation.JSExport
 import doctus.core.DoctusFont
-import doctus.DoctusControllerCanvas
+import doctus.core.DoctusControllerCanvas
 
 @JSExport("CanvasMap")
 object ShowcaseScalajsCanvas {

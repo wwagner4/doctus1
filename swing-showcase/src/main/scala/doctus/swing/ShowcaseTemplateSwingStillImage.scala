@@ -1,6 +1,6 @@
 package doctus.swing
 
-import doctus.DoctusTemplateStillImage
+import doctus.core.DoctusTemplateStillImage
 import javax.swing.JFrame
 import javax.swing.ImageIcon
 import java.awt.BorderLayout

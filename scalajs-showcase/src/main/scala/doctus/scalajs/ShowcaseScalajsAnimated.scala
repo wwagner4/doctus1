@@ -4,7 +4,7 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLCanvasElement
-import doctus.DoctusControllerAnimated
+import doctus.core.DoctusControllerAnimated
 
 @JSExport("AnimatedMap")
 object ShowcaseScalajsAnimated {

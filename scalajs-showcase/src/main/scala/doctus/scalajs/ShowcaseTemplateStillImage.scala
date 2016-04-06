@@ -6,7 +6,7 @@ import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLCanvasElement
 
 import doctus.core.template.DoctusTemplateController
-import doctus.DoctusTemplateStillImage
+import doctus.core.DoctusTemplateStillImage
 
 @JSExport("StillImage")
 object ShowcaseTemplateStillImage {

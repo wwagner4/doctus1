@@ -3,7 +3,7 @@ package doctus.scalajs
 import scala.scalajs.js.annotation.JSExport
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLCanvasElement
-import doctus.DoctusTemplateKeys
+import doctus.core.DoctusTemplateKeys
 import doctus.core.template.DoctusTemplateController
 
 

@@ -3,7 +3,7 @@ package doctus.swing
 import java.awt.BorderLayout
 import java.awt.Dimension
 
-import doctus.DoctusControllerPointable
+import doctus.core.DoctusControllerPointable
 import javax.swing.JFrame
 
 object PointableApp extends App {

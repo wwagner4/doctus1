@@ -4,7 +4,7 @@ import scala.scalajs.js.annotation.JSExport
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLElement
 import org.scalajs.jquery.jQuery
-import doctus._
+import doctus.core._
 
 @JSExport("ComponentMap")
 object ShowcaseScalajsComponent {

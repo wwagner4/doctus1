@@ -1,4 +1,4 @@
-package doctus
+package doctus.core
 
 import doctus.core._
 import doctus.core.comp._
@@ -6,25 +6,23 @@ import doctus.core.color._
 import doctus.core.util._
 import doctus.core.text._
 
-sealed trait ActionTyp
-
-case class Started(p: DoctusPoint, cnt: Int) extends ActionTyp
-case class Stopped(p: DoctusPoint, cnt: Int) extends ActionTyp
-case class Dragged(p: DoctusPoint, cnt: Int) extends ActionTyp
-
-case class DoctusControllerDraggable(draggable: DoctusDraggable, canvas: DoctusCanvas) {
+case class DoctusControllerPointable(pointable: DoctusPointable, canvas: DoctusCanvas) {
 
   var actCount = 0
-
+  var init = true
   var actions = List.empty[ActionTyp]
 
-  draggable.onStart { started }
-  draggable.onStop { stopped }
-  draggable.onDrag { dragged }
-  
+  pointable.onStart { started }
+  pointable.onStop { stopped }
   canvas.onRepaint { paint }
 
   def paint(g: DoctusGraphics): Unit = {
+    if (init) {
+      g.noStroke()
+      g.fill(DoctusColorYellow, 30)
+      g.rect(0, 0, canvas.width, canvas.height)
+      init = false
+    }
     synchronized {
       actions.foreach {
         _ match {
@@ -37,8 +35,7 @@ case class DoctusControllerDraggable(draggable: DoctusDraggable, canvas: DoctusC
             g.ellipse(DoctusPoint(a.p.x, a.p.y), 5, 5)
             drawNum(g, a.p, a.cnt)
           case a: Dragged =>
-            g.fill(DoctusColorYellow, 100)
-            g.ellipse(DoctusPoint(a.p.x, a.p.y), 2, 2)
+            // Nothing to do
         }
       }
       actions = List.empty[ActionTyp]
@@ -48,7 +45,7 @@ case class DoctusControllerDraggable(draggable: DoctusDraggable, canvas: DoctusC
   def drawNum(g: DoctusGraphics, p: DoctusPoint, num: Int): Unit = {
     val a = 40
     val h = 10
-    g.fill(DoctusColorBlack, 255)
+    g.stroke(DoctusColorBlack, 255)
     num % 8 match {
       case 0 =>
         val x1 = p.x + a
@@ -103,14 +100,6 @@ case class DoctusControllerDraggable(draggable: DoctusDraggable, canvas: DoctusC
   def stopped(p: DoctusPoint): Unit = {
     synchronized {
       actions ::= Stopped(p, actCount)
-      actCount += 1
-      canvas.repaint()
-    }
-  }
-
-  def dragged(p: DoctusPoint): Unit = {
-    synchronized {
-      actions ::= Dragged(p, actCount)
       actCount += 1
       canvas.repaint()
     }

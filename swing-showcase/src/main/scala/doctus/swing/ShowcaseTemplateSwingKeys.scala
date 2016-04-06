@@ -1,11 +1,12 @@
 package doctus.swing
 
-import javax.swing.JFrame
+import java.awt.BorderLayout
 import java.awt.Dimension
-import doctus.DoctusTemplateKeys
+
+import doctus.core.DoctusTemplateKeys
 import doctus.core.template.DoctusTemplateController
 import javax.swing.ImageIcon
-import java.awt.BorderLayout
+import javax.swing.JFrame
 
 object ShowcaseTemplateSwingKeys extends App {
   

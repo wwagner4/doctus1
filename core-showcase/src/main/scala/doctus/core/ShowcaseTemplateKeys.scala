@@ -1,4 +1,4 @@
-package doctus
+package doctus.core
 
 import doctus.core.template._
 import doctus.core._

@@ -3,7 +3,7 @@ package doctus.swing
 import java.awt.BorderLayout
 import java.awt.Dimension
 
-import doctus.DoctusControllerDraggable
+import doctus.core.DoctusControllerDraggable
 import javax.swing.JFrame
 
 object DraggableApp extends App {

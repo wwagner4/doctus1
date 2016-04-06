@@ -5,7 +5,7 @@ import java.awt.Dimension
 import java.awt.FlowLayout
 import javax.swing._
 import javax.swing.border.EmptyBorder
-import doctus._
+import doctus.core._
 
 object ShowcaseSwingSchedulerStop extends App {
 
