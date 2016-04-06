@@ -10,7 +10,7 @@ import doctus.core._
 import doctus.core.comp.DoctusText
 import doctus.core.template.DoctusTemplateCanvas
 import doctus.core.util.DoctusPoint
-import inner._
+import impl._
 
 case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGraphics {
 

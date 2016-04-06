@@ -1,4 +1,4 @@
-package doctus.scalajs.inner
+package doctus.scalajs.impl
 
 import scala.scalajs.js
 import scala.scalajs.js.Any.fromFunction1
