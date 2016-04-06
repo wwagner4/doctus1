@@ -1,4 +1,4 @@
-package doctus.swing.inner
+package doctus.swing.impl
 
 import java.util.concurrent._
 import doctus.core._

@@ -28,10 +28,10 @@ import doctus.core.comp.DoctusSelect
 import doctus.core.comp.DoctusText
 import doctus.core.template.DoctusTemplateCanvas
 import doctus.core.util.DoctusPoint
-import inner.DoctusCanvasSwing1
-import inner.DoctusDraggableSwing1
-import inner.DoctusKeySwing1
-import inner.DoctusPointableSwing1
+import impl.DoctusCanvasSwing1
+import impl.DoctusDraggableSwing1
+import impl.DoctusKeySwing1
+import impl.DoctusPointableSwing1
 import javax.swing.DefaultComboBoxModel
 import javax.swing.JComboBox
 import javax.swing.JList
