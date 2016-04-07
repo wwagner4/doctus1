@@ -49,6 +49,7 @@ lazy val root = (project in file("."))
     scalajs,
     showcase_core,
     showcase_swing, 
+    showcase_jvm, 
     showcase_scalajs)
 
 lazy val core = (project in file("core"))
