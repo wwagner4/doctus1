@@ -36,12 +36,12 @@ trait DoctusImage {
   def scale(factor: Double): DoctusImage
   
   /**
-   * Width of the image in pixel
+   * Width of the unscaled image in pixel
    */
   def width: Int
   
   /**
-   * Height of the image in pixel
+   * Height of the unscaled image in pixel
    */
   def height: Int
 

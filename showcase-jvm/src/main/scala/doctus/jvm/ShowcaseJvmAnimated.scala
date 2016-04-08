@@ -25,10 +25,9 @@ object ShowcaseJvmAnimated extends App {
       val height = 400
 
       val fxCanvas = new Canvas(width, height);
-      val ctx = fxCanvas.getGraphicsContext2D
 
       val sched = DoctusSchedulerJvm
-      val canvas = DoctusCanvasFx(ctx)
+      val canvas = DoctusCanvasFx(fxCanvas)
       val img = DoctusImageFx("logo.png")
 
       // Start the controller
