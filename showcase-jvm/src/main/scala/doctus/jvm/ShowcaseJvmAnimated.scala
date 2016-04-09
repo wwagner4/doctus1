@@ -15,6 +15,7 @@ import javafx.stage.Stage
 import javafx.stage.WindowEvent
 import javafx.event.EventHandler
 import javafx.event.ActionEvent
+import javafx.event.Event
 
 object ShowcaseJvmAnimated extends App {
 
@@ -40,19 +41,20 @@ object ShowcaseJvmAnimated extends App {
       val bgCol = Color.WHITE;
       val scene = new Scene(grp, width, height, bgCol);
 
+      // Start the controller
+      DoctusControllerAnimated(canvas, sched, img)
+      
       stage.setScene(scene);
 
       stage.show();
-      def handler(h: (WindowEvent => Unit)): EventHandler[WindowEvent] =
-        new EventHandler[WindowEvent] {
-          override def handle(event: WindowEvent): Unit = h(event)
+      def handler[T <: Event](h: (T => Unit)): EventHandler[T] =
+        new EventHandler[T] {
+          override def handle(event: T): Unit = h(event)
         }
 
       // Find a better solution to exit
       stage.setOnCloseRequest(handler(e => System.exit(0)))
 
-      // Start the controller
-      DoctusControllerAnimated(canvas, sched, img)
 
 
     }

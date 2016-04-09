@@ -138,6 +138,7 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGr
 
   def image(img: DoctusImage, originX: Double, originY: Double): Unit = {
     def draw(_img: DoctusImageScalajs, x: Double, y: Double, _imageMode: ImageMode): Unit = {
+      ctx.globalAlpha = 1.0
       _imageMode match {
         case ImageModeCORNER =>
           ctx.drawImage(_img.image, x, y)
@@ -146,6 +147,7 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGr
           val _y = y - _img.height / 2.0 / _img.scaleFactor
           ctx.drawImage(_img.image, _x, _y)
       }
+      ctx.globalAlpha = fillAlpha
     }
 
     img match {

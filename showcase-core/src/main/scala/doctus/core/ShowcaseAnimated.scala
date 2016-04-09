@@ -17,24 +17,23 @@ case class DoctusControllerAnimated(canvas: DoctusCanvas, scheduler: DoctusSched
 
   canvas.onRepaint(paint)
   canvas.repaint()
-  scheduler.start(() => canvas.repaint(), 10)
+  scheduler.start(() => canvas.repaint(), 25)
 
   def paint(g: DoctusGraphics): Unit = {
     
     // Fill the background
-    g.fill(color.DoctusColorWhite, 255)
+    g.fill(color.DoctusColorWhite, 100)
     g.rect(DoctusPoint(0, 0), canvas.width, canvas.height)
 
     val pos = calcPos(count)
     val scale = calcScale(count)
 
     g.image(logo.scale(scale), DoctusPoint(pos.x, pos.y))
-    count += 1
+    count = (count + 1) % 1000
   }
 
   def calcPos(i: Int): DoctusPoint = {
-    val speedDiff = 0.01 + math.sin(i * 0.001) * 0.003
-    val speed = 0.01 + speedDiff
+    val speed = 0.02 + math.sin(i * 0.05) * 0.003
     val rad = i * speed
     val x = math.sin(rad) * radius * 2
     val y = math.cos(rad) * radius

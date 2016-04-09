@@ -1,39 +1,22 @@
 package doctus.jvm
 
-import doctus.core.DoctusActivatable
-import doctus.core.DoctusCanvas
-import doctus.core.DoctusDraggable
-import doctus.core.DoctusFont
-import doctus.core.DoctusGraphics
-import doctus.core.DoctusImage
-import doctus.core.DoctusKey
-import doctus.core.DoctusPointable
-import doctus.core.DoctusScheduler
-import doctus.core.ImageMode
-import doctus.core.comp.DoctusSelect
-import doctus.core.comp.DoctusText
+import doctus.core._
+import doctus.core.comp._
 import doctus.core.template.DoctusTemplateCanvas
 import doctus.core.util.DoctusPoint
+import javafx.application.Platform
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
-import doctus.core.DoctusColor
-import javafx.scene.paint.Color
 import javafx.scene.image.Image
-import java.net.URL
-import scala.concurrent.ExecutionContext.Implicits.global
-import javafx.application.Platform
-import doctus.core.ImageModeCENTER
-import doctus.core.ImageModeCORNER
+import javafx.scene.paint.Color
 
 case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
 
   def ellipse(centerX: Double, centerY: Double, a: Double, b: Double): Unit = ???
 
   def fill(c: DoctusColor, alpha: Double): Unit = {
-    // TODO refactor variables
     val (r, g, b) = c.rgb
-    val c1 = Color.rgb(r, g, b, alpha / 255)
-    gc.setFill(c1)
+    gc.setFill(Color.rgb(r, g, b, alpha / 255))
   }
 
   def noFill(): Unit = {
@@ -92,20 +75,18 @@ case class DoctusCanvasFx(canvas: Canvas) extends DoctusCanvas {
   var paintFun = Option.empty[DoctusGraphics => Unit]
 
   def onRepaint(f: DoctusGraphics => Unit): Unit = {
-    // TODO remove variables
     paintFun = Some(f)
     repaint
   }
-  // TODO refactor this method
+
   def repaint(): Unit = {
-    import scala.concurrent._
     paintFun match {
       case Some(f) =>
         val dg = DoctusGraphicsFx(g)
         Platform.runLater(new Runnable {
           def run = f(dg)
         })
-      case None => println("repaint was called but nothing was done !!!")
+      case None => throw new IllegalStateException("'onRepaint' must be called at least ones before 'repaint' is called")
     }
   }
   def width: Int = canvas.getWidth.toInt
