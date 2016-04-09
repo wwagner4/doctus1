@@ -41,12 +41,11 @@ case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
   def imageMode(imageMode: ImageMode): Unit = ???
 
   def image(img: DoctusImage, originX: Double, originY: Double): Unit = {
-    def image(res: String): Image = {
-      new Image(res)
-    }
     img match {
-      case DoctusImageFx(res, scale) =>
-        gc.drawImage(image(res), originX, originY)
+      case img: DoctusImageFx =>
+        val w = img.width * img.scaleFactor
+        val h = img.height * img.scaleFactor
+        gc.drawImage(img.image, originX, originY, w, h)
       case _ => throw new IllegalStateException("Image class not DoctusImageFx. " + img.getClass)
     }
 
@@ -174,9 +173,11 @@ case class DoctusImageFx(resource: String, scaleFactor: Double = 1.0) extends Do
 
   def scale(factor: Double): doctus.core.DoctusImage = DoctusImageFx(resource, scaleFactor * factor)
 
-  def width = ???
+  lazy val image = new Image(resource)
+  
+  def width = image.getWidth.toInt
 
-  def height = ???
+  def height = image.getHeight.toInt
 
 }
 
