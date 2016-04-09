@@ -18,12 +18,12 @@ import javafx.scene.transform.Rotate
 import javafx.scene.shape.StrokeLineCap
 
 case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
-  
+
   gc.setLineCap(StrokeLineCap.BUTT)
 
   def ellipse(centerX: Double, centerY: Double, a: Double, b: Double): Unit = {
-    if (doFill) gc.fillOval(centerX, centerY, a, b)
-    if (doStroke) gc.strokeOval(centerX, centerY, a, b)
+    if (doFill) gc.fillOval(centerX - a, centerY - b, a * 2, b * 2)
+    if (doStroke) gc.strokeOval(centerX - a, centerY - b, a * 2, b * 2)
   }
 
   var doFill = true
