@@ -9,18 +9,31 @@ import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.image.Image
 import javafx.scene.paint.Color
+import doctus.core.text.DoctusFontSansSerif
+import javafx.scene.text.Font
+import doctus.core.text.DoctusFontSerif
+import doctus.core.text.DoctusFontMonospace
+import doctus.core.text.DoctusFontNamed
+import javafx.scene.transform.Rotate
 
 case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
 
-  def ellipse(centerX: Double, centerY: Double, a: Double, b: Double): Unit = ???
+  def ellipse(centerX: Double, centerY: Double, a: Double, b: Double): Unit = {
+    if (doFill) gc.fillOval(centerX, centerY, a, b)
+    if (doStroke) gc.strokeOval(centerX, centerY, a, b)
+  }
+
+  var doFill = true
+  var doStroke = true
 
   def fill(c: DoctusColor, alpha: Double): Unit = {
     val (r, g, b) = c.rgb
     gc.setFill(Color.rgb(r, g, b, alpha / 255))
+    doFill = true
   }
 
   def noFill(): Unit = {
-    // TODO Do not ignore
+    doFill = false
   }
 
   var _imageMode: ImageMode = ImageModeCORNER
@@ -42,29 +55,68 @@ case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
     }
   }
 
-  def line(fromX: Double, fromY: Double, toX: Double, toY: Double): Unit = ???
-
-  def poli(poli: List[DoctusPoint]): Unit = ???
-
-  def rect(originX: Double, originY: Double, width: Double, height: Double): Unit = {
-    // TODO determine between fill and no fill
-    gc.fillRect(originX, originY, width, height)
+  def line(fromX: Double, fromY: Double, toX: Double, toY: Double): Unit = {
+    gc.strokeLine(fromX, fromY, toX, toY)
   }
 
-  def stroke(c: doctus.core.DoctusColor, alpha: Double): Unit = {
-    // TODO Do not ignore
+  def poli(poli: List[DoctusPoint]): Unit = {
+    poli match {
+      case Nil      => // Empty list -> Nothing to do
+      case _ :: Nil => // List with one element -> Nothing to do
+      case first :: rest =>
+        gc.beginPath()
+        gc.moveTo(first.x, first.y)
+        rest.foreach { p => gc.lineTo(p.x, p.y) }
+        gc.closePath()
+    }
+  }
+
+  def rect(originX: Double, originY: Double, width: Double, height: Double): Unit = {
+    if (doFill) gc.fillRect(originX, originY, width, height)
+    if (doStroke) gc.strokeRect(originX, originY, width, height)
+  }
+
+  def stroke(c: DoctusColor, alpha: Double): Unit = {
+    val (r, g, b) = c.rgb
+    gc.setStroke(new Color(r.toDouble / 255, g.toDouble / 255, b.toDouble / 255, alpha / 255))
+    doStroke = true
   }
 
   def noStroke(): Unit = {
-    // TODO Do not ignore
+    doStroke = false
   }
-  def strokeWeight(weight: Double): Unit = ???
 
-  def textFont(font: DoctusFont): Unit = ???
+  def strokeWeight(weight: Double): Unit = {
+    gc.setLineWidth(weight)
+    doStroke = true
+  }
 
-  def textSize(textSize: Double): Unit = ???
+  def textFont(font: DoctusFont): Unit = {
+    val size = gc.getFont.getSize
+    // TODO implement more advanced name finding
+    font match {
+      case DoctusFontSansSerif   => gc.setFont(Font.font("Arial", size))
+      case DoctusFontSerif       => gc.setFont(Font.font("Times", size))
+      case DoctusFontMonospace   => gc.setFont(Font.font("Courier", size))
+      case DoctusFontNamed(name) => gc.setFont(Font.font(name, size))
+    }
+  }
 
-  def text(str: String, originX: Double, originY: Double, rotation: Double): Unit = ???
+  def textSize(textSize: Double): Unit = {
+    val family = gc.getFont.getFamily
+    val size = gc.getFont.getSize
+    gc.setFont(Font.font(family, size))
+  }
+
+  def text(str: String, originX: Double, originY: Double, rotation: Double): Unit = {
+    val current = gc.getTransform
+    val rot = current.clone()
+    rot.appendTranslation(originX, originY)
+    rot.appendRotation(rotation * 180 / math.Pi)
+    gc.setTransform(rot)
+    gc.fillText(str, 0, 0)
+    gc.setTransform(current)
+  }
 
 }
 
