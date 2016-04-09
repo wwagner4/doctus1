@@ -25,8 +25,8 @@ object ShowcaseJvmCanvas extends App {
 
     override def start(stage: Stage) {
 
-      val width = 700
-      val height = 500
+      val width = 1000
+      val height = 700
 
       val canvasFx = new Canvas(width, height);
 
@@ -35,7 +35,7 @@ object ShowcaseJvmCanvas extends App {
       val img = DoctusImageFx("logo.png")
 
 
-      val grp = new Group();
+      val grp = new Group()
       grp.getChildren().add(canvasFx);
 
       val bgCol = Color.WHITE;

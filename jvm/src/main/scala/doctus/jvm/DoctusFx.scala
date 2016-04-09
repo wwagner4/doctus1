@@ -15,8 +15,11 @@ import doctus.core.text.DoctusFontSerif
 import doctus.core.text.DoctusFontMonospace
 import doctus.core.text.DoctusFontNamed
 import javafx.scene.transform.Rotate
+import javafx.scene.shape.StrokeLineCap
 
 case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
+  
+  gc.setLineCap(StrokeLineCap.BUTT)
 
   def ellipse(centerX: Double, centerY: Double, a: Double, b: Double): Unit = {
     if (doFill) gc.fillOval(centerX, centerY, a, b)
@@ -112,7 +115,7 @@ case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
     val current = gc.getTransform
     val rot = current.clone()
     rot.appendTranslation(originX, originY)
-    rot.appendRotation(rotation * 180 / math.Pi)
+    rot.appendRotation(-rotation * 180 / math.Pi)
     gc.setTransform(rot)
     gc.fillText(str, 0, 0)
     gc.setTransform(current)
