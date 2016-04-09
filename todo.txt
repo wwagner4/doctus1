@@ -8,6 +8,7 @@
 - Integrate JavaFX
 - Implementation of the doctus sound interface
 - switch from scala build file to build.sbt in myDoctus
+- Check the reason for the yellow border on the animation showcase
 
 closed
 - sbt: change to build.sbt from scala file
