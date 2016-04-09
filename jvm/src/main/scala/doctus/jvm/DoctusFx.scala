@@ -23,6 +23,7 @@ import javafx.stage.Stage
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.KeyCode
 import javafx.scene.control.ComboBox
+import javafx.scene.control.TextInputControl
 
 case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
 
@@ -242,11 +243,11 @@ case class DoctusActivatableFx(comp: Parent) extends DoctusActivatable {
 
 }
 
-case class DoctusTextFx(textComp: Any) extends DoctusText {
+case class DoctusTextFx(textComp: TextInputControl) extends DoctusText {
 
-  def text: String = ???
+  def text: String = textComp.getText
 
-  def text_=(txt: String) = ???
+  def text_=(txt: String) = textComp.setText(txt)
 }
 
 /**
