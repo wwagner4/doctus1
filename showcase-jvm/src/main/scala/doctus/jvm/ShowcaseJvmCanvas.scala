@@ -25,7 +25,7 @@ object ShowcaseJvmCanvas extends App {
 
     override def start(stage: Stage) {
 
-      val width = 1000
+      val width = 800
       val height = 700
 
       val canvasFx = new Canvas(width, height);

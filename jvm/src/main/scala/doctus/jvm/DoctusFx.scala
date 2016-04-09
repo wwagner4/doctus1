@@ -71,6 +71,8 @@ case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
         gc.moveTo(first.x, first.y)
         rest.foreach { p => gc.lineTo(p.x, p.y) }
         gc.closePath()
+        if (doFill) gc.fill()
+        if (doStroke) gc.stroke()
     }
   }
 
@@ -107,7 +109,7 @@ case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
 
   def textSize(textSize: Double): Unit = {
     val family = gc.getFont.getFamily
-    val size = gc.getFont.getSize
+    val size = textSize
     gc.setFont(Font.font(family, size))
   }
 
