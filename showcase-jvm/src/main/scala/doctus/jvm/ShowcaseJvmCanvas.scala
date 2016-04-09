@@ -30,10 +30,8 @@ object ShowcaseJvmCanvas extends App {
 
       val canvasFx = new Canvas(width, height);
 
-      val sched = DoctusSchedulerJvm
       val canvas = DoctusCanvasFx(canvasFx)
       val img = DoctusImageFx("logo.png")
-
 
       val grp = new Group()
       grp.getChildren().add(canvasFx);
