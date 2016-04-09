@@ -179,6 +179,7 @@ case class DoctusTemplateCanvasFx(comp: Any)
   def onStop(f: doctus.core.util.DoctusPoint ⇒ Unit): Unit = ???
 }
 
+// TODO Move parameter f to DoctusSelect
 case class DoctusSelectFx[T](comboBox: ComboBox[T], f: (T) => String = (t: T) => t.toString()) extends DoctusSelect[T] {
 
   def addItem(item: T): Unit = comboBox.getItems.add(item)
