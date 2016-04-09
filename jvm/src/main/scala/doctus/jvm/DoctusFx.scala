@@ -22,6 +22,8 @@ import javafx.scene.image.Image
 import java.net.URL
 import scala.concurrent.ExecutionContext.Implicits.global
 import javafx.application.Platform
+import doctus.core.ImageModeCENTER
+import doctus.core.ImageModeCORNER
 
 case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
 
@@ -38,17 +40,23 @@ case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
     // TODO Do not ignore
   }
 
-  def imageMode(imageMode: ImageMode): Unit = ???
+  var _imageMode: ImageMode = ImageModeCORNER
+
+  def imageMode(imageMode: ImageMode): Unit = _imageMode = imageMode
 
   def image(img: DoctusImage, originX: Double, originY: Double): Unit = {
     img match {
       case img: DoctusImageFx =>
         val w = img.width * img.scaleFactor
         val h = img.height * img.scaleFactor
-        gc.drawImage(img.image, originX, originY, w, h)
+        _imageMode match {
+          case ImageModeCENTER =>
+            gc.drawImage(img.image, originX - w * 0.5, originY - h * 0.5, w, h)
+          case ImageModeCORNER =>
+            gc.drawImage(img.image, originX, originY, w, h)
+        }
       case _ => throw new IllegalStateException("Image class not DoctusImageFx. " + img.getClass)
     }
-
   }
 
   def line(fromX: Double, fromY: Double, toX: Double, toY: Double): Unit = ???
@@ -96,7 +104,7 @@ case class DoctusCanvasFx(canvas: Canvas) extends DoctusCanvas {
         val dg = DoctusGraphicsFx(g)
         Platform.runLater(new Runnable {
           def run = f(dg)
-        })  
+        })
       case None => println("repaint was called but nothing was done !!!")
     }
   }
@@ -174,7 +182,7 @@ case class DoctusImageFx(resource: String, scaleFactor: Double = 1.0) extends Do
   def scale(factor: Double): doctus.core.DoctusImage = DoctusImageFx(resource, scaleFactor * factor)
 
   lazy val image = new Image(resource)
-  
+
   def width = image.getWidth.toInt
 
   def height = image.getHeight.toInt
