@@ -12,6 +12,9 @@ import javafx.application._
 import javafx.scene._
 import javafx.scene.paint._
 import javafx.stage.Stage
+import javafx.stage.WindowEvent
+import javafx.event.EventHandler
+import javafx.event.ActionEvent
 
 object ShowcaseJvmAnimated extends App {
 
@@ -21,17 +24,37 @@ object ShowcaseJvmAnimated extends App {
 
     override def start(stage: Stage) {
 
-      val width = 400
-      val height = 400
+      val width = 700
+      val height = 500
 
-      val fxCanvas = new Canvas(width, height);
+      val canvasFx = new Canvas(width, height);
 
       val sched = DoctusSchedulerJvm
-      val canvas = DoctusCanvasFx(fxCanvas)
+      val canvas = DoctusCanvasFx(canvasFx)
       val img = DoctusImageFx("logo.png")
+
+
+      val grp = new Group();
+      grp.getChildren().add(canvasFx);
+
+      val bgCol = Color.WHITE;
+      val scene = new Scene(grp, width, height, bgCol);
+
+      stage.setScene(scene);
+
+      stage.show();
+      def handler(h: (WindowEvent => Unit)): EventHandler[WindowEvent] =
+        new EventHandler[WindowEvent] {
+          override def handle(event: WindowEvent): Unit = h(event)
+        }
+
+      // Find a better solution to exit
+      stage.setOnCloseRequest(handler(e => System.exit(0)))
 
       // Start the controller
       DoctusControllerAnimated(canvas, sched, img)
+
+
     }
   }
 

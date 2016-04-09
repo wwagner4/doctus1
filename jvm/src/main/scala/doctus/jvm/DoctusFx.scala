@@ -18,6 +18,10 @@ import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import doctus.core.DoctusColor
 import javafx.scene.paint.Color
+import javafx.scene.image.Image
+import java.net.URL
+import scala.concurrent.ExecutionContext.Implicits.global
+import javafx.application.Platform
 
 case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
 
@@ -25,16 +29,28 @@ case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
 
   def fill(c: DoctusColor, alpha: Double): Unit = {
     // TODO refactor variables
-    val (r, g, b) = c.rgb 
-    val c1 = Color.rgb(r, g , b, alpha / 255)
+    val (r, g, b) = c.rgb
+    val c1 = Color.rgb(r, g, b, alpha / 255)
     gc.setFill(c1)
   }
 
-  def noFill(): Unit = ???
+  def noFill(): Unit = {
+    // TODO Do not ignore
+  }
 
   def imageMode(imageMode: ImageMode): Unit = ???
 
-  def image(img: DoctusImage, originX: Double, originY: Double): Unit = ???
+  def image(img: DoctusImage, originX: Double, originY: Double): Unit = {
+    def image(res: String): Image = {
+      new Image(res)
+    }
+    img match {
+      case DoctusImageFx(res, scale) =>
+        gc.drawImage(image(res), originX, originY)
+      case _ => throw new IllegalStateException("Image class not DoctusImageFx. " + img.getClass)
+    }
+
+  }
 
   def line(fromX: Double, fromY: Double, toX: Double, toY: Double): Unit = ???
 
@@ -45,10 +61,13 @@ case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
     gc.fillRect(originX, originY, width, height)
   }
 
-  def stroke(c: doctus.core.DoctusColor, alpha: Double): Unit = ???
+  def stroke(c: doctus.core.DoctusColor, alpha: Double): Unit = {
+    // TODO Do not ignore
+  }
 
-  def noStroke(): Unit = ???
-
+  def noStroke(): Unit = {
+    // TODO Do not ignore
+  }
   def strokeWeight(weight: Double): Unit = ???
 
   def textFont(font: DoctusFont): Unit = ???
@@ -61,15 +80,26 @@ case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
 
 case class DoctusCanvasFx(canvas: Canvas) extends DoctusCanvas {
 
-  def onRepaint(f: DoctusGraphics ⇒ Unit): Unit = {
+  val g = canvas.getGraphicsContext2D;
+
+  var paintFun = Option.empty[DoctusGraphics => Unit]
+
+  def onRepaint(f: DoctusGraphics => Unit): Unit = {
     // TODO remove variables
-    val g = canvas.getGraphicsContext2D;
-    val dg = DoctusGraphicsFx(g)
-    f(dg)
+    paintFun = Some(f)
+    repaint
   }
-  // TODO check if nothing to do is the right thing when repaint is called.
+  // TODO refactor this method
   def repaint(): Unit = {
-    println("repaint was called but nothing was done !!!")
+    import scala.concurrent._
+    paintFun match {
+      case Some(f) =>
+        val dg = DoctusGraphicsFx(g)
+        Platform.runLater(new Runnable {
+          def run = f(dg)
+        })  
+      case None => println("repaint was called but nothing was done !!!")
+    }
   }
   def width: Int = canvas.getWidth.toInt
   def height: Int = canvas.getHeight.toInt
