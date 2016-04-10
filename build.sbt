@@ -23,7 +23,7 @@ lazy val coreSettings =
 lazy val showcaseSettings =
   coreSettings
 
-lazy val swingSettings =
+lazy val jvmSettings =
   coreSettings ++
     Seq(
       libraryDependencies += "commons-lang" % "commons-lang" % "2.6" % "test",
@@ -44,11 +44,9 @@ lazy val root = (project in file("."))
     name := "doctus-root")
   .aggregate(
     core,
-    swing,
     jvm,
     scalajs,
     showcase_core,
-    showcase_swing, 
     showcase_jvm, 
     showcase_scalajs)
 
@@ -58,14 +56,8 @@ lazy val core = (project in file("core"))
     name := "doctus-core")
   .enablePlugins(ScalaJSPlugin)
 
-lazy val swing = (project in file("swing"))
-  .settings(swingSettings: _*)
-  .settings(
-    name := "doctus-swing")
-  .dependsOn(core)
-
 lazy val jvm = (project in file("jvm"))
-  .settings(swingSettings: _*)
+  .settings(jvmSettings: _*)
   .settings(
     name := "doctus-jvm")
   .dependsOn(core)
@@ -90,12 +82,6 @@ lazy val showcase_scalajs = (project in file("showcase-scalajs"))
     name := "showcase-doctus-scalajs")
   .dependsOn(showcase_core, scalajs)
   .enablePlugins(ScalaJSPlugin)
-
-lazy val showcase_swing = (project in file("showcase-swing"))
-  .settings(showcaseSettings: _*)
-  .settings(
-    name := "showcase-doctus-swing")
-  .dependsOn(showcase_core, swing)
 
 lazy val showcase_jvm = (project in file("showcase-jvm"))
   .settings(showcaseSettings: _*)
