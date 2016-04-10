@@ -123,6 +123,8 @@ private[jvm] trait DoctusDraggableFxImpl extends DoctusDraggable {
  */
 private[jvm] trait DoctusKeyFxImp extends DoctusKey {
 
+  comp.setFocusTraversable(true)
+  
   def comp: Node
 
   var _onKeyPressed = Option.empty[DoctusKeyCode ⇒ Unit]

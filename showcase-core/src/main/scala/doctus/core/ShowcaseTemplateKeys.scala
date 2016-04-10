@@ -10,7 +10,7 @@ case class Button(pos: DoctusPoint)
 
 case class DoctusTemplateKeys(canvas: DoctusCanvas) extends DoctusTemplate {
 
-  def center: DoctusPoint = DoctusPoint(canvas.width * 0.5, canvas.height * 0.5)
+  def center: DoctusPoint = DoctusPoint(0, 0)
 
   var button = new Button(center)
 
