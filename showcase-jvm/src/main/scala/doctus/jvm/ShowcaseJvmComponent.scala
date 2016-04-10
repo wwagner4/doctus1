@@ -36,9 +36,6 @@ object ShowcaseJvmComponent extends App {
       val width = 700
       val height = 500
 
-      
-      
-
       val label01 = new Label("Activatable 01")
 
       val pane02 = new Pane();
@@ -54,7 +51,6 @@ object ShowcaseJvmComponent extends App {
       val textField = new TextField()
       textField.setEditable(false)
       textField.setFocusTraversable(false)
-      
       
       val contPane = new VBox(30)
       contPane.setPadding(new Insets(20, 20, 20, 20))
