@@ -213,13 +213,47 @@ case class DoctusPointableFx(comp: Node) extends DoctusPointable {
   })
 }
 
-case class DoctusDraggableFx(comp: Any) extends DoctusDraggable {
+case class DoctusDraggableFx(comp: Node) extends DoctusDraggable {
+
+  var _onStart = Option.empty[DoctusPoint ⇒ Unit]
+  var _onStop = Option.empty[DoctusPoint ⇒ Unit]
+  var _onDrag = Option.empty[DoctusPoint ⇒ Unit]
+
   // Members declared in doctus.core.DoctusDraggable
-  def onDrag(f: doctus.core.util.DoctusPoint ⇒ Unit): Unit = ???
+  def onDrag(f: DoctusPoint ⇒ Unit): Unit = _onDrag = Some(f)
 
   // Members declared in doctus.core.DoctusPointable
-  def onStart(f: doctus.core.util.DoctusPoint ⇒ Unit): Unit = ???
-  def onStop(f: doctus.core.util.DoctusPoint ⇒ Unit): Unit = ???
+  def onStart(f: DoctusPoint ⇒ Unit): Unit = _onStart = Some(f)
+  def onStop(f: DoctusPoint ⇒ Unit): Unit = _onStop = Some(f)
+
+  comp.setOnMouseDragEntered(DoctusJvmUtil.handler { e =>
+    println("onDragEntered...")
+  })
+  comp.setOnMouseDragExited(DoctusJvmUtil.handler { e =>
+    println("onDragExited...")
+  })
+  comp.setOnMouseDragged(DoctusJvmUtil.handler { e =>
+    val x = e.getX
+    val y = e.getY
+    _onDrag.foreach(f => f(DoctusPoint(x, y)))
+  })
+  comp.setOnMouseDragOver(DoctusJvmUtil.handler { e =>
+    println("onDragOver...")
+  })
+  comp.setOnMouseDragReleased(DoctusJvmUtil.handler { e =>
+    println("onDragExitedReleased...")
+  })
+  comp.setOnMousePressed(DoctusJvmUtil.handler { e =>
+    val x = e.getX
+    val y = e.getY
+    _onStart.foreach(f => f(DoctusPoint(x, y)))
+  })
+  comp.setOnMouseReleased(DoctusJvmUtil.handler { e =>
+    val x = e.getX
+    val y = e.getY
+    _onStop.foreach(f => f(DoctusPoint(x, y)))
+  })
+
 }
 
 case class DoctusActivatableFx(comp: Parent) extends DoctusActivatable {
