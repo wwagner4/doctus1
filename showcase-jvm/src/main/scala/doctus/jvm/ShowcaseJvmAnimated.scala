@@ -40,6 +40,8 @@ object ShowcaseJvmAnimated extends App {
 
       val bgCol = Color.WHITE;
       val scene = new Scene(grp, width, height, bgCol);
+      canvasFx.widthProperty().bind(scene.widthProperty())
+      canvasFx.heightProperty().bind(scene.heightProperty())
 
       // Start the controller
       DoctusControllerAnimated(canvas, sched, img)

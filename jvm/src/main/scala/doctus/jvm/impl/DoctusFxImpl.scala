@@ -9,10 +9,22 @@ import javafx.scene.Node
 import javafx.scene.canvas.Canvas
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
+import javafx.beans.Observable
+import javafx.beans.value.ChangeListener
+import javafx.event.Event
+import javafx.beans.value.ObservableValue
 
 private[jvm] trait DoctusCanvasFxImpl extends DoctusCanvas {
-  
+
   def comp: Canvas
+
+  comp.widthProperty.addListener(new ChangeListener[Number] {
+    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number) { repaint }
+  })
+  
+  comp.heightProperty().addListener(new ChangeListener[Number] {
+    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number) { repaint }
+  })
 
   val g = comp.getGraphicsContext2D;
 
@@ -30,7 +42,7 @@ private[jvm] trait DoctusCanvasFxImpl extends DoctusCanvas {
         Platform.runLater(new Runnable {
           def run = f(dg)
         })
-      case None => throw new IllegalStateException("'onRepaint' must be called at least ones before 'repaint' is called")
+      case None => // Nothing to do
     }
   }
   def width: Int = comp.getWidth.toInt
@@ -41,7 +53,7 @@ private[jvm] trait DoctusCanvasFxImpl extends DoctusCanvas {
 private[jvm] trait DoctusPointableFxImpl extends DoctusPointable {
 
   def comp: Node
-  
+
   def onStart(f: DoctusPoint ⇒ Unit): Unit = _onStart = Some(f)
   def onStop(f: DoctusPoint ⇒ Unit): Unit = _onStop = Some(f)
 
@@ -64,7 +76,7 @@ private[jvm] trait DoctusPointableFxImpl extends DoctusPointable {
 private[jvm] trait DoctusDraggableFxImpl extends DoctusDraggable {
 
   def comp: Node
-  
+
   var _onStart = Option.empty[DoctusPoint ⇒ Unit]
   var _onStop = Option.empty[DoctusPoint ⇒ Unit]
   var _onDrag = Option.empty[DoctusPoint ⇒ Unit]
@@ -112,7 +124,7 @@ private[jvm] trait DoctusDraggableFxImpl extends DoctusDraggable {
 private[jvm] trait DoctusKeyFxImp extends DoctusKey {
 
   def comp: Node
-  
+
   var _onKeyPressed = Option.empty[DoctusKeyCode ⇒ Unit]
   var _onKeyReleased = Option.empty[DoctusKeyCode ⇒ Unit]
 
