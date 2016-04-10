@@ -24,6 +24,7 @@ import javafx.scene.input.KeyEvent
 import javafx.scene.input.KeyCode
 import javafx.scene.control.ComboBox
 import javafx.scene.control.TextInputControl
+import javafx.scene.Node
 
 case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
 
@@ -191,7 +192,7 @@ case class DoctusSelectFx[T](comboBox: ComboBox[T], f: (T) => String = (t: T) =>
 
 }
 
-case class DoctusPointableFx(comp: Parent) extends DoctusPointable {
+case class DoctusPointableFx(comp: Node) extends DoctusPointable {
 
   def onStart(f: DoctusPoint ⇒ Unit): Unit = _onStart = Some(f)
   def onStop(f: DoctusPoint ⇒ Unit): Unit = _onStop = Some(f)
@@ -200,14 +201,14 @@ case class DoctusPointableFx(comp: Parent) extends DoctusPointable {
   var _onStop = Option.empty[DoctusPoint ⇒ Unit]
 
   comp.setOnMousePressed(DoctusJvmUtil.handler { e =>
-    val x = e.getScreenX
-    val y = e.getScreenY
+    val x = e.getX
+    val y = e.getY
     _onStart.foreach(f => f(DoctusPoint(x, y)))
   })
 
   comp.setOnMouseReleased(DoctusJvmUtil.handler { e =>
-    val x = e.getScreenX
-    val y = e.getScreenY
+    val x = e.getX
+    val y = e.getY
     _onStop.foreach(f => f(DoctusPoint(x, y)))
   })
 }
