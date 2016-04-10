@@ -26,6 +26,8 @@ import javafx.scene.control.ComboBox
 import javafx.scene.control.TextInputControl
 import javafx.scene.Node
 
+import impl._
+
 case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
 
   gc.setLineCap(StrokeLineCap.BUTT)
@@ -134,51 +136,11 @@ case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
 
 }
 
-case class DoctusCanvasFx(canvas: Canvas) extends DoctusCanvas {
+case class DoctusCanvasFx(comp: Canvas) extends DoctusCanvasFxImpl 
 
-  val g = canvas.getGraphicsContext2D;
-
-  var paintFun = Option.empty[DoctusGraphics => Unit]
-
-  def onRepaint(f: DoctusGraphics => Unit): Unit = {
-    paintFun = Some(f)
-    repaint
-  }
-
-  def repaint(): Unit = {
-    paintFun match {
-      case Some(f) =>
-        val dg = DoctusGraphicsFx(g)
-        Platform.runLater(new Runnable {
-          def run = f(dg)
-        })
-      case None => throw new IllegalStateException("'onRepaint' must be called at least ones before 'repaint' is called")
-    }
-  }
-  def width: Int = canvas.getWidth.toInt
-  def height: Int = canvas.getHeight.toInt
-
-}
-
-case class DoctusTemplateCanvasFx(comp: Any)
-    extends DoctusTemplateCanvas with DoctusCanvas with DoctusDraggable
-    with DoctusKey {
-  // Members declared in doctus.core.DoctusCanvas
-  def height: Int = ???
-  def onRepaint(f: doctus.core.DoctusGraphics ⇒ Unit): Unit = ???
-  def repaint(): Unit = ???
-  def width: Int = ???
-
-  // Members declared in doctus.core.DoctusDraggable
-  def onDrag(f: doctus.core.util.DoctusPoint ⇒ Unit): Unit = ???
-
-  // Members declared in doctus.core.DoctusKey
-  def onKeyPressed(f: doctus.core.DoctusKeyCode ⇒ Unit): Unit = ???
-  def onKeyReleased(f: doctus.core.DoctusKeyCode ⇒ Unit): Unit = ???
-
-  // Members declared in doctus.core.DoctusPointable
-  def onStart(f: doctus.core.util.DoctusPoint ⇒ Unit): Unit = ???
-  def onStop(f: doctus.core.util.DoctusPoint ⇒ Unit): Unit = ???
+case class DoctusTemplateCanvasFx(comp: Canvas)
+    extends DoctusTemplateCanvas with DoctusCanvasFxImpl with DoctusDraggableFxImpl
+    with DoctusKeyFxImp {
 }
 
 // TODO Move parameter f to DoctusSelect
@@ -192,69 +154,9 @@ case class DoctusSelectFx[T](comboBox: ComboBox[T], f: (T) => String = (t: T) =>
 
 }
 
-case class DoctusPointableFx(comp: Node) extends DoctusPointable {
+case class DoctusPointableFx(comp: Node) extends DoctusPointableFxImpl
 
-  def onStart(f: DoctusPoint ⇒ Unit): Unit = _onStart = Some(f)
-  def onStop(f: DoctusPoint ⇒ Unit): Unit = _onStop = Some(f)
-
-  var _onStart = Option.empty[DoctusPoint ⇒ Unit]
-  var _onStop = Option.empty[DoctusPoint ⇒ Unit]
-
-  comp.setOnMousePressed(DoctusJvmUtil.handler { e =>
-    val x = e.getX
-    val y = e.getY
-    _onStart.foreach(f => f(DoctusPoint(x, y)))
-  })
-
-  comp.setOnMouseReleased(DoctusJvmUtil.handler { e =>
-    val x = e.getX
-    val y = e.getY
-    _onStop.foreach(f => f(DoctusPoint(x, y)))
-  })
-}
-
-case class DoctusDraggableFx(comp: Node) extends DoctusDraggable {
-
-  var _onStart = Option.empty[DoctusPoint ⇒ Unit]
-  var _onStop = Option.empty[DoctusPoint ⇒ Unit]
-  var _onDrag = Option.empty[DoctusPoint ⇒ Unit]
-
-  // Members declared in doctus.core.DoctusDraggable
-  def onDrag(f: DoctusPoint ⇒ Unit): Unit = _onDrag = Some(f)
-
-  // Members declared in doctus.core.DoctusPointable
-  def onStart(f: DoctusPoint ⇒ Unit): Unit = _onStart = Some(f)
-  def onStop(f: DoctusPoint ⇒ Unit): Unit = _onStop = Some(f)
-
-  comp.setOnMouseDragEntered(DoctusJvmUtil.handler { e =>
-    println("onDragEntered...")
-  })
-  comp.setOnMouseDragExited(DoctusJvmUtil.handler { e =>
-    println("onDragExited...")
-  })
-  comp.setOnMouseDragged(DoctusJvmUtil.handler { e =>
-    val x = e.getX
-    val y = e.getY
-    _onDrag.foreach(f => f(DoctusPoint(x, y)))
-  })
-  comp.setOnMouseDragOver(DoctusJvmUtil.handler { e =>
-    println("onDragOver...")
-  })
-  comp.setOnMouseDragReleased(DoctusJvmUtil.handler { e =>
-    println("onDragExitedReleased...")
-  })
-  comp.setOnMousePressed(DoctusJvmUtil.handler { e =>
-    val x = e.getX
-    val y = e.getY
-    _onStart.foreach(f => f(DoctusPoint(x, y)))
-  })
-  comp.setOnMouseReleased(DoctusJvmUtil.handler { e =>
-    val x = e.getX
-    val y = e.getY
-    _onStop.foreach(f => f(DoctusPoint(x, y)))
-  })
-
-}
+case class DoctusDraggableFx(comp: Node) extends DoctusDraggableFxImpl
 
 case class DoctusActivatableFx(comp: Parent) extends DoctusActivatable {
 
@@ -288,33 +190,7 @@ case class DoctusTextFx(textComp: TextInputControl) extends DoctusText {
 /**
  * Listens to the keyboard.
  */
-case class DoctusKeyFx(comp: Parent) extends DoctusKey {
-
-  var _onKeyPressed = Option.empty[DoctusKeyCode ⇒ Unit]
-  var _onKeyReleased = Option.empty[DoctusKeyCode ⇒ Unit]
-
-  def onKeyPressed(f: DoctusKeyCode ⇒ Unit): Unit = _onKeyPressed = Some(f)
-
-  def onKeyReleased(f: DoctusKeyCode ⇒ Unit): Unit = _onKeyReleased = Some(f)
-
-  def keyCode(e: KeyEvent): Option[DoctusKeyCode] = {
-    val code: KeyCode = e.getCode
-    if (code == KeyCode.SPACE) Some(DKC_Space)
-    else if (code == KeyCode.UP) Some(DKC_Up)
-    else if (code == KeyCode.DOWN) Some(DKC_Down)
-    else if (code == KeyCode.LEFT) Some(DKC_Left)
-    else if (code == KeyCode.RIGHT) Some(DKC_Right)
-    else if (code == KeyCode.ENTER) Some(DKC_Enter)
-    else None
-  }
-
-  comp.setOnKeyPressed(DoctusJvmUtil.handler { e =>
-    _onKeyPressed.foreach { f => keyCode(e).foreach { dkc => f(dkc) } }
-  })
-  comp.setOnKeyReleased(DoctusJvmUtil.handler { e =>
-    _onKeyReleased.foreach { f => keyCode(e).foreach { dkc => f(dkc) } }
-  })
-}
+case class DoctusKeyFx(comp: Parent) extends DoctusKeyFxImp
 
 case class DoctusImageFx(resource: String, scaleFactor: Double = 1.0) extends DoctusImage {
 

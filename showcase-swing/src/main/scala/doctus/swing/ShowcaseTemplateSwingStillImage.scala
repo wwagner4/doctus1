@@ -12,7 +12,6 @@ object ShowcaseTemplateSwingStillImage extends App {
   val p = DoctusComponentFactory.component()
   val canvas = DoctusTemplateCanvasSwing(p)
   val sched = DoctusSchedulerSwing
-  val logo = DoctusImageSwing("logo.png")
 
   val top = new JFrame()
   top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
