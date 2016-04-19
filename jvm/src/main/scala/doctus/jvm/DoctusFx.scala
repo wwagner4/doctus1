@@ -93,8 +93,10 @@ case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
   }
 
   def stroke(c: DoctusColor, alpha: Double): Unit = {
+    val a1 = math.min(255, alpha)
+    val a2 = math.max(0, a1)
     val (r, g, b) = c.rgb
-    gc.setStroke(new Color(r.toDouble / 255, g.toDouble / 255, b.toDouble / 255, alpha / 255))
+    gc.setStroke(new Color(r.toDouble / 255, g.toDouble / 255, b.toDouble / 255, a2 / 255))
     doStroke = true
   }
 
