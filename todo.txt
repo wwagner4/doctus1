@@ -13,3 +13,11 @@
 closed
 - sbt: change to build.sbt from scala file
 
+
+
+Sound integration
+- https://github.com/processing/processing-sound using methcla http://methc.la/
+- http://www.softsynth.com/jsyn/beta/index.php
+- http://www.beadsproject.net/
+- http://code.compartmental.net/tools/minim/
+- https://github.com/processing/processing-sound using methcla
