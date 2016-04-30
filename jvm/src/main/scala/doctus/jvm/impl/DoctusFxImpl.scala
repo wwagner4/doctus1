@@ -1,38 +1,34 @@
 package doctus.jvm.impl
 
-import doctus.core._
-import doctus.core.util.DoctusPoint
-import doctus.jvm.DoctusGraphicsFx
-import doctus.jvm.DoctusJvmUtil
 import javafx.application.Platform
+import javafx.beans.value.{ChangeListener, ObservableValue}
 import javafx.scene.Node
 import javafx.scene.canvas.Canvas
-import javafx.scene.input.KeyCode
-import javafx.scene.input.KeyEvent
-import javafx.beans.Observable
-import javafx.beans.value.ChangeListener
-import javafx.event.Event
-import javafx.beans.value.ObservableValue
+import javafx.scene.input.{KeyCode, KeyEvent}
+
+import doctus.core._
+import doctus.core.util.DoctusPoint
+import doctus.jvm.{DoctusGraphicsFx, DoctusJvmUtil}
 
 private[jvm] trait DoctusCanvasFxImpl extends DoctusCanvas {
 
   def comp: Canvas
 
   comp.widthProperty.addListener(new ChangeListener[Number] {
-    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number) { repaint }
+    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number) { repaint() }
   })
   
   comp.heightProperty().addListener(new ChangeListener[Number] {
-    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number) { repaint }
+    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number) { repaint() }
   })
 
-  val g = comp.getGraphicsContext2D;
+  val g = comp.getGraphicsContext2D
 
   var paintFun = Option.empty[DoctusGraphics => Unit]
 
   def onRepaint(f: DoctusGraphics => Unit): Unit = {
     paintFun = Some(f)
-    repaint
+    repaint()
   }
 
   def repaint(): Unit = {
@@ -40,7 +36,7 @@ private[jvm] trait DoctusCanvasFxImpl extends DoctusCanvas {
       case Some(f) =>
         val dg = DoctusGraphicsFx(g)
         Platform.runLater(new Runnable {
-          def run = f(dg)
+          def run() = f(dg)
         })
       case None => // Nothing to do
     }

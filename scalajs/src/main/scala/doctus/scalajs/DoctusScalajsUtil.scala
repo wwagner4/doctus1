@@ -49,27 +49,24 @@ class DoctusEventManager {
 
   def addEvent(event: DoctusEvent) = {
     event match {
-      case MouseDown(p) => {
+      case MouseDown(p) =>
         optStart.foreach(f => f(p))
         down = true
-      }
-      case MouseUp(p) => {
+      case MouseUp(p) =>
         optStop.foreach(f => f(p))
         down = false
-      }
-      case MouseMove(p) => {
+      case MouseMove(p) =>
         if (down) optDrag.foreach(f => f(p))
-      }
       case TouchStart(piList) =>
         if (piList.size == 1) {
-          val p = piList(0).point
+          val p = piList.head.point
           latestPos = Some(p)
           optStart.foreach(f => f(p))
           down = true
         }
       case TouchEnd(piList) =>
         val pi = piList.filter(_.id == 0)
-        if (pi.size == 0 && latestPos.isDefined) {
+        if (pi.isEmpty && latestPos.isDefined) {
           optStop.foreach(f => f(latestPos.get))
           down = false
           latestPos = None
@@ -77,7 +74,7 @@ class DoctusEventManager {
       case TouchMove(piList) =>
         val pi = piList.filter(_.id == 0)
         if (pi.nonEmpty) {
-          val p = pi(0).point
+          val p = pi.head.point
           latestPos = Some(p)
           if (down) optDrag.foreach(f => f(p))
         }

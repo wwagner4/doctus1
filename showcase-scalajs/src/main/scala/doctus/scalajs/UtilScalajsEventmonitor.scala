@@ -1,16 +1,10 @@
 package doctus.scalajs
 
-import scala.scalajs.js.annotation.JSExport
-
 import org.scalajs.dom
-import org.scalajs.dom.raw.HTMLCanvasElement
+import org.scalajs.dom.raw._
+
 import scala.scalajs.js.Any.fromFunction1
-import org.scalajs.dom.raw.Event
-import org.scalajs.dom.raw.HTMLElement
-import org.scalajs.dom.raw.MouseEvent
-import org.scalajs.dom.raw.Touch
-import org.scalajs.dom.raw.TouchEvent
-import org.scalajs.dom.raw.TouchList
+import scala.scalajs.js.annotation.JSExport
 
 @JSExport("Eventmonitor")
 object UtilScalajsEventmonitor {
@@ -71,15 +65,15 @@ case class UtilEventmonitor(elem: HTMLElement, info: HTMLElement) {
     def format(tl: TouchList): String = {
       (for (i <- 0 until tl.length.intValue) yield {
         val t: Touch = tl(i)
-        "%d - %d %d" format (t.identifier, t.clientX.intValue(), t.clientY.intValue())
+        "%.2f - %d %d" format (t.identifier, t.clientX.intValue(), t.clientY.intValue())
       }).mkString("[", ",", "]")
     }
     val te = e.asInstanceOf[TouchEvent]
-    "TE %s" format (format(te.targetTouches))
+    "TE %s" format format(te.targetTouches)
   }
 
   def formatMouseEvent(e: Event): String = {
     val me = e.asInstanceOf[MouseEvent]
-    "ME %d %d" format (me.clientX, me.clientY)
+    "ME %.2f %.2f" format (me.clientX, me.clientY)
   }
 }

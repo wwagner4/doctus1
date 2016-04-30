@@ -1,16 +1,14 @@
 package doctus.scalajs
 
-import scala.scalajs.js
-import scala.scalajs.js.Any._
-
-import org.scalajs.dom
-import org.scalajs.dom.raw._
-
 import doctus.core._
 import doctus.core.comp.DoctusText
 import doctus.core.template.DoctusTemplateCanvas
 import doctus.core.util.DoctusPoint
-import impl._
+import doctus.scalajs.impl._
+import org.scalajs.dom
+import org.scalajs.dom.raw._
+
+import scala.scalajs.js.Any._
 
 case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGraphics {
 
@@ -65,7 +63,7 @@ case class DoctusGraphicsScalajs(ctx: CanvasRenderingContext2D) extends DoctusGr
   def text(str: String, originX: Double, originY: Double, rotation: Double): Unit = {
     ctx.globalAlpha = fillAlpha
     ctx.save()
-    ctx.translate(originX, originY);
+    ctx.translate(originX, originY)
     ctx.rotate(-rotation)
     ctx.fillText(str, 0.0, 0.0)
     ctx.restore()
@@ -254,7 +252,7 @@ case object DoctusSchedulerScalajs extends DoctusScheduler {
     new DoctusScheduler.Stopper {
       // Stops the execution of a Scheduler
       override def stop(): Unit = {
-        stopped = true;
+        stopped = true
         if (id >= 0) dom.window.clearInterval(id)
       }
     }

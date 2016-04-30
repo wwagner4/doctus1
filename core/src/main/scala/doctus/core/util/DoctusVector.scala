@@ -41,7 +41,7 @@ trait DoctusPoint {
     case _other: DoctusPoint => _other.x == x && _other.y == y
     case _                   => false
   }
-  override def hashCode(): Int = (41 * (41 + x.toInt) + y.toInt)
+  override def hashCode(): Int = 41 * (41 + x.toInt) + y.toInt
   override def toString = "p[%.2f, %.2f]" format (this.x, this.y)
 
   def +(v: DoctusVector): DoctusPoint

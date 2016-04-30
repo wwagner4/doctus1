@@ -8,7 +8,7 @@ package object color {
 }
 
 /**
- * Utility functionality that is not bound to spezific 
+ * Utility functionality that is not bound to specific
  * interface classes
  */
 package object util {

@@ -56,7 +56,7 @@ case object DoctusColorYellow extends DoctusColor {
   def rgb = colors
 }
 /**
- * The color mangenta
+ * The color magenta
  */
 case object DoctusColorMangenta extends DoctusColor {
   private val colors = (255, 0, 255)
@@ -65,7 +65,7 @@ case object DoctusColorMangenta extends DoctusColor {
 }
 
 /**
- * The color turquois
+ * The color turquoise
  */
 case object DoctusColorTurquois extends DoctusColor {
   private val colors = (0, 255, 255)
@@ -97,7 +97,7 @@ object DoctusColorUtil {
    * Converts HSV (Hue, Saturation, Brightness) into RGB (Red, Green, Blue)
    * Ranges:
    * hue:       [0, 360]
-   * saturtion: [0, 99]
+   * saturation: [0, 99]
    * value:     [0, 99]
    *
    * red:       [0, 255]

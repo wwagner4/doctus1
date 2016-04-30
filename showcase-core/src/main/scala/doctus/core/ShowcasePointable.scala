@@ -1,10 +1,7 @@
 package doctus.core
 
-import doctus.core._
-import doctus.core.comp._
 import doctus.core.color._
 import doctus.core.util._
-import doctus.core.text._
 
 case class DoctusControllerPointable(pointable: DoctusPointable, canvas: DoctusCanvas) {
 
@@ -25,7 +22,6 @@ case class DoctusControllerPointable(pointable: DoctusPointable, canvas: DoctusC
     }
     synchronized {
       actions.foreach {
-        _ match {
           case a: Started =>
             g.fill(DoctusColorRed, 100)
             g.ellipse(DoctusPoint(a.p.x, a.p.y), 10, 10)
@@ -36,7 +32,6 @@ case class DoctusControllerPointable(pointable: DoctusPointable, canvas: DoctusC
             drawNum(g, a.p, a.cnt)
           case a: Dragged =>
             // Nothing to do
-        }
       }
       actions = List.empty[ActionTyp]
     }

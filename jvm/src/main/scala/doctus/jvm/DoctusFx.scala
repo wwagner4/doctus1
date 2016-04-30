@@ -1,32 +1,19 @@
 package doctus.jvm
 
+import javafx.scene.canvas.{Canvas, GraphicsContext}
+import javafx.scene.control.{ComboBox, TextInputControl}
+import javafx.scene.image.Image
+import javafx.scene.paint.Color
+import javafx.scene.shape.StrokeLineCap
+import javafx.scene.text.Font
+import javafx.scene.{Node, Parent}
+
 import doctus.core._
 import doctus.core.comp._
 import doctus.core.template.DoctusTemplateCanvas
+import doctus.core.text.{DoctusFontMonospace, DoctusFontNamed, DoctusFontSansSerif, DoctusFontSerif}
 import doctus.core.util.DoctusPoint
-import javafx.application.Platform
-import javafx.scene.canvas.Canvas
-import javafx.scene.canvas.GraphicsContext
-import javafx.scene.image.Image
-import javafx.scene.paint.Color
-import doctus.core.text.DoctusFontSansSerif
-import javafx.scene.text.Font
-import doctus.core.text.DoctusFontSerif
-import doctus.core.text.DoctusFontMonospace
-import doctus.core.text.DoctusFontNamed
-import javafx.scene.transform.Rotate
-import javafx.scene.shape.StrokeLineCap
-import javafx.scene.Parent
-import javafx.event.EventHandler
-import javafx.event.Event
-import javafx.stage.Stage
-import javafx.scene.input.KeyEvent
-import javafx.scene.input.KeyCode
-import javafx.scene.control.ComboBox
-import javafx.scene.control.TextInputControl
-import javafx.scene.Node
-
-import impl._
+import doctus.jvm.impl._
 
 case class DoctusGraphicsFx(gc: GraphicsContext) extends DoctusGraphics {
 
@@ -146,7 +133,7 @@ case class DoctusTemplateCanvasFx(comp: Canvas)
 }
 
 // TODO Move parameter f to DoctusSelect
-case class DoctusSelectFx[T](comboBox: ComboBox[T], f: (T) => String = (t: T) => t.toString()) extends DoctusSelect[T] {
+case class DoctusSelectFx[T](comboBox: ComboBox[T], f: (T) => String = (t: T) => t.toString) extends DoctusSelect[T] {
 
   def addItem(item: T): Unit = comboBox.getItems.add(item)
 
