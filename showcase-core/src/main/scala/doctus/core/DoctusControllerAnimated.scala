@@ -1,10 +1,6 @@
 package doctus.core
 
-import doctus.core._
-import doctus.core.comp._
-import doctus.core.color._
 import doctus.core.util._
-import doctus.core.text._
 
 case class DoctusControllerAnimated(canvas: DoctusCanvas, scheduler: DoctusScheduler, logo: DoctusImage) {
 
