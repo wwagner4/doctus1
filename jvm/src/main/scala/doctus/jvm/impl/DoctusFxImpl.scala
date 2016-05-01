@@ -15,11 +15,15 @@ private[jvm] trait DoctusCanvasFxImpl extends DoctusCanvas {
   def comp: Canvas
 
   comp.widthProperty.addListener(new ChangeListener[Number] {
-    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number) { repaint() }
+    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number) {
+      repaint()
+    }
   })
-  
+
   comp.heightProperty().addListener(new ChangeListener[Number] {
-    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number) { repaint() }
+    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number) {
+      repaint()
+    }
   })
 
   val g = comp.getGraphicsContext2D
@@ -35,13 +39,19 @@ private[jvm] trait DoctusCanvasFxImpl extends DoctusCanvas {
     paintFun match {
       case Some(f) =>
         val dg = DoctusGraphicsFx(g)
-        Platform.runLater(new Runnable {
-          def run() = f(dg)
-        })
+        if (Platform.isFxApplicationThread) {
+          f(dg)
+        } else {
+          Platform.runLater(new Runnable {
+            def run() = f(dg)
+          })
+        }
       case None => // Nothing to do
     }
   }
+
   def width: Int = comp.getWidth.toInt
+
   def height: Int = comp.getHeight.toInt
 
 }
@@ -51,6 +61,7 @@ private[jvm] trait DoctusPointableFxImpl extends DoctusPointable {
   def comp: Node
 
   def onStart(f: DoctusPoint ⇒ Unit): Unit = _onStart = Some(f)
+
   def onStop(f: DoctusPoint ⇒ Unit): Unit = _onStop = Some(f)
 
   var _onStart = Option.empty[DoctusPoint ⇒ Unit]
@@ -82,6 +93,7 @@ private[jvm] trait DoctusDraggableFxImpl extends DoctusDraggable {
 
   // Members declared in doctus.core.DoctusPointable
   def onStart(f: DoctusPoint ⇒ Unit): Unit = _onStart = Some(f)
+
   def onStop(f: DoctusPoint ⇒ Unit): Unit = _onStop = Some(f)
 
   comp.setOnMouseDragEntered(DoctusJvmUtil.handler { e =>
@@ -115,12 +127,12 @@ private[jvm] trait DoctusDraggableFxImpl extends DoctusDraggable {
 }
 
 /**
- * Listens to the keyboard.
- */
+  * Listens to the keyboard.
+  */
 private[jvm] trait DoctusKeyFxImp extends DoctusKey {
 
   comp.setFocusTraversable(true)
-  
+
   def comp: Node
 
   var _onKeyPressed = Option.empty[DoctusKeyCode ⇒ Unit]
