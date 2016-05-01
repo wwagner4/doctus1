@@ -9,7 +9,7 @@ import javafx.stage.Stage
 import doctus.core._
 import doctus.core.template.DoctusTemplateController
 
-object ShowcaseTemplatJvmKeys extends App {
+object ShowcaseTemplateJvmKeys extends App {
 
   Application.launch(classOf[FxApp], args: _*)
 

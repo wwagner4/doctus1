@@ -1,8 +1,6 @@
 package doctus.jvm
 
-import java.util.concurrent.Executors
-import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.{Executors, ScheduledExecutorService, TimeUnit}
 
 import doctus.core.DoctusScheduler
 

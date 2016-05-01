@@ -3,8 +3,6 @@ package doctus.scalajs
 import doctus.core.comp.DoctusSelect
 import org.scalajs.jquery._
 
-import scala.scalajs.js
-
 /**
  * Uses a HTML select box in combination with jQuery
  * The default mapping is the toString mapping

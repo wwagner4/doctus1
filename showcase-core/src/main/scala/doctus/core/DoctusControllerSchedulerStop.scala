@@ -1,10 +1,8 @@
 package doctus.core
 
-import doctus.core._
-import doctus.core.comp._
 import doctus.core.color._
-import doctus.core.util._
 import doctus.core.text._
+import doctus.core.util._
 
 /**
  * Demonstrates how a scheduler can be started and stopped
@@ -12,6 +10,8 @@ import doctus.core.text._
 case class DoctusControllerSchedulerStop(sched: DoctusScheduler, start: DoctusActivatable, stop: DoctusActivatable, canv: DoctusCanvas) {
 
   var cnt = 0
+
+  var stopper: List[DoctusScheduler.Stopper] = List.empty[DoctusScheduler.Stopper]
 
   canv.onRepaint(g => {
     val r = 111
@@ -31,8 +31,6 @@ case class DoctusControllerSchedulerStop(sched: DoctusScheduler, start: DoctusAc
   })
 
   sched.start(canv.repaint, 10)
-
-  var stopper: List[DoctusScheduler.Stopper] = List.empty[DoctusScheduler.Stopper]
 
   start.onDeactivated(() => {
     stopper ::= sched.start(() => {
