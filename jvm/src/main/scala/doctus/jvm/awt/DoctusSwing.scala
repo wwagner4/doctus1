@@ -1,17 +1,22 @@
 package doctus.jvm.awt
 
 import java.awt.geom.AffineTransform
-import java.awt.{BasicStroke, Font, Graphics2D, Image}
+import java.awt.image.BufferedImage
+import java.awt.{Graphics2D, BasicStroke, Font, Image, RenderingHints}
 
 import doctus.core._
+import doctus.core.template.DoctusTemplateCanvas
 import doctus.core.util.DoctusPoint
 
-case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
+
+case class DoctusGraphicsAwt(graphics: Graphics2D) extends DoctusGraphics {
 
   var fill = new java.awt.Color(100, 100, 100, 255)
   var strokeColor = new java.awt.Color(0, 0, 0, 255)
   var isStroke: Boolean = true
   var isFill: Boolean = true
+  var textFontSize: Float = 12.0f
+  protected var imageMode: ImageMode = ImageModeCORNER
 
   def ellipse(centerX: Double, centerY: Double, a: Double, b: Double): Unit = {
     if (isFill) {
@@ -36,15 +41,13 @@ case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
 
   def noFill(): Unit = isFill = false
 
-  protected var imageMode: ImageMode = ImageModeCORNER
-
   def imageMode(imageMode: ImageMode): Unit = {
     this.imageMode = imageMode
   }
 
   def image(img: DoctusImage, originX: Double, originY: Double): Unit = {
     img match {
-      case i: DoctusImageSwing =>
+      case i: DoctusImageAwt =>
         val trans = this.imageMode match {
           case ImageModeCORNER => AffineTransform.getTranslateInstance(originX, originY)
           case ImageModeCENTER =>
@@ -97,13 +100,23 @@ case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
     isStroke = true
   }
 
+  private def toAwtColor(c: DoctusColor, alpha: Double): java.awt.Color = {
+    def minmax(value: Int): Int = math.max(0, math.min(255, value))
+    c.rgb match {
+      case (r, g, b) =>
+        val red = minmax(r)
+        val green = minmax(g)
+        val blue = minmax(b)
+        val a = minmax(alpha.toInt)
+        new java.awt.Color(red, green, blue, a)
+    }
+  }
+
   def noStroke(): Unit = isStroke = false
 
   def strokeWeight(weight: Double): Unit = {
     graphics.setStroke(new BasicStroke(weight.toFloat, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, null, 0.0f))
   }
-
-  var textFontSize: Float = 12.0f
 
   def textFont(font: DoctusFont): Unit = {
     import doctus.core.text._
@@ -134,21 +147,9 @@ case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
     graphics.setTransform(t)
   }
 
-  private def toAwtColor(c: DoctusColor, alpha: Double): java.awt.Color = {
-    def minmax(value: Int): Int = math.max(0, math.min(255, value))
-    c.rgb match {
-      case (r, g, b) =>
-        val red = minmax(r)
-        val green = minmax(g)
-        val blue = minmax(b)
-        val a = minmax(alpha.toInt)
-        new java.awt.Color(red, green, blue, a)
-    }
-  }
-
 }
 
-case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0) extends DoctusImage {
+case class DoctusImageAwt(resource: String, scaleFactor: Double = 1.0) extends DoctusImage {
 
   val icon: Image = {
     val imgPath = resource
@@ -157,7 +158,7 @@ case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0) extends
     java.awt.Toolkit.getDefaultToolkit.createImage(imgr)
   }
 
-  def scale(factor: Double): doctus.core.DoctusImage = DoctusImageSwing(resource, scaleFactor * factor)
+  def scale(factor: Double): doctus.core.DoctusImage = DoctusImageAwt(resource, scaleFactor * factor)
 
   def width = icon.getWidth(null)
 
@@ -165,3 +166,40 @@ case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0) extends
 
 }
 
+case class DoctusBufferedImage(img: BufferedImage) {
+
+  var paintOpt: Option[DoctusGraphics => Unit] = None
+
+  def width: Int = img.getWidth
+
+  def height: Int = img.getHeight
+
+  def paint(): Unit = {
+    val g = img.getGraphics.asInstanceOf[Graphics2D]
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+    val doctusGraphics = DoctusGraphicsAwt(g)
+    paintOpt.foreach(f => f(doctusGraphics))
+  }
+
+}
+
+case class DoctusTemplateCanvasBufferedImage(img: DoctusBufferedImage) extends DoctusTemplateCanvas {
+
+  def height: Int = img.height
+
+  def onRepaint(f: DoctusGraphics => Unit): Unit = img.paintOpt = Some(f)
+
+  def repaint(): Unit = img.paint()
+
+  def width: Int = img.width
+
+  override def onStart(f: (DoctusPoint) => Unit): Unit = ()
+
+  override def onStop(f: (DoctusPoint) => Unit): Unit = ()
+
+  override def onKeyReleased(f: (DoctusKeyCode) => Unit): Unit = ()
+
+  override def onKeyPressed(f: (DoctusKeyCode) => Unit): Unit = ()
+
+  override def onDrag(f: (DoctusPoint) => Unit): Unit = ()
+}

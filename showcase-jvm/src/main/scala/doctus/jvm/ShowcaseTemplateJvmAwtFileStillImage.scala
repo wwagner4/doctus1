@@ -6,7 +6,7 @@ import javax.imageio.ImageIO
 
 import doctus.core._
 import doctus.core.template.DoctusTemplateController
-import doctus.jvm.awt.{DoctusBufferedImage, DoctusCanvasSwingBufferedImage}
+import doctus.jvm.awt.{DoctusBufferedImage, DoctusTemplateCanvasBufferedImage}
 
 object ShowcaseTemplateJvmAwtFileStillImage extends App {
 
@@ -20,7 +20,7 @@ object ShowcaseTemplateJvmAwtFileStillImage extends App {
 
   val dbi = DoctusBufferedImage(bi)
 
-  val doctCanvas = DoctusCanvasSwingBufferedImage(dbi)
+  val doctCanvas = DoctusTemplateCanvasBufferedImage(dbi)
   val doctSched = DoctusSchedulerJvm
 
   // Start the controller
@@ -32,7 +32,6 @@ object ShowcaseTemplateJvmAwtFileStillImage extends App {
 
   println("wrote image to '%s'" format pngFile)
   System.exit(0)
-
 
 }
 
