@@ -11,14 +11,19 @@ import javax.imageio.ImageIO
 import doctus.core._
 import doctus.core.template.DoctusTemplateController
 
+/**
+  * According to a bug in JavaFx images do have a maximum size 4k
+  * Use the awt implementation for big images.
+  * https://bugs.openjdk.java.net/browse/JDK-8088198
+  */
 object ShowcaseTemplateJvmFileStillImage extends App {
 
   Application.launch(classOf[FxApp], args: _*)
 
   class FxApp extends Application {
 
-    val width = 3000
-    val height = 2000
+    val width = 2000
+    val height = 1500
 
     val homeDir = new File(System.getProperty("user.home"))
     val pngFile = new File(homeDir, "ShowcaseTemplateJvmFileStillImage_%d_%d.png" format(width, height))
