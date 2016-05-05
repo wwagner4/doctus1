@@ -1,15 +1,10 @@
 package doctus.jvm.awt
 
-import java.awt.event.{MouseListener, WindowFocusListener}
 import java.awt.geom.AffineTransform
-import java.awt.image.BufferedImage
-import java.awt.{BasicStroke, Canvas, Component, Font, Graphics, Graphics2D, RenderingHints}
-import java.util.concurrent.{Executors, ScheduledExecutorService, TimeUnit}
-import javax.swing.text.JTextComponent
-import javax.swing.{ImageIcon, JComboBox, JPanel}
+import java.awt.{BasicStroke, Component, Font, Graphics2D}
+import javax.swing.ImageIcon
 
 import doctus.core._
-import doctus.core.comp.{DoctusSelect, DoctusText}
 import doctus.core.template.DoctusTemplateCanvas
 import doctus.core.util.DoctusPoint
 import doctus.jvm.awt.impl.{DoctusCanvasSwing1, DoctusDraggableSwing1, DoctusKeySwing1, DoctusPointableSwing1}
@@ -166,102 +161,12 @@ trait DoctusComponent extends Component {
   def paintOpt: Option[DoctusGraphics => Unit]
 }
 
-/**
-  * A normal scala.swing.Component with some extra functionality
-  * needed for SwingCanvas
-  */
-object DoctusComponentFactory {
-
-  /**
-    * Parameters are only used for Mac.
-    */
-  def component(bufferWidth: Int = 3000, bufferHeight: Int = 3000,
-                textAntialiasing: Boolean = true, doubleBuffering: Boolean = true): DoctusComponent = {
-
-    case class Buffer(image: BufferedImage, graphics: DoctusGraphics)
-
-    def createBuffer: Buffer = {
-      val bi = new BufferedImage(3000, 3000, BufferedImage.TYPE_INT_RGB)
-      val bg = bi.createGraphics()
-      bg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
-      if (textAntialiasing) {
-        bg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
-      } else {
-        bg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF)
-      }
-      val bdg = DoctusGraphicsSwing(bg.asInstanceOf[Graphics2D])
-      Buffer(bi, bdg)
-    }
-
-    lazy val buffer = createBuffer
-
-    def createCanvas = new Canvas with DoctusComponent {
-
-      var paintOpt: Option[(DoctusGraphics) => Unit] = None
-
-      override def paint(g: Graphics): Unit = {
-        if (doubleBuffering) {
-          val doctusGraphics = DoctusGraphicsSwing(g.asInstanceOf[Graphics2D])
-          paintOpt.foreach(f => f(buffer.graphics))
-          g.drawImage(buffer.image, 0, 0, null)
-        } else {
-          val doctusGraphics = DoctusGraphicsSwing(g.asInstanceOf[Graphics2D])
-          paintOpt.foreach(f => f(doctusGraphics))
-        }
-      }
-
-      override def update(g: Graphics): Unit = paint(g)
-
-    }
-
-    def createJPanel = new JPanel with DoctusComponent {
-
-      var paintOpt: Option[(DoctusGraphics) => Unit] = None
-
-      override def paint(g: Graphics): Unit = {
-        val doctusGraphics = DoctusGraphicsSwing(g.asInstanceOf[Graphics2D])
-        paintOpt.foreach(f => f(doctusGraphics))
-      }
-
-    }
-
-    createJPanel
-  }
-
-}
 
 case class DoctusCanvasSwing(comp: DoctusComponent) extends DoctusCanvasSwing1
 
 case class DoctusTemplateCanvasSwing(comp: DoctusComponent)
   extends DoctusTemplateCanvas with DoctusCanvasSwing1 with DoctusDraggableSwing1
     with DoctusKeySwing1
-
-case class DoctusSelectSwing[T](comboBox: JComboBox[T], f: (T) => String = (t: T) => t.toString) extends DoctusSelect[T] {
-
-  import javax.swing._
-
-  val model = new DefaultComboBoxModel[T]()
-  comboBox.setModel(model)
-
-  object TaskCellRenderer extends ListCellRenderer[T] {
-    val peerRenderer: ListCellRenderer[T] = (new DefaultListCellRenderer).asInstanceOf[ListCellRenderer[T]]
-
-    override def getListCellRendererComponent(
-                                               list: JList[_ <: T], item: T, index: Int,
-                                               isSelected: Boolean, cellHasFocus: Boolean): Component = {
-      val component = peerRenderer.getListCellRendererComponent(
-        list, item, index, isSelected, cellHasFocus).asInstanceOf[JLabel]
-      component.setText(f(item))
-      component
-    }
-  }
-
-  comboBox.setRenderer(TaskCellRenderer)
-
-  def addItem(item: T): Unit = model.addElement(item)
-
-  def selectedItem: T = comboBox.getSelectedItem.asInstanceOf[T]
-}
 
 case class DoctusPointableSwing(comp: Component) extends DoctusPointableSwing1
 
@@ -276,94 +181,6 @@ case class DoctusActivatableSwing(comp: Component) extends DoctusActivatable {
   def onDeactivated(f: () => Unit): Unit = p.onStop { _ => f() }
 
 }
-
-case object DoctusSchedulerSwing extends DoctusScheduler {
-
-  def start(f: () => Unit, duration: Int, initialDelay: Int = 0): DoctusScheduler.Stopper = {
-    require(duration > 0, "Duration must be greater than zero. " + duration)
-    require(initialDelay >= 0, "Initial delay must be greater equal to zero. " + duration)
-
-    val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
-    val b = new Runnable {
-      override def run(): Unit = f()
-    }
-    val future = scheduler.scheduleAtFixedRate(b, initialDelay, duration, TimeUnit.MILLISECONDS)
-
-    new DoctusScheduler.Stopper {
-      // Stops the execution of a Scheduler
-      override def stop(): Unit = future.cancel(true)
-    }
-  }
-
-}
-
-case class DoctusTextSwing(textComp: JTextComponent) extends DoctusText {
-
-  def text: String = {
-    textComp.getText
-  }
-
-  def text_=(txt: String) = {
-    textComp.setText(txt)
-  }
-}
-
-object DoctusActivatableSwingKey {
-
-  implicit class Implicit(c: Component) {
-
-    /**
-      * Convenience function for gaining the focus of a component.
-      * Consider making the focus handling explicit as needed for you use case
-      *
-      * - The component is made focusable
-      * - The component gains the focus when the front window gains the focus,
-      * or when the user clicked the component
-      */
-    def requestFocusForDoctusActivatableSwingKey(): Unit = {
-
-      c.setFocusable(true)
-
-      val win = javax.swing.SwingUtilities.getRoot(c)
-      win match {
-        case null => () // The component is not yet bound to a window (e.g. JFrame)
-        case w: java.awt.Window =>
-          val wfl = new WindowFocusListener {
-            def windowGainedFocus(x$1: java.awt.event.WindowEvent): Unit = {
-              c.requestFocusInWindow()
-            }
-            def windowLostFocus(x$1: java.awt.event.WindowEvent): Unit = ()
-          }
-          w.addWindowFocusListener(wfl)
-      }
-
-      val ml = new MouseListener {
-        def mouseClicked(e: java.awt.event.MouseEvent): Unit = {
-          c.requestFocusInWindow()
-        }
-
-        def mouseEntered(e: java.awt.event.MouseEvent): Unit = ()
-
-        def mouseExited(e: java.awt.event.MouseEvent): Unit = ()
-
-        def mousePressed(e: java.awt.event.MouseEvent): Unit = ()
-
-        def mouseReleased(e: java.awt.event.MouseEvent): Unit = ()
-      }
-      c.addMouseListener(ml)
-
-    }
-  }
-
-}
-
-/**
-  * Listens to the keyboard.
-  *
-  * Consider that listening only works if the component 'comp' has currently the focus.
-  * You may use 'requestFocusForDoctusActivatableSwingKey' as for convenience.
-  */
-case class DoctusKeySwing(comp: Component) extends DoctusKeySwing1
 
 case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0) extends DoctusImage {
 
