@@ -7,7 +7,7 @@ import javax.swing.ImageIcon
 import doctus.core._
 import doctus.core.template.DoctusTemplateCanvas
 import doctus.core.util.DoctusPoint
-import doctus.jvm.awt.impl.{DoctusCanvasSwing1, DoctusDraggableSwing1, DoctusKeySwing1, DoctusPointableSwing1}
+import doctus.jvm.awt.impl.{DoctusCanvasSwing1, DoctusDraggableSwing1, DoctusKeySwing1}
 
 case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
 
@@ -167,20 +167,6 @@ case class DoctusCanvasSwing(comp: DoctusComponent) extends DoctusCanvasSwing1
 case class DoctusTemplateCanvasSwing(comp: DoctusComponent)
   extends DoctusTemplateCanvas with DoctusCanvasSwing1 with DoctusDraggableSwing1
     with DoctusKeySwing1
-
-case class DoctusPointableSwing(comp: Component) extends DoctusPointableSwing1
-
-case class DoctusDraggableSwing(comp: Component) extends DoctusDraggableSwing1 with DoctusDraggable
-
-case class DoctusActivatableSwing(comp: Component) extends DoctusActivatable {
-
-  val p = DoctusPointableSwing(comp)
-
-  def onActivated(f: () => Unit): Unit = p.onStart { _ => f() }
-
-  def onDeactivated(f: () => Unit): Unit = p.onStop { _ => f() }
-
-}
 
 case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0) extends DoctusImage {
 
