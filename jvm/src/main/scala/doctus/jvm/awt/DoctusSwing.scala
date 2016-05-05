@@ -1,12 +1,11 @@
 package doctus.jvm.awt
 
 import java.awt.geom.AffineTransform
-import java.awt.{BasicStroke, Component, Font, Graphics2D}
+import java.awt.{BasicStroke, Component, Dimension, Font, Graphics2D}
 import javax.swing.ImageIcon
 
 import doctus.core._
 import doctus.core.util.DoctusPoint
-import doctus.jvm.awt.impl.DoctusCanvasSwing1
 
 case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
 
@@ -161,7 +160,27 @@ trait DoctusComponent extends Component {
 }
 
 
-case class DoctusCanvasSwing(comp: DoctusComponent) extends DoctusCanvasSwing1
+case class DoctusCanvasSwing(comp: DoctusComponent) {
+
+  case class DoctusCanvasSwing(comp: DoctusComponent) {
+    def onRepaint(f: (DoctusGraphics) => Unit): Unit = {
+      comp.paintOpt = Some(f)
+    }
+
+    def repaint() = comp.repaint()
+
+    def width = {
+      val size: Dimension = comp.getSize
+      size.width
+    }
+
+    def height = {
+      val size: Dimension = comp.getSize
+      size.height
+    }
+  }
+
+}
 
 case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0) extends DoctusImage {
 
