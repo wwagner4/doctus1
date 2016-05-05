@@ -1,8 +1,7 @@
 package doctus.jvm.awt
 
 import java.awt.geom.AffineTransform
-import java.awt.{BasicStroke, Component, Dimension, Font, Graphics2D}
-import javax.swing.ImageIcon
+import java.awt.{BasicStroke, Font, Graphics2D, Image}
 
 import doctus.core._
 import doctus.core.util.DoctusPoint
@@ -54,7 +53,7 @@ case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
             AffineTransform.getTranslateInstance(x, y)
         }
         trans.concatenate(AffineTransform.getScaleInstance(i.scaleFactor, i.scaleFactor))
-        graphics.drawImage(i.icon.getImage, trans, null)
+        graphics.drawImage(i.icon, trans, null)
       case _ => throw new IllegalStateException("Unknown implementation for 'DoctusImage'. %s" format img.getClass)
     }
   }
@@ -149,53 +148,20 @@ case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
 
 }
 
-/**
-  * Extended scala.swing.Component with some extra functionality
-  * needed for SwingCanvas
-  */
-trait DoctusComponent extends Component {
-  def paintOpt_=(paintOpt: Option[DoctusGraphics => Unit])
-
-  def paintOpt: Option[DoctusGraphics => Unit]
-}
-
-
-case class DoctusCanvasSwing(comp: DoctusComponent) {
-
-  case class DoctusCanvasSwing(comp: DoctusComponent) {
-    def onRepaint(f: (DoctusGraphics) => Unit): Unit = {
-      comp.paintOpt = Some(f)
-    }
-
-    def repaint() = comp.repaint()
-
-    def width = {
-      val size: Dimension = comp.getSize
-      size.width
-    }
-
-    def height = {
-      val size: Dimension = comp.getSize
-      size.height
-    }
-  }
-
-}
-
 case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0) extends DoctusImage {
 
-  val icon: ImageIcon = {
+  val icon: Image = {
     val imgPath = resource
     val imgr = getClass.getClassLoader.getResource(imgPath)
     assert(imgr != null, s"Found no resource for $imgPath")
-    new ImageIcon(imgr)
+    java.awt.Toolkit.getDefaultToolkit.createImage(imgr)
   }
 
   def scale(factor: Double): doctus.core.DoctusImage = DoctusImageSwing(resource, scaleFactor * factor)
 
-  def width = icon.getIconWidth
+  def width = icon.getWidth(null)
 
-  def height = icon.getIconHeight
+  def height = icon.getWidth(null)
 
 }
 
