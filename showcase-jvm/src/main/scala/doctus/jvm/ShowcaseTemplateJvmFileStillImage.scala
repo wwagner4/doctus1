@@ -17,13 +17,13 @@ object ShowcaseTemplateJvmFileStillImage extends App {
 
   class FxApp extends Application {
 
+    val width = 3000
+    val height = 2000
+
     val homeDir = new File(System.getProperty("user.home"))
-    val pngFile = new File(homeDir, "ShowcaseTemplateJvmFileStillImage.png")
+    val pngFile = new File(homeDir, "ShowcaseTemplateJvmFileStillImage_%d_%d.png" format(width, height))
 
     override def start(stage1: Stage) {
-
-      val width = 3000
-      val height = 2000
 
       val canvas = new Canvas(width, height)
 

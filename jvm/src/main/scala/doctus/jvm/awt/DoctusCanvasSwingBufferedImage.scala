@@ -3,7 +3,9 @@ package doctus.jvm.awt
 import java.awt.image.BufferedImage
 import java.awt.{Graphics2D, RenderingHints}
 
-import doctus.core.{DoctusCanvas, DoctusGraphics}
+import doctus.core.template.DoctusTemplateCanvas
+import doctus.core.util.DoctusPoint
+import doctus.core.{DoctusGraphics, DoctusKeyCode}
 
 case class DoctusBufferedImage(img: BufferedImage) {
 
@@ -22,7 +24,7 @@ case class DoctusBufferedImage(img: BufferedImage) {
 
 }
 
-case class DoctusCanvasSwingBufferedImage(img: DoctusBufferedImage) extends DoctusCanvas {
+case class DoctusCanvasSwingBufferedImage(img: DoctusBufferedImage) extends DoctusTemplateCanvas {
 
   def height: Int = img.height
 
@@ -32,4 +34,13 @@ case class DoctusCanvasSwingBufferedImage(img: DoctusBufferedImage) extends Doct
 
   def width: Int = img.width
 
+  override def onStart(f: (DoctusPoint) => Unit): Unit = ()
+
+  override def onStop(f: (DoctusPoint) => Unit): Unit = ()
+
+  override def onKeyReleased(f: (DoctusKeyCode) => Unit): Unit = ()
+
+  override def onKeyPressed(f: (DoctusKeyCode) => Unit): Unit = ()
+
+  override def onDrag(f: (DoctusPoint) => Unit): Unit = ()
 }
