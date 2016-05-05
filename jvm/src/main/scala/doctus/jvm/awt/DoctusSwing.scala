@@ -178,8 +178,6 @@ object DoctusComponentFactory {
   def component(bufferWidth: Int = 3000, bufferHeight: Int = 3000,
                 textAntialiasing: Boolean = true, doubleBuffering: Boolean = true): DoctusComponent = {
 
-    import doctus.jvm.awt.DoctusSwingUtil._
-
     case class Buffer(image: BufferedImage, graphics: DoctusGraphics)
 
     def createBuffer: Buffer = {
@@ -227,8 +225,7 @@ object DoctusComponentFactory {
 
     }
 
-    if (osName == Mac) createCanvas
-    else createJPanel
+    createJPanel
   }
 
 }
