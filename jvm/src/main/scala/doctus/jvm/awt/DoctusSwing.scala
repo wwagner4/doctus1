@@ -5,9 +5,8 @@ import java.awt.{BasicStroke, Component, Font, Graphics2D}
 import javax.swing.ImageIcon
 
 import doctus.core._
-import doctus.core.template.DoctusTemplateCanvas
 import doctus.core.util.DoctusPoint
-import doctus.jvm.awt.impl.{DoctusCanvasSwing1, DoctusDraggableSwing1, DoctusKeySwing1}
+import doctus.jvm.awt.impl.DoctusCanvasSwing1
 
 case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
 
@@ -163,10 +162,6 @@ trait DoctusComponent extends Component {
 
 
 case class DoctusCanvasSwing(comp: DoctusComponent) extends DoctusCanvasSwing1
-
-case class DoctusTemplateCanvasSwing(comp: DoctusComponent)
-  extends DoctusTemplateCanvas with DoctusCanvasSwing1 with DoctusDraggableSwing1
-    with DoctusKeySwing1
 
 case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0) extends DoctusImage {
 
