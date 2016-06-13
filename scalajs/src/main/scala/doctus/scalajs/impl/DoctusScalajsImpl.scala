@@ -1,6 +1,5 @@
 package doctus.scalajs.impl
 
-import scala.scalajs.js
 import scala.scalajs.js.Any.fromFunction1
 
 import org.scalajs.dom.raw._
@@ -143,7 +142,6 @@ trait DoctusKeyScalajs1 extends DoctusKey {
   private var active = false
 
   dom.window.addEventListener("keydown", (e: Event) => {
-    println("-- keydown")
     val kevent: KeyboardEvent = e.asInstanceOf[KeyboardEvent]
     if (!active) mapKeyCode(kevent.keyCode) match {
       case Some(key) =>
@@ -156,7 +154,6 @@ trait DoctusKeyScalajs1 extends DoctusKey {
   })
 
   dom.window.addEventListener("keyup", (e: Event) => {
-    println("-- keyup")
     val kevent: KeyboardEvent = e.asInstanceOf[KeyboardEvent]
     if (active) mapKeyCode(kevent.keyCode) match {
       case Some(key) =>
