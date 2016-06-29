@@ -50,16 +50,30 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
   val em = new DoctusEventManager
 
+  var mousedown = false
+
   elem.addEventListener("mousedown", (e: Event) => {
     // 'mousedown' always produces a MouseEvent
     // Patternmatching can cause problems
+    mousedown = true
     val me = e.asInstanceOf[MouseEvent]
     e.preventDefault()
     em.addEvent(MouseDown(point(me)))
   })
 
+  elem.addEventListener("mouseout", (e: Event) => {
+    // 'mouseup' always produces a MouseEvent
+    val me = e.asInstanceOf[MouseEvent]
+    e.preventDefault()
+    if (mousedown) {
+      mousedown = false
+      em.addEvent(MouseUp(point(me)))
+    }
+  })
+
   elem.addEventListener("mouseup", (e: Event) => {
     // 'mouseup' always produces a MouseEvent
+    mousedown = false
     val me = e.asInstanceOf[MouseEvent]
     e.preventDefault()
     em.addEvent(MouseUp(point(me)))
@@ -74,6 +88,7 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
   elem.addEventListener("touchstart", (e: Event) => {
     // 'touchstart' always produces a TouchEvent
+    mousedown = true
     val te = e.asInstanceOf[TouchEvent]
     e.preventDefault()
     em.addEvent(TouchStart(idpoints(te)))
@@ -81,6 +96,7 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
 
   elem.addEventListener("touchend", (e: Event) => {
     // 'touchstart' always produces a TouchEvent
+    mousedown = false
     val te = e.asInstanceOf[TouchEvent]
     e.preventDefault()
     em.addEvent(TouchEnd(idpoints(te)))
