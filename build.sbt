@@ -2,7 +2,8 @@ lazy val _scalaVersion = "2.11.8"
 lazy val doctusVersion = "1.0.6-SNAPSHOT"
 lazy val mockitoVersion = "1.9.5"
 lazy val utestVersion = "0.4.1"
-lazy val scalaJsDomJqueryVersion = "0.9.0"
+lazy val scalaJsDomVersion = "0.9.0"
+lazy val scalaJsJqueryVersion = "0.9.0"
 
 lazy val commonSettings = 
   Seq(
@@ -34,8 +35,8 @@ lazy val scalajsSettings =
   coreSettings ++
     Seq(
       jsDependencies += RuntimeDOM,
-      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % scalaJsDomJqueryVersion,
-      libraryDependencies += "be.doeraene" %%% "scalajs-jquery" % scalaJsDomJqueryVersion,
+      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % scalaJsDomVersion,
+      libraryDependencies += "be.doeraene" %%% "scalajs-jquery" % scalaJsJqueryVersion,
       testFrameworks += new TestFramework("utest.runner.Framework"))
 
 lazy val root = (project in file("."))
