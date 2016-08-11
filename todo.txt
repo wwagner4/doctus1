@@ -1,17 +1,20 @@
 1.0.6
-- uniform structure for showcase
+- Deploy showcases on entelijan for verifying Browser features
+- Solve the wrong point position if canvas is not fullscreen in the browser
+- Solve the blurry text issue
 - remove utest. migrate all testcases. exception scalajs module
 - remove obsolete tryouts
 -- name of modules start all with doctus-showcase...
 -- packages: uniform structure
 -- name of classes and file: uniform structure. Principle: technical before usage.
-- Integrate JavaFX
 - Implementation of the doctus sound interface
-- switch from scala build file to build.sbt in myDoctus
 - Check the reason for the yellow border on the animation showcase
 
 closed
 - sbt: change to build.sbt from scala file
+- uniform structure for showcase
+- Integrate JavaFX
+- switch from scala build file to build.sbt in myDoctus
 
 
 
