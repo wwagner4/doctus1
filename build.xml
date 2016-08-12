@@ -1,0 +1,33 @@
+<project name="doctus">
+    <target name="deploy-showcases">
+        <exec executable="sbt" >
+            <arg line="-Dsbt.log.noformat=true fullOptJS"/>
+        </exec>
+        <mkdir dir="staging"/>
+        <copy todir="staging" verbose="true">
+            <fileset dir="showcase-scalajs/target/scala-2.11">
+                <include name="showcase-doctus-scalajs-*"/>
+            </fileset>
+        </copy>
+        <copy todir="staging" verbose="true">
+            <fileset dir="showcase-scalajs">
+                <include name="showcase-scalajs/*.html"/>
+            </fileset>
+        </copy>
+        <!--
+        <replace file="staging/index.html"
+                 token="target/scala-2.11/doctuswebaudiotryout-scalajs-fastopt.js"
+                 value="doctuswebaudiotryout-scalajs-opt.js"/>
+        <scp remotetodir="root@entelijan.net:/var/www/webaudio" keyfile="${user.home}/.ssh/id_rsa">
+            <fileset dir="staging">
+                <include name="*"/>
+            </fileset>
+        </scp>
+        -->
+    </target>
+    <target name="clean">
+        <exec executable="sbt" >
+            <arg line="-Dsbt.log.noformat=true clean"/>
+        </exec>
+    </target>
+</project>
