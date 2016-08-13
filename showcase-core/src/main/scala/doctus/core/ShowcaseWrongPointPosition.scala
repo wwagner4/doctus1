@@ -8,7 +8,7 @@ case class DoctusTemplateWrongPointPosition(canvas: DoctusCanvas) extends Doctus
 
   var pos = Option.empty[DoctusPoint]
 
-  override def frameRate = Some(5)
+  override def frameRate = Some(1)
 
   def draw(g: DoctusGraphics): Unit = {
     g.noStroke()

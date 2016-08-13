@@ -125,12 +125,11 @@ private[scalajs] trait DoctusPointableScalajs1 extends DoctusPointable {
   }
 
   private def idpoints(te: TouchEvent): List[DoctusIdPoint] = {
-    val (st, sl) = scrollTopLeft(elem)
     val tl = te.targetTouches
     (for (i <- 0 until tl.length.intValue) yield {
       val t: Touch = tl(i)
-      val x = t.clientX - elem.offsetLeft + sl - 1
-      val y = t.clientY - elem.offsetTop + st - 1
+      val x = t.clientX - elem.offsetLeft - 1
+      val y = t.clientY - elem.offsetTop - 1
       DoctusIdPoint(t.identifier, DoctusPoint(x, y))
     }).toList
   }

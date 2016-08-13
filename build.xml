@@ -29,7 +29,9 @@
                 <include name="*.html"/>
             </fileset>
         </replace>
-        <scp remotetodir="root@entelijan.net:/var/www/doctusshowcase" keyfile="${user.home}/.ssh/id_rsa">
+        <scp remotetodir="root@entelijan.net:/var/www/doctusshowcase"
+             keyfile="${user.home}/.ssh/id_rsa"
+                verbose="true">
             <fileset dir="staging">
                 <include name="**"/>
             </fileset>
@@ -39,5 +41,10 @@
         <exec executable="sbt" >
             <arg line="-Dsbt.log.noformat=true clean"/>
         </exec>
+        <delete>
+            <fileset dir="staging">
+                <include name="**"/>
+            </fileset>
+        </delete>
     </target>
 </project>
