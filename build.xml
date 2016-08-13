@@ -8,22 +8,32 @@
             <fileset dir="showcase-scalajs/target/scala-2.11">
                 <include name="showcase-doctus-scalajs-*"/>
             </fileset>
-        </copy>
-        <copy todir="staging" verbose="true">
             <fileset dir="showcase-scalajs">
-                <include name="showcase-scalajs/*.html"/>
+                <include name="*.html"/>
             </fileset>
         </copy>
-        <!--
-        <replace file="staging/index.html"
-                 token="target/scala-2.11/doctuswebaudiotryout-scalajs-fastopt.js"
-                 value="doctuswebaudiotryout-scalajs-opt.js"/>
-        <scp remotetodir="root@entelijan.net:/var/www/webaudio" keyfile="${user.home}/.ssh/id_rsa">
-            <fileset dir="staging">
+        <copy todir="staging/src/main/resources" verbose="true">
+            <fileset dir="showcase-scalajs/src/main/resources">
                 <include name="*"/>
             </fileset>
+        </copy>
+        <copy todir="staging/js" verbose="true">
+            <fileset dir="showcase-scalajs/js">
+                <include name="*"/>
+            </fileset>
+        </copy>
+        <replace summary="true"
+                 token="target/scala-2.11/showcase-doctus-scalajs-fastopt.js"
+                 value="showcase-doctus-scalajs-opt.js">
+            <fileset dir="staging">
+                <include name="*.html"/>
+            </fileset>
+        </replace>
+        <scp remotetodir="root@entelijan.net:/var/www/doctusshowcase" keyfile="${user.home}/.ssh/id_rsa">
+            <fileset dir="staging">
+                <include name="**"/>
+            </fileset>
         </scp>
-        -->
     </target>
     <target name="clean">
         <exec executable="sbt" >

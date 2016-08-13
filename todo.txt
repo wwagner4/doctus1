@@ -1,5 +1,4 @@
 1.0.6
-- Deploy showcases on entelijan for verifying Browser features
 - Solve the wrong point position if canvas is not fullscreen in the browser
 - Solve the blurry text issue
 - remove utest. migrate all testcases. exception scalajs module
@@ -15,6 +14,7 @@ closed
 - uniform structure for showcase
 - Integrate JavaFX
 - switch from scala build file to build.sbt in myDoctus
+- Deploy showcases on entelijan for verifying Browser features http://entelijan.net/doctusshowcase/
 
 
 
