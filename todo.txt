@@ -1,5 +1,5 @@
 1.0.6
-- Solve the wrong point position if canvas is not fullscreen in the browser
+- Solve the canvas exit on mouse down issue
 - Solve the blurry text issue
 - remove utest. migrate all testcases. exception scalajs module
 - remove obsolete tryouts
@@ -10,6 +10,7 @@
 - Check the reason for the yellow border on the animation showcase
 
 closed
+- Solve the wrong point position if canvas is not fullscreen in the browser
 - sbt: change to build.sbt from scala file
 - uniform structure for showcase
 - Integrate JavaFX
