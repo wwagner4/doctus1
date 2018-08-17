@@ -3,10 +3,9 @@ package doctus.scalajs
 import org.scalajs.dom
 import org.scalajs.dom.raw._
 
-import scala.scalajs.js.Any.fromFunction1
-import scala.scalajs.js.annotation.JSExport
+import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 
-@JSExport("Eventmonitor")
+@JSExportTopLevel("Eventmonitor")
 object UtilScalajsEventmonitor {
 
   @JSExport

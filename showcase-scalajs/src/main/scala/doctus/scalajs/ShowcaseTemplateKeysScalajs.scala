@@ -1,13 +1,14 @@
 package doctus.scalajs
 
-import scala.scalajs.js.annotation.JSExport
-import org.scalajs.dom
-import org.scalajs.dom.raw.HTMLCanvasElement
 import doctus.core.DoctusTemplateKeys
 import doctus.core.template.DoctusTemplateController
+import org.scalajs.dom
+import org.scalajs.dom.raw.HTMLCanvasElement
+
+import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 
 
-@JSExport("ShowcaseTemplateKeys")
+@JSExportTopLevel("ShowcaseTemplateKeys")
 object ShowcaseTemplateKeysScalajs {
   
   @JSExport

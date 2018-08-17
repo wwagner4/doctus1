@@ -1,13 +1,11 @@
 package doctus.scalajs
 
-import scala.scalajs.js.annotation.JSExport
-
+import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLCanvasElement
-
 import doctus.core.DoctusControllerPointable
 
-@JSExport("PointedMap")
+@JSExportTopLevel("PointedMap")
 object ShowcaseScalajsPointed {
 
   @JSExport

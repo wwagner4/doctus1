@@ -1,14 +1,12 @@
 package doctus.scalajs
 
-import scala.scalajs.js.annotation.JSExport
-
+import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLCanvasElement
 import org.scalajs.dom.raw.HTMLElement
-
 import doctus.core.DoctusControllerSchedulerStop
 
-@JSExport("SchedulerStopMap")
+@JSExportTopLevel("SchedulerStopMap")
 object ShowcaseScalajsSchedulerStop {
 
   @JSExport
