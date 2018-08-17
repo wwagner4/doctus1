@@ -24,7 +24,7 @@ object ShowcaseScalajsComponent {
       DoctusPointableScalajs(activatable02Elem),
       DoctusKeyScalajs(dom.document.body),
       DoctusActivatableScalajs(button01Elem),
-      DoctusSelectScalajs[FullName](jQuery(select01Elem), (fn) => s"${fn.first} -- ${fn.last}"),
+      DoctusSelectScalajs[FullName](jQuery(select01Elem), fn => s"${fn.first} -- ${fn.last}"),
       DoctusActivatableScalajs(selectButton01Elem),
       DoctusTextScalajs(infoElem))
   }

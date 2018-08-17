@@ -1,5 +1,5 @@
 lazy val _scalaVersion = "2.12.6"
-lazy val doctusVersion = "1.0.6"
+lazy val doctusVersion = "1.0.7-SNAPSHOT"
 lazy val mockitoVersion = "1.9.5"
 lazy val utestVersion = "0.6.3"
 lazy val scalaJsDomVersion = "0.9.6"
