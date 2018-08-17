@@ -1,4 +1,4 @@
-lazy val _scalaVersion = "2.11.8"
+lazy val _scalaVersion = "2.12.6"
 lazy val doctusVersion = "1.0.6-SNAPSHOT"
 lazy val mockitoVersion = "1.9.5"
 lazy val utestVersion = "0.4.1"
