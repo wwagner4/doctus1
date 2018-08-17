@@ -1,14 +1,13 @@
 package doctus.scalajs
 
-import scala.scalajs.js.annotation.JSExport
-
+import doctus.core.DoctusTemplateStillImage
+import doctus.core.template.DoctusTemplateController
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLCanvasElement
 
-import doctus.core.template.DoctusTemplateController
-import doctus.core.DoctusTemplateStillImage
+import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 
-@JSExport("StillImage")
+@JSExportTopLevel("StillImage")
 object ShowcaseTemplateStillImage {
 
   @JSExport

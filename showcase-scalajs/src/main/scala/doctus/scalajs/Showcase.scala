@@ -1,2 +1,0 @@
-package doctus.scalajs
-

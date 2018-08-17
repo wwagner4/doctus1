@@ -1,12 +1,13 @@
 package doctus.scalajs
 
-import scala.scalajs.js.annotation.JSExport
+import doctus.core._
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLElement
 import org.scalajs.jquery.jQuery
-import doctus.core._
 
-@JSExport("ComponentMap")
+import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
+
+@JSExportTopLevel("ComponentMap")
 object ShowcaseScalajsComponent {
 
   @JSExport
