@@ -9,3 +9,5 @@ bin
 core-showcase/.settings
 .DS_Store
 staging
+.env
+.bsp

@@ -13,5 +13,5 @@ trait DoctusSelect[T] {
  */
 trait DoctusText {
   def text: String
-  def text_=(txt: String)
+  def text_=(txt: String): Unit
 }

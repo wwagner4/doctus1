@@ -10,7 +10,7 @@ import doctus.core.DoctusControllerAnimated
 object ShowcaseScalajsAnimated {
 
   @JSExport
-  def main() {
+  def main(): Unit = {
     // Get element from html page
     val canvasElem: HTMLCanvasElement = dom.document.getElementById("canvas").asInstanceOf[HTMLCanvasElement]
     // Create doctus wrappers

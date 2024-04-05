@@ -179,7 +179,7 @@ trait DoctusGraphics {
    * Draws an image
    * 'originX' and 'originY' define the top left corner of the image.
    */
-  def image(img: DoctusImage, originX: Double, originY: Double)
+  def image(img: DoctusImage, originX: Double, originY: Double): Unit
 
   /**
    * Draws an image
@@ -284,7 +284,7 @@ trait DoctusPointable {
 
 trait DoctusDraggable extends DoctusPointable {
   
-  def onDrag(f: (DoctusPoint) => Unit)
+  def onDrag(f: (DoctusPoint) => Unit): Unit
 
 }
 

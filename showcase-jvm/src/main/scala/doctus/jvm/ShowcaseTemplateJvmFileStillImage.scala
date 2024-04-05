@@ -28,7 +28,7 @@ object ShowcaseTemplateJvmFileStillImage extends App {
     val homeDir = new File(System.getProperty("user.home"))
     val pngFile = new File(homeDir, "ShowcaseTemplateJvmFileStillImage_%d_%d.png" format(width, height))
 
-    override def start(stage1: Stage) {
+    override def start(stage1: Stage): Unit = {
 
       val canvas = new Canvas(width, height)
 

@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 object ShowcaseTemplateKeysScalajs {
   
   @JSExport
-  def main() {
+  def main(): Unit = {
 
     // Get element from html page
     val canvasElem: HTMLCanvasElement = dom.document.getElementById("canvas").asInstanceOf[HTMLCanvasElement]

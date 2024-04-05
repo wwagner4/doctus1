@@ -15,7 +15,7 @@ object ShowcaseJvmAnimated extends App {
 
   class MyApp extends Application {
 
-    override def start(stage: Stage) {
+    override def start(stage: Stage): Unit = {
 
       val width = 700
       val height = 500

@@ -10,7 +10,7 @@ import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 object ShowcaseScalajsCanvas {
 
   @JSExport
-  def main() {
+  def main(): Unit = {
     // Get elements from html page
     val canvasElem: HTMLCanvasElement = dom.document.getElementById("canvas").asInstanceOf[HTMLCanvasElement]
     // Wrap elements with doctus implementations

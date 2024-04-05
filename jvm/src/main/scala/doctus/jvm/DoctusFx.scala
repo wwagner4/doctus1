@@ -152,8 +152,8 @@ case class DoctusActivatableFx(comp: Parent) extends DoctusActivatable {
   def onActivated(f: () => Unit): Unit = _onStart = Some(f)
   def onDeactivated(f: () => Unit): Unit = _onStop = Some(f)
 
-  var _onStart = Option.empty[() ⇒ Unit]
-  var _onStop = Option.empty[() ⇒ Unit]
+  var _onStart = Option.empty[() => Unit]
+  var _onStop = Option.empty[() => Unit]
 
   comp.setOnMousePressed(DoctusJvmUtil.handler { e =>
     val x = e.getScreenX

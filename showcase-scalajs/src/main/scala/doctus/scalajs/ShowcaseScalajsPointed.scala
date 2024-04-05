@@ -9,7 +9,7 @@ import doctus.core.DoctusControllerPointable
 object ShowcaseScalajsPointed {
 
   @JSExport
-  def main() {
+  def main(): Unit = {
     // Get elements from html page
     val canvasElem: HTMLCanvasElement = dom.document.getElementById("canvas").asInstanceOf[HTMLCanvasElement]
     // Wrap elements with doctus implementations

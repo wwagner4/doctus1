@@ -1,9 +1,9 @@
-lazy val _scalaVersion = "2.12.6"
+lazy val _scalaVersion = "2.13.13"
 lazy val doctusVersion = "1.0.7-SNAPSHOT"
-lazy val mockitoVersion = "1.9.5"
-lazy val utestVersion = "0.6.3"
-lazy val scalaJsDomVersion = "0.9.6"
-lazy val scalaJsJqueryVersion = "0.9.4"
+lazy val utestVersion = "0.8.2"
+lazy val scalaJsJqueryVersion = "1.0.0"
+lazy val javaFxVersion = "21.0.2" // LTS
+lazy val javaVersion = "17" // Info for scalac in order to optimise
 
 lazy val commonSettings = 
   Seq(
@@ -19,7 +19,8 @@ lazy val coreSettings =
     Seq(
       libraryDependencies += "com.lihaoyi" %%% "utest" % utestVersion % "test",
       libraryDependencies += "org.scala-lang" % "scala-reflect" % _scalaVersion,
-      testFrameworks += new TestFramework("utest.runner.Framework"))
+      testFrameworks += new TestFramework("utest.runner.Framework"),
+    )
 
 lazy val showcaseSettings =
   coreSettings
@@ -27,14 +28,26 @@ lazy val showcaseSettings =
 lazy val jvmSettings =
   coreSettings ++
     Seq(
-      libraryDependencies += "commons-lang" % "commons-lang" % "2.6" % "test",
+      libraryDependencies ++= {
+      // Determine OS version of JavaFX binaries
+        val osName = System.getProperty("os.name") match {
+          case n if n.startsWith("Linux")   => "linux"
+          case n if n.startsWith("Mac")     => "mac"
+          case n if n.startsWith("Windows") => "win"
+          case _                            => throw new Exception("Unknown platform!")
+        }
+        Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
+          .map(m => "org.openjfx" % s"javafx-$m" % javaFxVersion classifier osName)
+      },
+      javacOptions ++= Seq("-source", javaVersion, "-target", javaVersion),
       fork := true,
       testFrameworks += new TestFramework("utest.runner.Framework"))
+
+
 
 lazy val scalajsSettings =
   coreSettings ++
     Seq(
-      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % scalaJsDomVersion,
       libraryDependencies += "be.doeraene" %%% "scalajs-jquery" % scalaJsJqueryVersion,
       testFrameworks += new TestFramework("utest.runner.Framework"))
 

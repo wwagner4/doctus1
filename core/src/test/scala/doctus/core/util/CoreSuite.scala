@@ -57,102 +57,102 @@ object CoreSuite extends TestSuite {
 
     }
 
-    'adding_two_vectors{
+    Symbol("adding_two_vectors"){
       val v1 = DoctusVector(10, 10)
       val v2 = DoctusVector(3, 4)
       val v3: DoctusVector = v1 + v2
       assert(v3.x == 13.0)
       assert(v3.y == 14.0)
     }
-    'subtracting_two_vectors{
+    Symbol("subtracting_two_vectors"){
       val v1 = DoctusVector(10, 10)
       val v2 = DoctusVector(3, 4)
       val v3: DoctusVector = v1 - v2
       assert(v3.x == 7.0)
       assert(v3.y == 6.0)
     }
-    'subtracting_two_vectors_the_other_way_around{
+    Symbol("subtracting_two_vectors_the_other_way_around"){
       val v1 = DoctusVector(10, 10)
       val v2 = DoctusVector(3, 4)
       val v3: DoctusVector = v2 - v1
       assert(v3.x == -7.0)
       assert(v3.y == -6.0)
     }
-    'adding_a_vector_to_a_point{
+    Symbol("adding_a_vector_to_a_point"){
       val v = DoctusVector(10, 10)
       val p = DoctusPoint(3, 4)
       val p1: DoctusPoint = p + v
       assert(p1.x == 13.0)
       assert(p1.y == 14.0)
     }
-    'subtracting_a_vector_from_a_point{
+    Symbol("subtracting_a_vector_from_a_point"){
       val v = DoctusVector(10, 10)
       val p = DoctusPoint(3, 4)
       val p1: DoctusPoint = p - v
       assert(p1.x == -7.0)
       assert(p1.y == -6.0)
     }
-    'subtracting_a_point_from_a_point{
+    Symbol("subtracting_a_point_from_a_point"){
       val p1 = DoctusPoint(10, 10)
       val p2 = DoctusPoint(3, 4)
       val v: DoctusVector = p1 - p2
       assert(v.x == 7.0)
       assert(v.y == 6.0)
     }
-    'subtracting_a_point_from_a_point_the_other_way_around{
+    Symbol("subtracting_a_point_from_a_point_the_other_way_around"){
       val p1 = DoctusPoint(10, 10)
       val p2 = DoctusPoint(3, 4)
       val v: DoctusVector = p2 - p1
       assert(v.x == -7.0)
       assert(v.y == -6.0)
     }
-    'multiply_a_vector_with_a_pos_scalar{
+    Symbol("multiply_a_vector_with_a_pos_scalar"){
       val v = DoctusVector(10, 11)
       val v1: DoctusVector = v * 2
       assert(v1.x == 20.0)
       assert(v1.y == 22.0)
     }
-    'multiply_a_vector_with_a_neg_scalar{
+    Symbol("multiply_a_vector_with_a_neg_scalar"){
       val v = DoctusVector(10, 11)
       val v1: DoctusVector = v * (-2)
       assert(v1.x == -20.0)
       assert(v1.y == -22.0)
     }
-    'norm_of_a_vector_01{
+    Symbol("norm_of_a_vector_01"){
       val v = DoctusVector(4, 3)
       assert(v.norm == 5.0)
     }
-    'norm_of_a_vector_02{
+    Symbol("norm_of_a_vector_02"){
       val v = DoctusVector(40, 0)
       assert(v.norm == 40.0)
     }
-    'norm_of_a_vector_03{
+    Symbol("norm_of_a_vector_03"){
       val v = DoctusVector(-40, 0)
       assert(v.norm == 40.0)
     }
-    'norm_of_a_vector_03{
+    Symbol("norm_of_a_vector_03"){
       val v = DoctusVector(0, -40)
       assert(v.norm == 40.0)
     }
-    'to_unit_01{
+    Symbol("to_unit_01"){
       val v = DoctusVector(0, -40)
       val u = v.toUnit
       assert(u.x == 0.0)
       assert(u.y == -1.0)
     }
-    'to_unit_02{
+    Symbol("to_unit_02"){
       val v = DoctusVector(0, 40)
       val u = v.toUnit
       assert(u.x == 0.0)
       assert(u.y == 1.0)
     }
-    'to_unit_02{
+    Symbol("to_unit_02"){
       val v = DoctusVector(0.2, 0)
       val u = v.toUnit
       assert(u.x == 1.0)
       assert(u.y == 0.0)
     }
-    'rot_01{
+    Symbol("rot_01"){
       val v = DoctusVector(10, 0)
       val u = v.rot(math.Pi / 2.0)
       val x = round(u.x)
@@ -160,7 +160,7 @@ object CoreSuite extends TestSuite {
       assert(x == 0.0)
       assert(y == 10.0)
     }
-    'rot_02{
+    Symbol("rot_02"){
       val v = DoctusVector(10, 0)
       val u = v.rot(-math.Pi / 2.0)
       val x = round(u.x)
@@ -168,7 +168,7 @@ object CoreSuite extends TestSuite {
       assert(x == 0.0)
       assert(y == -10.0)
     }
-    'rot_03{
+    Symbol("rot_03"){
       val v = DoctusVector(10, 0)
       val u = v.rot(math.Pi)
       val x = round(u.x)
@@ -176,7 +176,7 @@ object CoreSuite extends TestSuite {
       assert(x == -10.0)
       assert(y == 0.0)
     }
-    'multiply_scalar_01{
+    Symbol("multiply_scalar_01"){
       val v = DoctusVector(10, 5)
       val u = v * 10
       val x = round(u.x)
@@ -184,7 +184,7 @@ object CoreSuite extends TestSuite {
       assert(x == 100)
       assert(y == 50)
     }
-    'multiply_scalar_02{
+    Symbol("multiply_scalar_02"){
       val v = DoctusVector(10, 5)
       val u = v * -10
       val x = round(u.x)

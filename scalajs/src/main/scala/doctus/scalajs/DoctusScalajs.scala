@@ -214,8 +214,8 @@ case class DoctusActivatableScalajs(elem: HTMLElement) extends DoctusActivatable
 
   val p = DoctusPointableScalajs(elem)
 
-  def onActivated(f: () ⇒ Unit): Unit = p.onStart { _ => f() }
-  def onDeactivated(f: () ⇒ Unit): Unit = p.onStop { _ => f() }
+  def onActivated(f: () => Unit): Unit = p.onStart { _ => f() }
+  def onDeactivated(f: () => Unit): Unit = p.onStop { _ => f() }
 
 }
 

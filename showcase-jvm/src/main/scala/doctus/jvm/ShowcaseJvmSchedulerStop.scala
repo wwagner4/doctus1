@@ -18,7 +18,7 @@ object ShowcaseJvmSchedulerStop extends App {
 
   class FxApp extends Application {
 
-    override def start(stage: Stage) {
+    override def start(stage: Stage): Unit = {
 
       val width = 700
       val height = 500

@@ -15,7 +15,7 @@ object ShowcaseJvmCanvas extends App {
 
   class MyApp extends Application {
 
-    override def start(stage: Stage) {
+    override def start(stage: Stage): Unit = {
 
       val width = 800
       val height = 700

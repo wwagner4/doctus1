@@ -9,7 +9,7 @@ import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 object UtilScalajsEventmonitor {
 
   @JSExport
-  def main() {
+  def main(): Unit = {
     // Get elements from html page
     val infoElem = dom.document.getElementById("term").asInstanceOf[HTMLCanvasElement]
     val bodyElem = dom.document.body

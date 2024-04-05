@@ -10,7 +10,7 @@ import doctus.core.DoctusControllerSchedulerStop
 object ShowcaseScalajsSchedulerStop {
 
   @JSExport
-  def main() {
+  def main(): Unit = {
 
     // Get elements from html
     val canvasElem: HTMLCanvasElement = dom.document.getElementById("canvas").asInstanceOf[HTMLCanvasElement]

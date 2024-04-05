@@ -15,13 +15,13 @@ private[jvm] trait DoctusCanvasFxImpl extends DoctusCanvas {
   def comp: Canvas
 
   comp.widthProperty.addListener(new ChangeListener[Number] {
-    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number) {
+    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number): Unit = {
       repaint()
     }
   })
 
   comp.heightProperty().addListener(new ChangeListener[Number] {
-    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number) {
+    def changed(obs: ObservableValue[_ <: Number], old: Number, nev: Number): Unit = {
       repaint()
     }
   })
@@ -60,12 +60,12 @@ private[jvm] trait DoctusPointableFxImpl extends DoctusPointable {
 
   def comp: Node
 
-  def onStart(f: DoctusPoint ⇒ Unit): Unit = _onStart = Some(f)
+  def onStart(f: DoctusPoint => Unit): Unit = _onStart = Some(f)
 
-  def onStop(f: DoctusPoint ⇒ Unit): Unit = _onStop = Some(f)
+  def onStop(f: DoctusPoint => Unit): Unit = _onStop = Some(f)
 
-  var _onStart = Option.empty[DoctusPoint ⇒ Unit]
-  var _onStop = Option.empty[DoctusPoint ⇒ Unit]
+  var _onStart = Option.empty[DoctusPoint => Unit]
+  var _onStop = Option.empty[DoctusPoint => Unit]
 
   comp.setOnMousePressed(DoctusJvmUtil.handler { e =>
     val x = e.getX
@@ -84,17 +84,17 @@ private[jvm] trait DoctusDraggableFxImpl extends DoctusDraggable {
 
   def comp: Node
 
-  var _onStart = Option.empty[DoctusPoint ⇒ Unit]
-  var _onStop = Option.empty[DoctusPoint ⇒ Unit]
-  var _onDrag = Option.empty[DoctusPoint ⇒ Unit]
+  var _onStart = Option.empty[DoctusPoint => Unit]
+  var _onStop = Option.empty[DoctusPoint => Unit]
+  var _onDrag = Option.empty[DoctusPoint => Unit]
 
   // Members declared in doctus.core.DoctusDraggable
-  def onDrag(f: DoctusPoint ⇒ Unit): Unit = _onDrag = Some(f)
+  def onDrag(f: DoctusPoint => Unit): Unit = _onDrag = Some(f)
 
   // Members declared in doctus.core.DoctusPointable
-  def onStart(f: DoctusPoint ⇒ Unit): Unit = _onStart = Some(f)
+  def onStart(f: DoctusPoint => Unit): Unit = _onStart = Some(f)
 
-  def onStop(f: DoctusPoint ⇒ Unit): Unit = _onStop = Some(f)
+  def onStop(f: DoctusPoint => Unit): Unit = _onStop = Some(f)
 
   comp.setOnMouseDragEntered(DoctusJvmUtil.handler { e =>
     println("onDragEntered...")
@@ -135,12 +135,12 @@ private[jvm] trait DoctusKeyFxImp extends DoctusKey {
 
   def comp: Node
 
-  var _onKeyPressed = Option.empty[DoctusKeyCode ⇒ Unit]
-  var _onKeyReleased = Option.empty[DoctusKeyCode ⇒ Unit]
+  var _onKeyPressed = Option.empty[DoctusKeyCode => Unit]
+  var _onKeyReleased = Option.empty[DoctusKeyCode => Unit]
 
-  def onKeyPressed(f: DoctusKeyCode ⇒ Unit): Unit = _onKeyPressed = Some(f)
+  def onKeyPressed(f: DoctusKeyCode => Unit): Unit = _onKeyPressed = Some(f)
 
-  def onKeyReleased(f: DoctusKeyCode ⇒ Unit): Unit = _onKeyReleased = Some(f)
+  def onKeyReleased(f: DoctusKeyCode => Unit): Unit = _onKeyReleased = Some(f)
 
   def keyCode(e: KeyEvent): Option[DoctusKeyCode] = {
     val code: KeyCode = e.getCode

@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 object ShowcaseScalajsComponent {
 
   @JSExport
-  def main() {
+  def main(): Unit = {
     val infoElem: HTMLElement = dom.document.getElementById("info").asInstanceOf[HTMLElement]
     val activatable01Elem: HTMLElement = dom.document.getElementById("activatable_01").asInstanceOf[HTMLElement]
     val activatable02Elem: HTMLElement = dom.document.getElementById("activatable_02").asInstanceOf[HTMLElement]
