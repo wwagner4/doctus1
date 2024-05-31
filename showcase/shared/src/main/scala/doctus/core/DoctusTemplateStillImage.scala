@@ -6,7 +6,8 @@ import doctus.core.color.{DoctusColorRgb, DoctusColorUtil, DoctusColorWhite}
 import doctus.core.template.DoctusTemplate
 import doctus.core.util.DoctusPoint
 
-case class DoctusTemplateStillImage(canvas: DoctusCanvas) extends DoctusTemplate {
+case class DoctusTemplateStillImage(canvas: DoctusCanvas)
+    extends DoctusTemplate {
 
   val ran = new Random
 
@@ -29,8 +30,7 @@ case class DoctusTemplateStillImage(canvas: DoctusCanvas) extends DoctusTemplate
 
     g.noStroke()
     var t1 = ran.nextDouble * 100
-    var t2 = ran.nextDouble * 100
-    for (i <- 1 to 100) {
+    for (t2 <- 1 to 100) {
       val c = ranColor
       g.fill(c, 4)
       val x = ran.nextDouble() * w
@@ -45,9 +45,12 @@ case class DoctusTemplateStillImage(canvas: DoctusCanvas) extends DoctusTemplate
     }
   }
 
-  def pointableDragged(pos: DoctusPoint): Unit = () // Nothing to do in a still image
-  def pointablePressed(pos: DoctusPoint): Unit = () // Nothing to do in a still image
-  def pointableReleased(pos: DoctusPoint): Unit = () // Nothing to do in a still image
+  def pointableDragged(pos: DoctusPoint): Unit =
+    () // Nothing to do in a still image
+  def pointablePressed(pos: DoctusPoint): Unit =
+    () // Nothing to do in a still image
+  def pointableReleased(pos: DoctusPoint): Unit =
+    () // Nothing to do in a still image
   def keyPressed(code: DoctusKeyCode): Unit = {
     if (code == DKC_Space) this.canvas.repaint()
   }

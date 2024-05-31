@@ -6,7 +6,20 @@ package object color {}
 
 /** Utility functionality that is not bound to specific interface classes
   */
-package object util {}
+package object util {
+
+  def cropString(str: String, len: Int): String = {
+    if (len <= 0) ""
+    else if (str.length > len && len >= 10) {
+      val v = str.take(len - 3)
+      s"$v..."
+    } else {
+      val fmt = f"%%${len}s"
+      fmt.format(str.take(len))
+    }
+  }
+
+}
 
 /** Support for GUI-components
   *

@@ -4,25 +4,168 @@ import utest._
 
 object CoreSuite extends TestSuite {
 
-  def tests = TestSuite {
+  def tests: Tests = Tests {
 
-    "vector equality" - {
-      * - {
+    test("crop string") - {
+      test - {
+        val expected = "12345678"
+        val in = "123456789012"
+        val len = 8
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "123456789"
+        val in = "123456789012"
+        val len = 9
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "1234567..."
+        val in = "123456789012"
+        val len = 10
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "12345678..."
+        val in = "123456789012"
+        val len = 11
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "123456789012"
+        val in = "123456789012"
+        val len = 12
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = " 123456789012"
+        val in = "123456789012"
+        val len = 13
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "  123456789012"
+        val in = "123456789012"
+        val len = 14
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "   123456789012"
+        val in = "123456789012"
+        val len = 15
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "    123456789012"
+        val in = "123456789012"
+        val len = 16
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "     "
+        val in = ""
+        val len = 5
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "     "
+        val in = " "
+        val len = 5
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "     "
+        val in = "  "
+        val len = 5
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "     "
+        val in = "   "
+        val len = 5
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "     "
+        val in = "            "
+        val len = 5
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "  abc"
+        val in = "abc"
+        val len = 5
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = " abc"
+        val in = "abc"
+        val len = 4
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "abc"
+        val in = "abc"
+        val len = 3
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "ab"
+        val in = "abc"
+        val len = 2
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = "a"
+        val in = "abc"
+        val len = 1
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+      test - {
+        val expected = ""
+        val in = "abc"
+        val len = 0
+        val out = cropString(in, len)
+        assert(expected.equals(out))
+      }
+    }
+
+    test("vector equality") {
+      test - {
         val v1 = DoctusVector(0, 0)
         val v2 = DoctusVector(0, 0)
         assert(v1.equals(v2))
       }
-      * - {
+      test - {
         val v1 = DoctusVector(0, 0)
         val v2 = DoctusVector(0, 0)
         assert(v1 == v2)
       }
-      * - {
+      test - {
         val v1 = DoctusVector(1.0, 1.0)
         val v2 = DoctusVector(1.0, 1.0)
         assert(v1 == v2)
       }
-      * - {
+      test - {
         val v1 = DoctusVector(1.0, 1.0)
         val v2 = DoctusVector(1.0, 1.1)
         assert(v1 != v2)
@@ -30,26 +173,26 @@ object CoreSuite extends TestSuite {
 
     }
 
-    "point equality" - {
-      * - {
+    test("point equality") {
+      test - {
         val p1 = DoctusPoint(0, 0)
         val p2 = DoctusPoint(0, 0)
         assert(p1.equals(p2))
       }
       
-      * - {
+      test - {
         val p1 = DoctusPoint(0, 0)
         val p2 = DoctusPoint(0, 0)
         assert(p1 == p2)
       }
       
-      * - {
+      test - {
         val p1 = DoctusPoint(1.0, 1.0)
         val p2 = DoctusPoint(1.0, 1.0)
         assert(p1 == p2)
       }
       
-      * - {
+      test - {
         val p1 = DoctusPoint(1.0, 1.0)
         val p2 = DoctusPoint(1.0, 1.1)
         assert(p1 != p2)

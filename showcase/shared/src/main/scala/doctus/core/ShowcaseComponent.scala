@@ -1,21 +1,18 @@
 package doctus.core
 
-import doctus.core._
 import doctus.core.comp._
-import doctus.core.color._
-import doctus.core.util._
-import doctus.core.text._
 
 case class FullName(first: String, last: String)
 
 case class DoctusControllerComponent(
-  pointable01: DoctusPointable,
-  pointable02: DoctusPointable,
-  upKey04: DoctusKey,
-  activatable01: DoctusActivatable,
-  select03: DoctusSelect[FullName],
-  activatable03: DoctusActivatable,
-  info: DoctusText) {
+    pointable01: DoctusPointable,
+    pointable02: DoctusPointable,
+    upKey04: DoctusKey,
+    activatable01: DoctusActivatable,
+    select03: DoctusSelect[FullName],
+    activatable03: DoctusActivatable,
+    info: DoctusText
+) {
 
   var count = 0
 
@@ -63,4 +60,3 @@ case class DoctusControllerComponent(
     count += 1
   })
 }
-

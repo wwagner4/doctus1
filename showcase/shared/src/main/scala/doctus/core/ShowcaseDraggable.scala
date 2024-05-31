@@ -11,7 +11,10 @@ case class Stopped(p: DoctusPoint, cnt: Int) extends ActionTyp
 
 case class Dragged(p: DoctusPoint, cnt: Int) extends ActionTyp
 
-case class DoctusControllerDraggable(draggable: DoctusDraggable, canvas: DoctusCanvas) {
+case class DoctusControllerDraggable(
+    draggable: DoctusDraggable,
+    canvas: DoctusCanvas
+) {
 
   var actCount = 0
 
@@ -123,4 +126,3 @@ case class DoctusControllerDraggable(draggable: DoctusDraggable, canvas: DoctusC
   }
 
 }
-

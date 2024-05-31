@@ -1,7 +1,5 @@
 package doctus.core
 
-import doctus.core.DoctusScheduler.Stopper
-
 import doctus.core.util._
 
 /** Representation of a font in doctus
@@ -170,7 +168,7 @@ trait DoctusCanvas {
 
   /** Defines a paint function f that gets triggered whenever repaint is called
     */
-  def onRepaint(f: (DoctusGraphics) => Unit): Unit
+  def onRepaint(f: DoctusGraphics => Unit): Unit
 
   /** Creates a DoctusGraphics from the underlying system and calls onRepaint.
     */
@@ -211,11 +209,11 @@ trait DoctusKey {
 
   /** Defines a function that gets called whenever the key is pressed
     */
-  def onKeyPressed(f: (DoctusKeyCode) => Unit): Unit
+  def onKeyPressed(f: DoctusKeyCode => Unit): Unit
 
   /** Defines a function that gets called whenever the key is released
     */
-  def onKeyReleased(f: (DoctusKeyCode) => Unit): Unit
+  def onKeyReleased(f: DoctusKeyCode => Unit): Unit
 
 }
 
@@ -229,19 +227,19 @@ trait DoctusPointable {
     * started touching a touch device. The position of the point relative to the
     * left top corner of the component.
     */
-  def onStart(f: (DoctusPoint) => Unit): Unit
+  def onStart(f: DoctusPoint => Unit): Unit
 
   /** Defines a function that gets called whenever the pointing stops. The point
     * (DoctusPoints) indicates where the pointing was stopped. E.g. the position
     * of your mouse when you release the left button. The position of the point
     * relative to the left top corner of the component.
     */
-  def onStop(f: (DoctusPoint) => Unit): Unit
+  def onStop(f: DoctusPoint => Unit): Unit
 }
 
 trait DoctusDraggable extends DoctusPointable {
 
-  def onDrag(f: (DoctusPoint) => Unit): Unit
+  def onDrag(f: DoctusPoint => Unit): Unit
 
 }
 
@@ -253,14 +251,15 @@ trait DoctusScheduler {
     * first call of f for 'initialDelay' milliseconds Execution can be stopped
     * by calling the stop method of the returned stopper
     */
-  def start(f: () => Unit, duration: Int, initialDelay: Int = 0): Stopper
+  def start(
+      f: () => Unit,
+      duration: Int,
+      initialDelay: Int = 0
+  ): DoctusSchedulerStopper
 }
 
-object DoctusScheduler {
+trait DoctusSchedulerStopper {
 
-  trait Stopper {
-
-    // Stops the execution of a Scheduler
-    def stop(): Unit
-  }
+  // Stops the execution of a Scheduler
+  def stop(): Unit
 }

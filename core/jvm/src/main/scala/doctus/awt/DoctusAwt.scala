@@ -1,12 +1,11 @@
-package doctus.jvm.awt
+package doctus.awt
 
 import java.awt.geom.AffineTransform
-import java.awt.image.BufferedImage
-import java.awt.{Graphics2D, BasicStroke, Font, Image, RenderingHints}
-
+import java.awt.{BasicStroke, Font, Graphics2D, Image}
 import doctus.core._
 import doctus.core.template.DoctusTemplateCanvas
 import doctus.core.util.DoctusPoint
+import doctus.swing.DoctusBufferedImage
 
 case class DoctusGraphicsAwt(graphics: Graphics2D) extends DoctusGraphics {
 
@@ -202,26 +201,6 @@ case class DoctusImageAwt(resource: String, scaleFactor: Double = 1.0)
   def width = icon.getWidth(null)
 
   def height = icon.getWidth(null)
-
-}
-
-case class DoctusBufferedImage(img: BufferedImage) {
-
-  var paintOpt: Option[DoctusGraphics => Unit] = None
-
-  def width: Int = img.getWidth
-
-  def height: Int = img.getHeight
-
-  def paint(): Unit = {
-    val g = img.getGraphics.asInstanceOf[Graphics2D]
-    g.setRenderingHint(
-      RenderingHints.KEY_ANTIALIASING,
-      RenderingHints.VALUE_ANTIALIAS_ON
-    )
-    val doctusGraphics = DoctusGraphicsAwt(g)
-    paintOpt.foreach(f => f(doctusGraphics))
-  }
 
 }
 

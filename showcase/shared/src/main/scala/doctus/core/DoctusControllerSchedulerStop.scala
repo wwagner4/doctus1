@@ -4,14 +4,18 @@ import doctus.core.color._
 import doctus.core.text._
 import doctus.core.util._
 
-/**
- * Demonstrates how a scheduler can be started and stopped
- */
-case class DoctusControllerSchedulerStop(sched: DoctusScheduler, start: DoctusActivatable, stop: DoctusActivatable, canv: DoctusCanvas) {
+/** Demonstrates how a scheduler can be started and stopped
+  */
+case class DoctusControllerSchedulerStop(
+    sched: DoctusScheduler,
+    start: DoctusActivatable,
+    stop: DoctusActivatable,
+    canv: DoctusCanvas
+) {
 
   var cnt = 0
 
-  var stopper: List[DoctusScheduler.Stopper] = List.empty[DoctusScheduler.Stopper]
+  var stopper: List[DoctusSchedulerStopper] = List.empty[DoctusSchedulerStopper]
 
   canv.onRepaint(g => {
     val r = 111
@@ -33,14 +37,18 @@ case class DoctusControllerSchedulerStop(sched: DoctusScheduler, start: DoctusAc
   sched.start(canv.repaint, 10)
 
   start.onDeactivated(() => {
-    stopper ::= sched.start(() => {
-      cnt += 1
-    }, 500, 2000)
+    stopper ::= sched.start(
+      () => {
+        cnt += 1
+      },
+      500,
+      2000
+    )
   })
 
   stop.onDeactivated(() => {
     stopper.foreach(_.stop())
-    stopper = List.empty[DoctusScheduler.Stopper]
+    stopper = List.empty[DoctusSchedulerStopper]
   })
 
 }

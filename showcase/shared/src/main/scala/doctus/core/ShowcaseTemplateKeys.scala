@@ -31,7 +31,7 @@ case class DoctusTemplateKeys(canvas: DoctusCanvas) extends DoctusTemplate {
     case DKC_Right => button = Button(button.pos + DoctusVector(incr, 0))
     case _         => // Nothing to do
   }
-  
+
   def pointableDragged(pos: DoctusPoint): Unit = ()
   def pointablePressed(pos: DoctusPoint): Unit = ()
   def pointableReleased(pos: DoctusPoint): Unit = ()

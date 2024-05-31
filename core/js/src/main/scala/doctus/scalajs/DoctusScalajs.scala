@@ -280,7 +280,7 @@ case object DoctusSchedulerScalajs extends DoctusScheduler {
       f: () => Unit,
       duration: Int,
       initialDelay: Int = 0
-  ): DoctusScheduler.Stopper = {
+  ): DoctusSchedulerStopper = {
     require(duration > 0, "Duration must be greater than zero. " + duration)
     require(
       initialDelay >= 0,
@@ -299,7 +299,7 @@ case object DoctusSchedulerScalajs extends DoctusScheduler {
 
     dom.window.setTimeout(startInterval, initialDelay)
 
-    new DoctusScheduler.Stopper {
+    new DoctusSchedulerStopper {
       // Stops the execution of a Scheduler
       override def stop(): Unit = {
         stopped = true

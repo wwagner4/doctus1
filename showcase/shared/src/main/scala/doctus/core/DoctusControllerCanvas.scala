@@ -34,21 +34,32 @@ case class DoctusControllerCanvas(canvas: DoctusCanvas, logo: DoctusImage) {
     yoff += 100
     g.stroke(color.DoctusColorRgb(20, 100, 20), 255)
     g.textSize(15)
-    for (rot <- -20 to(210, 45)) {
-      g.text("___ Doctus " + rot, DoctusPoint(xoff + 10 + 100, yoff), rot * math.Pi / 180)
+    for (rot <- -20 to (210, 45)) {
+      g.text(
+        "___ Doctus " + rot,
+        DoctusPoint(xoff + 10 + 100, yoff),
+        rot * math.Pi / 180
+      )
     }
 
     yoff += 100
     g.stroke(color.DoctusColorBlack, 255)
     g.textSize(15)
     g.line(DoctusPoint(xoff + 10, yoff), DoctusPoint(xoff + 500, yoff))
-    g.line(DoctusPoint(xoff + 100, yoff - 100), DoctusPoint(xoff + 100, yoff + 50))
+    g.line(
+      DoctusPoint(xoff + 100, yoff - 100),
+      DoctusPoint(xoff + 100, yoff + 50)
+    )
     g.fill(DoctusColorBlue, 255)
     g.text("Doctus 90 ____", DoctusPoint(xoff + 100, yoff), math.Pi / 2.0)
     g.fill(DoctusColorGreen, 255)
     g.text("Doctus 180 ____", DoctusPoint(xoff + 100, yoff), math.Pi)
     g.fill(DoctusColorRed, 255)
-    g.text("Doctus 270 ____", DoctusPoint(xoff + 100, yoff), 3.0 * math.Pi / 2.0)
+    g.text(
+      "Doctus 270 ____",
+      DoctusPoint(xoff + 100, yoff),
+      3.0 * math.Pi / 2.0
+    )
     g.fill(DoctusColorBlue, 255)
     g.text("Doctus 0 ____", DoctusPoint(xoff + 100, yoff), 0.0)
     g.fill(DoctusColorBlack, 255)
@@ -141,7 +152,11 @@ case class DoctusControllerCanvas(canvas: DoctusCanvas, logo: DoctusImage) {
     g.stroke(color.DoctusColorBlack, 255)
     g.fill(color.DoctusColorBlack, 255)
     g.textSize(10)
-    g.text(s"canvas size = ${canvas.width} ${canvas.height}", DoctusPoint(xoff + 10, yoff), 0)
+    g.text(
+      s"canvas size = ${canvas.width} ${canvas.height}",
+      DoctusPoint(xoff + 10, yoff),
+      0
+    )
 
     yoff += 20
     g.imageMode(ImageModeCORNER)
@@ -156,8 +171,12 @@ case class DoctusControllerCanvas(canvas: DoctusCanvas, logo: DoctusImage) {
 
     yoff += 100
     g.strokeWeight(1)
-    (0 to(250, 2)) foreach (i =>
-      g.line(DoctusPoint(xoff + 10 + i, yoff), DoctusPoint(xoff + 10 + i, yoff + ampl(i))))
+    (0 to (250, 2)) foreach (i =>
+      g.line(
+        DoctusPoint(xoff + 10 + i, yoff),
+        DoctusPoint(xoff + 10 + i, yoff + ampl(i))
+      )
+    )
 
     yoff += 70
     g.strokeWeight(2)
@@ -230,7 +249,14 @@ case class DoctusControllerCanvas(canvas: DoctusCanvas, logo: DoctusImage) {
 
   }
 
-  private def drawImage(g: DoctusGraphics, img: DoctusImage, x: Int, y: Int, scale: Double, crossLine: Boolean): Unit = {
+  private def drawImage(
+      g: DoctusGraphics,
+      img: DoctusImage,
+      x: Int,
+      y: Int,
+      scale: Double,
+      crossLine: Boolean
+  ): Unit = {
     g.image(img.scale(scale), x, y)
     if (crossLine) {
       val b = 100
@@ -241,56 +267,75 @@ case class DoctusControllerCanvas(canvas: DoctusCanvas, logo: DoctusImage) {
     }
   }
 
-  private def hueShowcase(g: DoctusGraphics, xoff: Int, yoff: Int, startColor: DoctusColor): Unit = {
+  private def hueShowcase(
+      g: DoctusGraphics,
+      xoff: Int,
+      yoff: Int,
+      startColor: DoctusColor
+  ): Unit = {
     g.noStroke()
     val (sr, sg, sb) = startColor.rgb
     val (h, s, v) = DoctusColorUtil.rgb2hsv(sr, sg, sb)
-    val hues = h - 20 to(h + 360 + 20, 10)
-    hues.zipWithIndex.foreach {
-      case (h1, i) =>
-        val (dr, dg, db) = DoctusColorUtil.hsv2rgb(h1, s, v)
-        g.fill(DoctusColorRgb(dr, dg, db), 255)
-        g.rect(xoff + i * 10, yoff, 10, 10)
+    val hues = h - 20 to (h + 360 + 20, 10)
+    hues.zipWithIndex.foreach { case (h1, i) =>
+      val (dr, dg, db) = DoctusColorUtil.hsv2rgb(h1, s, v)
+      g.fill(DoctusColorRgb(dr, dg, db), 255)
+      g.rect(xoff + i * 10, yoff, 10, 10)
     }
   }
 
-  private def saturationShowcase(g: DoctusGraphics, xoff: Int, yoff: Int, startColor: DoctusColor): Unit = {
+  private def saturationShowcase(
+      g: DoctusGraphics,
+      xoff: Int,
+      yoff: Int,
+      startColor: DoctusColor
+  ): Unit = {
     g.noStroke()
     val (sr, sg, sb) = startColor.rgb
-    val (h, s, v) = DoctusColorUtil.rgb2hsv(sr, sg, sb)
-    val saturs = -20 to(100 + 20, 5)
-    saturs.zipWithIndex.foreach {
-      case (s1, i) =>
-        val (dr, dg, db) = DoctusColorUtil.hsv2rgb(h, s1, v)
-        g.fill(DoctusColorRgb(dr, dg, db), 255)
-        g.rect(xoff + i * 15, yoff, 15, 10)
+    val (h, _, v) = DoctusColorUtil.rgb2hsv(sr, sg, sb)
+    val saturs = -20 to (100 + 20, 5)
+    saturs.zipWithIndex.foreach { case (s1, i) =>
+      val (dr, dg, db) = DoctusColorUtil.hsv2rgb(h, s1, v)
+      g.fill(DoctusColorRgb(dr, dg, db), 255)
+      g.rect(xoff + i * 15, yoff, 15, 10)
     }
   }
 
-  private def valueShowcase(g: DoctusGraphics, xoff: Int, yoff: Int, startColor: DoctusColor): Unit = {
+  private def valueShowcase(
+      g: DoctusGraphics,
+      xoff: Int,
+      yoff: Int,
+      startColor: DoctusColor
+  ): Unit = {
     g.noStroke()
     g.strokeWeight(0)
     val (sr, sg, sb) = startColor.rgb
-    val (h, s, v) = DoctusColorUtil.rgb2hsv(sr, sg, sb)
-    val values = -20 to(100 + 20, 5)
-    values.zipWithIndex.foreach {
-      case (v1, i) =>
-        val (dr, dg, db) = DoctusColorUtil.hsv2rgb(h, s, v1)
-        g.fill(DoctusColorRgb(dr, dg, db), 255)
-        g.rect(xoff + i * 15, yoff, 15, 10)
+    val (h, s, _) = DoctusColorUtil.rgb2hsv(sr, sg, sb)
+    val values = -20 to (100 + 20, 5)
+    values.zipWithIndex.foreach { case (v1, i) =>
+      val (dr, dg, db) = DoctusColorUtil.hsv2rgb(h, s, v1)
+      g.fill(DoctusColorRgb(dr, dg, db), 255)
+      g.rect(xoff + i * 15, yoff, 15, 10)
     }
   }
 
   private def ampl(i: Int) = (math.sin(i.toDouble / 50) * 50).toInt + 20
 
-  private def points(n: Int, minx: Int, maxx: Int, miny: Int, maxy: Int): List[DoctusPoint] = {
+  private def points(
+      n: Int,
+      minx: Int,
+      maxx: Int,
+      miny: Int,
+      maxy: Int
+  ): List[DoctusPoint] = {
     val ran = new java.util.Random(12345)
-    (1 to n).map(i => {
-      val x = (ran.nextDouble() * (maxx - minx)).toInt + minx
-      val y = (ran.nextDouble() * (maxy - miny)).toInt + miny
-      util.DoctusPoint(x, y)
-    }).toList
+    (1 to n)
+      .map(_ => {
+        val x = (ran.nextDouble() * (maxx - minx)).toInt + minx
+        val y = (ran.nextDouble() * (maxy - miny)).toInt + miny
+        util.DoctusPoint(x, y)
+      })
+      .toList
   }
 
 }
-

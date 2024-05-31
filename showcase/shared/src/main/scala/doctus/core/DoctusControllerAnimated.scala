@@ -2,7 +2,11 @@ package doctus.core
 
 import doctus.core.util._
 
-case class DoctusControllerAnimated(canvas: DoctusCanvas, scheduler: DoctusScheduler, logo: DoctusImage) {
+case class DoctusControllerAnimated(
+    canvas: DoctusCanvas,
+    scheduler: DoctusScheduler,
+    logo: DoctusImage
+) {
 
   val ran = new java.util.Random
 
@@ -16,7 +20,7 @@ case class DoctusControllerAnimated(canvas: DoctusCanvas, scheduler: DoctusSched
   scheduler.start(() => canvas.repaint(), 25)
 
   def paint(g: DoctusGraphics): Unit = {
-    
+
     // Fill the background
     g.fill(color.DoctusColorWhite, 100)
     g.rect(DoctusPoint(0, 0), canvas.width, canvas.height)
@@ -41,7 +45,3 @@ case class DoctusControllerAnimated(canvas: DoctusCanvas, scheduler: DoctusSched
   }
 
 }
-
-
-
-

@@ -3,7 +3,10 @@ package doctus.core
 import doctus.core.color._
 import doctus.core.util._
 
-case class DoctusControllerPointable(pointable: DoctusPointable, canvas: DoctusCanvas) {
+case class DoctusControllerPointable(
+    pointable: DoctusPointable,
+    canvas: DoctusCanvas
+) {
 
   var actCount = 0
   var init = true
@@ -22,16 +25,16 @@ case class DoctusControllerPointable(pointable: DoctusPointable, canvas: DoctusC
     }
     synchronized {
       actions.foreach {
-          case a: Started =>
-            g.fill(DoctusColorRed, 100)
-            g.ellipse(DoctusPoint(a.p.x, a.p.y), 10, 10)
-            drawNum(g, a.p, a.cnt)
-          case a: Stopped =>
-            g.fill(DoctusColorGreen, 100)
-            g.ellipse(DoctusPoint(a.p.x, a.p.y), 5, 5)
-            drawNum(g, a.p, a.cnt)
-          case a: Dragged =>
-            // Nothing to do
+        case a: Started =>
+          g.fill(DoctusColorRed, 100)
+          g.ellipse(DoctusPoint(a.p.x, a.p.y), 10, 10)
+          drawNum(g, a.p, a.cnt)
+        case a: Stopped =>
+          g.fill(DoctusColorGreen, 100)
+          g.ellipse(DoctusPoint(a.p.x, a.p.y), 5, 5)
+          drawNum(g, a.p, a.cnt)
+        case _: Dragged =>
+        // Nothing to do
       }
       actions = List.empty[ActionTyp]
     }
@@ -101,4 +104,3 @@ case class DoctusControllerPointable(pointable: DoctusPointable, canvas: DoctusC
   }
 
 }
-
