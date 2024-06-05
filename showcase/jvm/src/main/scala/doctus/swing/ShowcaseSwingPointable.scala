@@ -5,9 +5,9 @@ import doctus.core.DoctusControllerPointable
 import java.awt.{BorderLayout, Dimension}
 import javax.swing.{JFrame, WindowConstants}
 
-object PointableApp extends App {
+object ShowcaseSwingPointable extends App {
 
-  val p = DoctusComponentFactory.component()
+  val p = DoctusSwingComponentFactory.component
 
   DoctusControllerPointable(DoctusPointableSwing(p), DoctusCanvasSwing(p))
 

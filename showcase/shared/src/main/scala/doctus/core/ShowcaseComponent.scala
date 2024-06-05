@@ -16,32 +16,32 @@ case class DoctusControllerComponent(
 
   var count = 0
 
-  pointable01.onStart((p) => {
+  pointable01.onStart(p => {
     info.text = s"$count - You started 'pointable 01' at $p"
     count += 1
   })
 
-  pointable01.onStop((p) => {
+  pointable01.onStop(p => {
     info.text = s"$count - You stopped 'stoppable 01' at $p"
     count += 1
   })
 
-  pointable02.onStart((p) => {
+  pointable02.onStart(p => {
     info.text = s"$count - You started 'pointable 02' at $p"
     count += 1
   })
 
-  pointable02.onStop((p) => {
+  pointable02.onStop(p => {
     info.text = s"$count - You stopped 'pointable 02' at $p"
     count += 1
   })
 
-  upKey04.onKeyPressed((key) => {
+  upKey04.onKeyPressed(key => {
     info.text = s"$count - You pressed the $key key"
     count += 1
   })
 
-  upKey04.onKeyReleased((key) => {
+  upKey04.onKeyReleased(key => {
     info.text = s"$count - You released the $key key"
     count += 1
   })

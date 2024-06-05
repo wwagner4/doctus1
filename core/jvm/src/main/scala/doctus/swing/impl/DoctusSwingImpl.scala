@@ -6,14 +6,14 @@ import doctus.core.util._
 import java.awt.Component
 import java.awt.Dimension
 import java.awt.event._
-import doctus.swing.DoctusComponent
+import doctus.swing.DoctusSwingComponent
 
 import javax.swing.{ComboBoxModel, ListModel}
 import javax.swing.event.ListDataListener
 
 private[swing] trait DoctusCanvasSwing1 extends DoctusCanvas {
 
-  def comp: DoctusComponent
+  def comp: DoctusSwingComponent
 
   def onRepaint(f: DoctusGraphics => Unit): Unit = {
     comp.graphicsOpt = Some(f)

@@ -6,9 +6,9 @@ import doctus.core.DoctusControllerDraggable
 
 import javax.swing.{JFrame, WindowConstants}
 
-object DraggableApp extends App {
+object ShowcaseSwingDraggable extends App {
 
-  val p = DoctusComponentFactory.component()
+  val p = DoctusSwingComponentFactory.component
 
   DoctusControllerDraggable(DoctusDraggableSwing(p), DoctusCanvasSwing(p))
 

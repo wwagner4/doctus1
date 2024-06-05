@@ -1,16 +1,18 @@
 package doctus.swing
 
-import java.awt.BasicStroke
-import java.awt.Canvas
-import java.awt.Component
-import java.awt.Font
-import java.awt.Graphics
-import java.awt.Graphics2D
-import java.awt.RenderingHints
+import java.awt.{
+  BasicStroke,
+  Canvas,
+  CardLayout,
+  Component,
+  Container,
+  Font,
+  Graphics,
+  Graphics2D
+}
 import java.awt.event.MouseListener
 import java.awt.event.WindowFocusListener
 import java.awt.geom.AffineTransform
-import java.awt.image.BufferedImage
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -28,6 +30,7 @@ import doctus.core.{
   ImageModeCORNER
 }
 import doctus.core.comp.{
+  DoctusCard,
   DoctusSelect,
   DoctusSelect1,
   DoctusText,
@@ -230,7 +233,7 @@ case class DoctusGraphicsSwing(graphics: Graphics2D) extends DoctusGraphics {
 
 /** Extended scala.swing.Component with a graphics member for drawing
   */
-trait DoctusComponent extends Component {
+trait DoctusSwingComponent extends Component {
   def graphicsOpt_=(paintOpt: Option[DoctusGraphics => Unit]): Unit
   def graphicsOpt: Option[DoctusGraphics => Unit]
 }
@@ -238,67 +241,34 @@ trait DoctusComponent extends Component {
 /** A normal scala.swing.Component with some extra functionality needed for
   * SwingCanvas
   */
-object DoctusComponentFactory {
+object DoctusSwingComponentFactory {
 
   /** Parameters are only used for Mac.
     */
-  def component(
-      bufferWidth: Int = 3000,
-      bufferHeight: Int = 3000,
-      textAntialiasing: Boolean = true,
-      doubleBuffering: Boolean = true
-  ): DoctusComponent = {
+  def component: DoctusSwingComponent = {
+
+    System.setProperty("sun.java2d.opengl", "true")
 
     import doctus.swing.DoctusSwingUtil._
 
-    case class Buffer(image: BufferedImage, graphics: DoctusGraphics)
-
-    def createBuffer: Buffer = {
-      val bi =
-        new BufferedImage(bufferWidth, bufferHeight, BufferedImage.TYPE_INT_RGB)
-      val bg = bi.createGraphics()
-      bg.setRenderingHint(
-        RenderingHints.KEY_ANTIALIASING,
-        RenderingHints.VALUE_ANTIALIAS_ON
-      )
-      if (textAntialiasing) {
-        bg.setRenderingHint(
-          RenderingHints.KEY_TEXT_ANTIALIASING,
-          RenderingHints.VALUE_TEXT_ANTIALIAS_ON
-        )
-      } else {
-        bg.setRenderingHint(
-          RenderingHints.KEY_TEXT_ANTIALIASING,
-          RenderingHints.VALUE_TEXT_ANTIALIAS_OFF
-        )
-      }
-      val bdg = DoctusGraphicsSwing(bg)
-      Buffer(bi, bdg)
-    }
-
-    lazy val buffer = createBuffer
-
-    def createCanvas = new Canvas with DoctusComponent {
+    // noinspection VarCouldBeVal
+    def createCanvas = new Canvas with DoctusSwingComponent {
 
       var graphicsOpt: Option[DoctusGraphics => Unit] = None
 
       override def paint(g: Graphics): Unit = {
-        if (doubleBuffering) {
-          graphicsOpt.foreach(f => f(buffer.graphics))
-          g.drawImage(buffer.image, 0, 0, null)
-        } else {
-          val doctusGraphics = DoctusGraphicsSwing(g.asInstanceOf[Graphics2D])
-          graphicsOpt.foreach(f => f(doctusGraphics))
-        }
+        val doctusGraphics = DoctusGraphicsSwing(g.asInstanceOf[Graphics2D])
+        graphicsOpt.foreach(f => f(doctusGraphics))
       }
 
       override def update(g: Graphics): Unit = paint(g)
 
     }
 
-    def createJPanel = new JPanel with DoctusComponent {
+    // noinspection VarCouldBeVal
+    def createJPanel = new JPanel with DoctusSwingComponent {
 
-      var graphicsOpt: Option[(DoctusGraphics) => Unit] = None
+      var graphicsOpt: Option[DoctusGraphics => Unit] = None
 
       override def paint(g: Graphics): Unit = {
         val doctusGraphics = DoctusGraphicsSwing(g.asInstanceOf[Graphics2D])
@@ -313,17 +283,20 @@ object DoctusComponentFactory {
 
 }
 
-case class DoctusCanvasSwing(comp: DoctusComponent) extends DoctusCanvasSwing1
+case class DoctusCanvasSwing(comp: DoctusSwingComponent)
+    extends DoctusCanvasSwing1
 
-case class DoctusTemplateCanvasSwing(comp: DoctusComponent)
+//noinspection ScalaUnusedSymbol
+case class DoctusTemplateCanvasSwing(comp: DoctusSwingComponent)
     extends DoctusTemplateCanvas
     with DoctusCanvasSwing1
     with DoctusDraggableSwing1
     with DoctusKeySwing1
 
+//noinspection ScalaUnusedSymbol
 case class DoctusSelectSwingJComboBox[T](
     comboBox: JComboBox[T],
-    f: (T) => String = (t: T) => t.toString()
+    f: T => String = (t: T) => t.toString
 ) extends DoctusSelect[T] {
 
   import javax.swing._
@@ -331,8 +304,9 @@ case class DoctusSelectSwingJComboBox[T](
   val model = new DefaultComboBoxModel[T]()
   comboBox.setModel(model)
 
+  // noinspection ScalaUnusedSymbol
   object TaskCellRenderer extends ListCellRenderer[T] {
-    val peerRenderer: ListCellRenderer[T] =
+    private val peerRenderer: ListCellRenderer[T] =
       (new DefaultListCellRenderer).asInstanceOf[ListCellRenderer[T]]
     override def getListCellRendererComponent(
         list: JList[_ <: T],
@@ -363,13 +337,14 @@ case class DoctusSelectSwingJComboBox[T](
 
 case class DoctusPointableSwing(comp: Component) extends DoctusPointableSwing1
 
+//noinspection ScalaUnusedSymbol
 case class DoctusDraggableSwing(comp: Component)
     extends DoctusDraggableSwing1
     with DoctusDraggable
 
 case class DoctusActivatableSwing(comp: Component) extends DoctusActivatable {
 
-  val p = DoctusPointableSwing(comp)
+  private val p = DoctusPointableSwing(comp)
 
   def onActivated(f: () => Unit): Unit = p.onStart { _ => f() }
   def onDeactivated(f: () => Unit): Unit = p.onStop { _ => f() }
@@ -401,27 +376,27 @@ case object DoctusSchedulerSwing extends DoctusScheduler {
       TimeUnit.MILLISECONDS
     )
 
-    new DoctusSchedulerStopper {
-      // Stops the execution of a Scheduler
-      override def stop(): Unit = future.cancel(true)
-    }
+    () => future.cancel(true)
   }
 
 }
 
+//noinspection ScalaUnusedSymbol
 case class DoctusTextSwing(textComp: JTextComponent) extends DoctusText {
 
   def text: String = {
     textComp.getText
   }
 
-  def text_=(txt: String) = {
+  def text_=(txt: String): Unit = {
     textComp.setText(txt)
   }
 }
 
+//noinspection ScalaUnusedSymbol
 object DoctusActivatableSwingKey {
 
+  // noinspection ScalaUnusedSymbol
   implicit class Implicit(c: Component) {
 
     /** Convenience function for gaining the focus of a component. Consider
@@ -439,7 +414,7 @@ object DoctusActivatableSwingKey {
       win match {
         case null =>
           () // The component is not yet bound to a window (e.g. JFrame)
-        case w: java.awt.Window => {
+        case w: java.awt.Window =>
           val wfl = new WindowFocusListener {
             def windowGainedFocus(x$1: java.awt.event.WindowEvent): Unit = {
               c.requestFocusInWindow()
@@ -447,7 +422,6 @@ object DoctusActivatableSwingKey {
             def windowLostFocus(x$1: java.awt.event.WindowEvent): Unit = ()
           }
           w.addWindowFocusListener(wfl)
-        }
       }
 
       val ml = new MouseListener {
@@ -471,6 +445,7 @@ object DoctusActivatableSwingKey {
   * focus. You may use 'requestFocusForDoctusActivatableSwingKey' as for
   * convenience.
   */
+//noinspection ScalaUnusedSymbol
 case class DoctusKeySwing(comp: Component) extends DoctusKeySwing1
 
 case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0)
@@ -478,30 +453,29 @@ case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0)
 
   val icon: ImageIcon = {
     val imgPath = resource
-    val imgr = getClass.getClassLoader.getResource(imgPath)
-    assert(imgr != null, s"Found no resource for $imgPath")
-    new ImageIcon(imgr)
+    val img = getClass.getClassLoader.getResource(imgPath)
+    assert(img != null, s"Found no resource for $imgPath")
+    new ImageIcon(img)
   }
 
   def scale(factor: Double): doctus.core.DoctusImage =
     DoctusImageSwing(resource, scaleFactor * factor)
 
-  def width = icon.getIconWidth()
+  def width: Int = icon.getIconWidth
 
-  def height = icon.getIconHeight()
+  def height: Int = icon.getIconHeight
 
 }
 
+//noinspection ScalaUnusedSymbol
 class DoctusSelectSwingList[C](
-    val list: JList[String],
-    fontSize: Int = 14
+    val list: JList[String]
 ) extends DoctusSelect1[C] {
 
   // Adapt JList
   private val sel = new DefaultListSelectionModel()
   sel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION)
   list.setSelectionModel(sel)
-  list.setFont(new Font("Courier", Font.PLAIN, fontSize))
 
   private var listModelOpt = Option.empty[AbstractDoctusListModel[C]]
 
@@ -538,13 +512,10 @@ class DoctusSelectSwingList[C](
 
 }
 
+//noinspection ScalaUnusedSymbol
 class DoctusSelectSwingComboBox[C](
-    val comboBox: JComboBox[String],
-    fontSize: Int = 14
+    val comboBox: JComboBox[String]
 ) extends DoctusSelect1[C] {
-
-  // Adapt JComboBox
-  comboBox.setFont(new Font("Courier", Font.PLAIN, fontSize))
 
   private var comboBoxModelOpt = Option.empty[AbstractDoctusComboBoxModel[C]]
 
@@ -552,7 +523,8 @@ class DoctusSelectSwingComboBox[C](
       items: Seq[C],
       itemDescription: SelectItemDescription[C]
   ): Unit = {
-    val model = createComboBoxModel(items, itemDescription)
+    val model: AbstractDoctusComboBoxModel[C] =
+      createComboBoxModel(items, itemDescription)
     comboBoxModelOpt = Some(model)
     comboBox.setModel(model)
   }
@@ -563,10 +535,10 @@ class DoctusSelectSwingComboBox[C](
     else comboBoxModelOpt.map { model => model.values(index) }
   }
 
-  private def createComboBoxModel(
+  def createComboBoxModel(
       items: Seq[C],
       itemDescription: SelectItemDescription[C]
-  ) = {
+  ): AbstractDoctusComboBoxModel[C] = {
     new AbstractDoctusComboBoxModel[C] {
 
       override def values: Seq[C] = items
@@ -592,4 +564,14 @@ class DoctusSelectSwingComboBox[C](
     }
   }
 
+}
+
+case class DoctusSwingCard(container: Container, cardLayout: CardLayout)
+    extends DoctusCard {
+
+  override def next(): Unit = cardLayout.next(container)
+
+  override def previous(): Unit = cardLayout.previous(container)
+
+  override def show(name: String): Unit = cardLayout.show(container, name)
 }

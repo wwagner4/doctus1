@@ -8,7 +8,7 @@ import javax.swing.{ImageIcon, JFrame, WindowConstants}
 
 object ShowcaseTemplateSwingKeys extends App {
 
-  val p = DoctusComponentFactory.component()
+  val p = DoctusSwingComponentFactory.component
   val canvas = DoctusTemplateCanvasSwing(p)
   val sched = DoctusSchedulerSwing
   val logo = DoctusImageSwing("logo.png")
@@ -16,7 +16,7 @@ object ShowcaseTemplateSwingKeys extends App {
   val top = new JFrame()
   top.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
   top.setTitle("Canvas Showcase")
-  val url = getClass().getClassLoader().getResource("logo.png")
+  val url = getClass.getClassLoader.getResource("logo.png")
   if (url != null) top.setIconImage(new ImageIcon(url).getImage)
 
   top.getContentPane.add(p, BorderLayout.CENTER)

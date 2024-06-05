@@ -25,3 +25,11 @@ trait DoctusText {
   def text: String
   def text_=(txt: String): Unit
 }
+
+/** A container containing multiple panels where only one is visible.
+  */
+trait DoctusCard {
+  def next(): Unit
+  def previous(): Unit
+  def show(name: String): Unit
+}

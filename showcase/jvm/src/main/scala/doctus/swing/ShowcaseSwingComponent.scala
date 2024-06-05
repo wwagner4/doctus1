@@ -8,28 +8,31 @@ import javax.swing.border.EmptyBorder
 
 object ShowcaseSwingComponent extends App {
 
+    // Activate openGL
+  ShowcaseUtil.setupSwing()
+
   // Must be imported in order to be able to use 'requestFocusForDoctusActivatableSwingKey'
   import DoctusActivatableSwingKey.Implicit
 
   // Create the components
-  val textField = new JTextField()
+  private val textField = new JTextField()
   textField.setEditable(false)
 
-  val label01 = new JLabel()
+  private val label01 = new JLabel()
   label01.setText("Activatable 01")
   label01.setBorder(new EmptyBorder(10, 10, 10, 10))
 
-  val panel02 = new JPanel()
+  private val panel02 = new JPanel()
   panel02.setBackground(java.awt.Color.YELLOW)
   panel02.setPreferredSize(new Dimension(100, 100))
 
-  val button01 = new JButton("button 01")
+  private val button01 = new JButton("button 01")
 
-  val comboBox03 = new JComboBox[FullName]()
-  val button03 = new JButton("check selection")
+  private val comboBox03 = new JComboBox[FullName]()
+  private val button03 = new JButton("check selection")
 
   // Layout the components
-  val main = new JPanel()
+  private val main = new JPanel()
   main.setLayout(new FlowLayout())
   main.add(label01)
   main.add(panel02)
@@ -41,7 +44,7 @@ object ShowcaseSwingComponent extends App {
       "Press one of the arrow keys for testing the key activatable\n" +
         "Click on the background panel if another component has currently the focus."
     ) {
-      override def isEditable() = false;
+      override def isEditable = false
     }
   )
 
@@ -52,16 +55,16 @@ object ShowcaseSwingComponent extends App {
   cont.add(textField, BorderLayout.NORTH)
 
   // Wrap the components
-  val infoText: DoctusTextSwing = DoctusTextSwing(textField)
+  private val infoText: DoctusTextSwing = DoctusTextSwing(textField)
   val pointable01 = DoctusPointableSwing(label01)
   val pointable02 = DoctusPointableSwing(panel02)
   val upKey04 = DoctusKeySwing(cont)
-  val clickable01 = DoctusActivatableSwing(button01)
+  private val clickable01 = DoctusActivatableSwing(button01)
   val select03 = DoctusSelectSwingJComboBox[FullName](
     comboBox03,
-    (fn) => "[%s - %s]" format (fn.first, fn.last)
+    fn => "[%s - %s]" format (fn.first, fn.last)
   )
-  val clickable03 = DoctusActivatableSwing(button03)
+  private val clickable03 = DoctusActivatableSwing(button03)
 
   // Start the controller
   DoctusControllerComponent(
@@ -78,7 +81,7 @@ object ShowcaseSwingComponent extends App {
   val top = new JFrame()
   top.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
   top.setTitle("Doctus Component Showcase")
-  val url = getClass().getClassLoader().getResource("logo.png")
+  val url = getClass.getClassLoader.getResource("logo.png")
   if (url != null) top.setIconImage(new ImageIcon(url).getImage)
   top.setContentPane(cont)
   // Calling makes only sense after the component was added to the JFrame

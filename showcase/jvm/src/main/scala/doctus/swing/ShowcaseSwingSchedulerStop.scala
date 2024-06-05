@@ -7,10 +7,13 @@ import javax.swing._
 
 object ShowcaseSwingSchedulerStop extends App {
 
+  // Activate openGL
+  ShowcaseUtil.setupSwing()
+
   // Create Components
-  val panel = DoctusComponentFactory.component()
-  val startButton = new JButton("start")
-  val stopButton = new JButton("stop")
+  val panel = DoctusSwingComponentFactory.component
+  private val startButton = new JButton("start")
+  private val stopButton = new JButton("stop")
 
   // Create Layout
   val buttonsPanel = new JPanel()
@@ -18,7 +21,7 @@ object ShowcaseSwingSchedulerStop extends App {
   buttonsPanel.add(startButton)
   buttonsPanel.add(stopButton)
 
-  val contPanel = new JPanel()
+  private val contPanel = new JPanel()
   contPanel.setLayout(new BorderLayout())
   contPanel.add(panel, BorderLayout.CENTER)
   contPanel.add(buttonsPanel, BorderLayout.NORTH)
@@ -35,7 +38,7 @@ object ShowcaseSwingSchedulerStop extends App {
   // Open the application
   val top = new JFrame()
   top.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
-  val url = getClass().getClassLoader().getResource("logo.png")
+  val url = getClass.getClassLoader.getResource("logo.png")
   if (url != null) top.setIconImage(new ImageIcon(url).getImage)
   top.setTitle("Scheduler Start Stop")
   top.setContentPane(contPanel)

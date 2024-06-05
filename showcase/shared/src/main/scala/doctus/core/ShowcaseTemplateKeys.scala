@@ -12,10 +12,10 @@ case class DoctusTemplateKeys(canvas: DoctusCanvas) extends DoctusTemplate {
 
   def center: DoctusPoint = DoctusPoint(0, 0)
 
-  var button = new Button(center)
+  private var button = Button(center)
 
   val size = 100
-  val incr = 50
+  private val incr = 50
 
   def draw(g: DoctusGraphics): Unit = {
     g.noStroke()

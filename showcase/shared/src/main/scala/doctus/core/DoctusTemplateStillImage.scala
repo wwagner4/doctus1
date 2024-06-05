@@ -12,7 +12,7 @@ case class DoctusTemplateStillImage(canvas: DoctusCanvas)
   val ran = new Random
 
   // None means there is no animation. The draw method is called ones
-  override def frameRate = None
+  override def frameRate: Option[Int] = None
 
   def draw(g: DoctusGraphics): Unit = {
 

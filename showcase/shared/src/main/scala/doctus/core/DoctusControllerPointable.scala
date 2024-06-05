@@ -3,13 +3,14 @@ package doctus.core
 import doctus.core.color._
 import doctus.core.util._
 
+//noinspection DuplicatedCode
 case class DoctusControllerPointable(
     pointable: DoctusPointable,
     canvas: DoctusCanvas
 ) {
 
   var actCount = 0
-  var init = true
+  private var init = true
   var actions = List.empty[ActionTyp]
 
   pointable.onStart { started }

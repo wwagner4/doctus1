@@ -11,6 +11,7 @@ case class Stopped(p: DoctusPoint, cnt: Int) extends ActionTyp
 
 case class Dragged(p: DoctusPoint, cnt: Int) extends ActionTyp
 
+//noinspection DuplicatedCode
 case class DoctusControllerDraggable(
     draggable: DoctusDraggable,
     canvas: DoctusCanvas
@@ -117,7 +118,7 @@ case class DoctusControllerDraggable(
     }
   }
 
-  def dragged(p: DoctusPoint): Unit = {
+  private def dragged(p: DoctusPoint): Unit = {
     synchronized {
       actions ::= Dragged(p, actCount)
       actCount += 1

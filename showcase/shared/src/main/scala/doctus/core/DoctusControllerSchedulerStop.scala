@@ -15,7 +15,8 @@ case class DoctusControllerSchedulerStop(
 
   var cnt = 0
 
-  var stopper: List[DoctusSchedulerStopper] = List.empty[DoctusSchedulerStopper]
+  private var stopper: List[DoctusSchedulerStopper] =
+    List.empty[DoctusSchedulerStopper]
 
   canv.onRepaint(g => {
     val r = 111

@@ -4,6 +4,7 @@ import doctus.core.color._
 import doctus.core.text._
 import doctus.core.util._
 
+//noinspection DuplicatedCode
 case class DoctusControllerCanvas(canvas: DoctusCanvas, logo: DoctusImage) {
 
   // Define what method should be called on repaint
