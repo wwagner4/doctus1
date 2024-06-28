@@ -1,6 +1,6 @@
 package doctus.core
 
-import doctus.core.comp.{DoctusSelect1, SelectItemDescription}
+import doctus.core.comp.{DoctusSelect, SelectItemDescription}
 
 case class Rocket(
     name: String,
@@ -12,8 +12,8 @@ case class DoctusControllerSelectables(
     activatableA: DoctusActivatable,
     activatableB: DoctusActivatable,
     activatableOpen: DoctusActivatable,
-    selectList: DoctusSelect1[Rocket],
-    selectComboBox: DoctusSelect1[Rocket]
+    selectList: DoctusSelect[Rocket],
+    selectComboBox: DoctusSelect[Rocket]
 ) {
 
   private val itemDescription = SelectItemDescription(

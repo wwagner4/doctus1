@@ -7,7 +7,7 @@ import javax.swing._
 
 object ShowcaseSwingAnimated extends App {
 
-    // Activate openGL
+  // Activate openGL
   ShowcaseUtil.setupSwing()
 
   // Create the component

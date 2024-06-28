@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder
 
 object ShowcaseSwingComponent extends App {
 
-    // Activate openGL
+  // Activate openGL
   ShowcaseUtil.setupSwing()
 
   // Must be imported in order to be able to use 'requestFocusForDoctusActivatableSwingKey'
@@ -28,7 +28,7 @@ object ShowcaseSwingComponent extends App {
 
   private val button01 = new JButton("button 01")
 
-  private val comboBox03 = new JComboBox[FullName]()
+  private val comboBox03 = new JComboBox[String]()
   private val button03 = new JButton("check selection")
 
   // Layout the components
@@ -60,9 +60,8 @@ object ShowcaseSwingComponent extends App {
   val pointable02 = DoctusPointableSwing(panel02)
   val upKey04 = DoctusKeySwing(cont)
   private val clickable01 = DoctusActivatableSwing(button01)
-  val select03 = DoctusSelectSwingJComboBox[FullName](
-    comboBox03,
-    fn => "[%s - %s]" format (fn.first, fn.last)
+  val select03 = new DoctusSelectSwingComboBox[FullName](
+    comboBox03
   )
   private val clickable03 = DoctusActivatableSwing(button03)
 

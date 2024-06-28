@@ -1,9 +1,9 @@
 package doctus.swing
 
 import doctus.core._
-import doctus.core.comp.DoctusSelect1
+import doctus.core.comp.DoctusSelect
 
-import java.awt.{BorderLayout, Dimension, FlowLayout}
+import java.awt.{BorderLayout, Dimension, FlowLayout, Font}
 import javax.swing._
 
 object ShowcaseSelectableComponent extends App {
@@ -21,14 +21,16 @@ object ShowcaseSelectableComponent extends App {
     cont
   }
 
-  private val list = new JList[String]()
+  private val list = new JList[String]
+  list.setFont(new Font(Font.MONOSPACED, Font.BOLD, 18))
 
-  private val selectList: DoctusSelect1[Rocket] =
+  private val selectList: DoctusSelect[Rocket] =
     new DoctusSelectSwingList[Rocket](list)
 
   private val comboBox = new JComboBox[String]()
+  comboBox.setFont(new Font(Font.MONOSPACED, Font.BOLD, 18))
 
-  private val selectComboBox: DoctusSelect1[Rocket] =
+  private val selectComboBox: DoctusSelect[Rocket] =
     new DoctusSelectSwingComboBox[Rocket](comboBox)
 
   private val activatableA: DoctusActivatable = DoctusActivatableSwing(buttonA)

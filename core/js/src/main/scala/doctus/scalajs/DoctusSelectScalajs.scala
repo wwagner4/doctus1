@@ -1,6 +1,6 @@
 package doctus.scalajs
 
-import doctus.core.comp.DoctusSelect
+import doctus.core.comp.{DoctusSelect, SelectItemDescription}
 import org.scalajs.jquery._
 
 /** Uses a HTML select box in combination with jQuery The default mapping is the
@@ -25,21 +25,29 @@ case class DoctusSelectScalajs[T](
 
   private val shadow = new ShadowSelect
 
-  def addItem(item: T): Unit = {
+  def setItems(
+      items: Seq[T],
+      itemDescription: SelectItemDescription[T]
+  ): Unit = {
     val value = index
-    val label = {
+    val entries = for (item <- items) yield {
       val posi = "%5d." format (index + 1)
-      s"$posi ${render(item)}"
+      (item, s"$posi ${render(item)}")
     }
+
     val v1 = jQuery("<option/>")
-    val optionElem = v1.attr("value", value).html(label)
-    selectBox.append(optionElem)
-    shadow.addItem(item)
-    index += 1
+    for ((item, label) <- entries) {
+      val optionElem = v1.attr("value", value).html(label)
+      selectBox.append(optionElem)
+      shadow.addItem(item)
+      index += 1
+    }
+    ()
   }
 
-  def selectedItem: T = {
+  def selectedItem: Option[T] = {
     val indexStr = selectBox.value().asInstanceOf[String]
-    shadow.selectedItem(indexStr.toInt)
+    Some(shadow.selectedItem(indexStr.toInt))
   }
+
 }

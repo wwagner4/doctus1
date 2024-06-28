@@ -51,9 +51,13 @@ case class DoctusControllerComponent(
     count += 1
   })
 
-  select03.addItem(FullName("Kurt", "Wallander"))
-  select03.addItem(FullName("Linda", "Wallander"))
-  select03.addItem(FullName("Baipa", "Liepa"))
+  select03.setItems(
+    List(
+      FullName("Kurt", "Wallander"),
+      FullName("Linda", "Wallander"),
+      FullName("Baipa", "Liepa")
+    )
+  )
 
   activatable03.onDeactivated(() => {
     info.text = s"$count - select 03 = ${select03.selectedItem}"

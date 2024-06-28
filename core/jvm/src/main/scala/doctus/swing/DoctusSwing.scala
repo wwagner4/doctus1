@@ -32,7 +32,6 @@ import doctus.core.{
 import doctus.core.comp.{
   DoctusCard,
   DoctusSelect,
-  DoctusSelect1,
   DoctusText,
   SelectItemDescription
 }
@@ -293,48 +292,6 @@ case class DoctusTemplateCanvasSwing(comp: DoctusSwingComponent)
     with DoctusDraggableSwing1
     with DoctusKeySwing1
 
-//noinspection ScalaUnusedSymbol
-case class DoctusSelectSwingJComboBox[T](
-    comboBox: JComboBox[T],
-    f: T => String = (t: T) => t.toString
-) extends DoctusSelect[T] {
-
-  import javax.swing._
-
-  val model = new DefaultComboBoxModel[T]()
-  comboBox.setModel(model)
-
-  // noinspection ScalaUnusedSymbol
-  object TaskCellRenderer extends ListCellRenderer[T] {
-    private val peerRenderer: ListCellRenderer[T] =
-      (new DefaultListCellRenderer).asInstanceOf[ListCellRenderer[T]]
-    override def getListCellRendererComponent(
-        list: JList[_ <: T],
-        item: T,
-        index: Int,
-        isSelected: Boolean,
-        cellHasFocus: Boolean
-    ): Component = {
-      val component = peerRenderer
-        .getListCellRendererComponent(
-          list,
-          item,
-          index,
-          isSelected,
-          cellHasFocus
-        )
-        .asInstanceOf[JLabel]
-      component.setText(f(item))
-      component
-    }
-  }
-  comboBox.setRenderer(TaskCellRenderer)
-
-  def addItem(item: T): Unit = model.addElement(item)
-
-  def selectedItem: T = comboBox.getSelectedItem.asInstanceOf[T]
-}
-
 case class DoctusPointableSwing(comp: Component) extends DoctusPointableSwing1
 
 //noinspection ScalaUnusedSymbol
@@ -470,7 +427,7 @@ case class DoctusImageSwing(resource: String, scaleFactor: Double = 1.0)
 //noinspection ScalaUnusedSymbol
 class DoctusSelectSwingList[C](
     val list: JList[String]
-) extends DoctusSelect1[C] {
+) extends DoctusSelect[C] {
 
   // Adapt JList
   private val sel = new DefaultListSelectionModel()
@@ -515,7 +472,7 @@ class DoctusSelectSwingList[C](
 //noinspection ScalaUnusedSymbol
 class DoctusSelectSwingComboBox[C](
     val comboBox: JComboBox[String]
-) extends DoctusSelect1[C] {
+) extends DoctusSelect[C] {
 
   private var comboBoxModelOpt = Option.empty[AbstractDoctusComboBoxModel[C]]
 

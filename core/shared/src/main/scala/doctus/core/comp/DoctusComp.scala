@@ -3,8 +3,12 @@ package doctus.core.comp
 /** A multiple select box
   */
 trait DoctusSelect[T] {
-  def addItem(item: T): Unit
-  def selectedItem: T
+  def setItems(
+      items: Seq[T],
+      itemDescription: SelectItemDescription[T] =
+        DoctusSelect.defaultSelectItemDescription()
+  ): Unit
+  def selectedItem: Option[T]
 }
 
 case class SelectItemDescription[T](
@@ -12,11 +16,9 @@ case class SelectItemDescription[T](
     extractColumnString: (T, Int) => String
 )
 
-/** A multiple select component
-  */
-trait DoctusSelect1[T] {
-  def setItems(items: Seq[T], itemDescription: SelectItemDescription[T]): Unit
-  def selectedItem: Option[T]
+object DoctusSelect {
+  def defaultSelectItemDescription[T](columnWidth: Int = 100) =
+    SelectItemDescription(Seq(columnWidth), (elem: T, _) => elem.toString)
 }
 
 /** A component for displaying a text
