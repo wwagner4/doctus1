@@ -5,7 +5,7 @@ ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 lazy val javaVersion = "17" // Info for scalac in order to optimise
 lazy val utestVersion = "0.8.3"
 lazy val scalaJsJqueryVersion = "1.0.0"
-lazy val doctusVersion = "1.1.0-SNAPSHOT"
+lazy val doctusVersion = "1.1.0"
 lazy val organisation = "net.entelijan"
 
 lazy val doctus = project.in(file(".")).
